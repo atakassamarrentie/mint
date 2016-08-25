@@ -1,0 +1,29 @@
+{
+  "ids": {
+    "User": 2,
+    "AccessToken": 122,
+    "ACL": 3,
+    "RoleMapping": 2,
+    "Role": 3,
+    "Note": 1,
+    "UserExt": 2
+  },
+  "models": {
+    "UserExt": {
+      "1": "{\"username\":\"ajuhos\",\"password\":\"$2a$10$ekyRqPIoab9DXZUGKun3rOh30QsnoAgAuw4KqTqCahZE838p8c5/i\",\"email\":\"akos.juhos@t-systems.com\",\"emailVerified\":true,\"firstname\":\"Akos\",\"lastname\":\"Juhos\",\"active\":\"Y\",\"id\":1,\"firstName\":\"Akos\",\"lastName\":\"Juhos\"}"
+    },
+    "AccessToken": {
+      "RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4": "{\"id\":\"RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4\",\"ttl\":1209600,\"created\":\"2016-08-25T12:10:12.541Z\",\"userId\":1}"
+    },
+    "ACL": {
+      "2": "{\"model\":\"UserExt\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"admin\",\"id\":2}"
+    },
+    "RoleMapping": {
+      "1": "{\"principalType\":\"USER\",\"principalId\":\"1\",\"roleId\":2,\"id\":1}"
+    },
+    "Role": {
+      "2": "{\"name\":\"admin\",\"created\":\"2016-08-25T07:20:21.284Z\",\"modified\":\"2016-08-25T07:20:21.284Z\",\"id\":2}"
+    },
+    "Note": {}
+  }
+}

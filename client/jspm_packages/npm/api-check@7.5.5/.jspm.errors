@@ -1,0 +1,8 @@
+MultipleErrors: /home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:1:1: Unexpected reserved word import
+/home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:1:8: Semi-colon expected
+/home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:1:24: Semi-colon expected
+/home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:1:29: Semi-colon expected
+/home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:3:1: Unexpected reserved word export
+/home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:3:8: Semi-colon expected
+/home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:3:8: Unexpected reserved word default
+/home/ajuhos/.jspm/packages/npm/api-check@7.5.5/src/index.js:3:16: Semi-colon expected

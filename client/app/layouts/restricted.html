@@ -1,0 +1,26 @@
+<div bg-layout="column">
+    <div ng-layout="column">
+        <div>
+            <md-content>
+                <md-toolbar class="md-hue-2">
+                    <div class="md-toolbar-tools">
+                        <md-button class="md-icon-button" ng-click="toggleLeft()">
+                            <md-icon md-font-set="material-icons">menu</md-icon>
+                        </md-button>
+                        <h2>
+                            <span>akosjatszik.com</span>
+                        </h2>
+
+                        <span flex></span>
+                        <span>{{sessionService.user.firstName}} {{sessionService.user.lastName}}</span>
+
+                        <md-button class="md-icon-button" ng-click="logout()">
+                            <md-icon md-font-set="material-icons">exit_to_app</md-icon>
+                    </div>
+                </md-toolbar>
+            </md-content>
+        </div>
+    </div>
+    <div ng-controller="sidemenuCtrl as sidemenu" ng-include="sidemenuTemplate">
+    </div>
+</div>

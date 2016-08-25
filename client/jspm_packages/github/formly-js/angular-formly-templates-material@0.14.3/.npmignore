@@ -1,0 +1,14 @@
+.idea
+coverage
+demo
+node_modules
+bower_components
+src
+tests
+webpack
+.editorconfig
+.eslintrc
+.travis.yml
+karma.conf.js
+package.js
+webpack.config.js
