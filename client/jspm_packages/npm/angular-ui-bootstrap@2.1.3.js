@@ -1,0 +1,1 @@
+module.exports = require("npm:angular-ui-bootstrap@2.1.3/index.js");

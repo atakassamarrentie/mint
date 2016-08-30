@@ -82,9 +82,7 @@
   "github:angular/bower-angular-aria@1.5.8": {
     "angular": "jspm:angular@^1.3.0"
   },
-  "npm:jquery@3.1.0": {
-    "process": "github:jspm/nodelibs-process@^0.1.0"
-  },
+  "npm:jquery@3.1.0": {},
   "github:angular/bower-angular-cookies@1.5.8": {
     "angular": "jspm:angular@^1.3.0-rc.1"
   },
@@ -97,5 +95,9 @@
   "npm:api-check@7.5.5": {},
   "github:angular/bower-angular-messages@1.5.8": {
     "angular": "jspm:angular@^1.5.0"
-  }
+  },
+  "github:twbs/bootstrap@3.3.7": {
+    "jquery": "jspm:jquery"
+  },
+  "npm:angular-ui-bootstrap@2.1.3": {}
 }

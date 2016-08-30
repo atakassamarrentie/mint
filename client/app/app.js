@@ -4,7 +4,6 @@
 import sessionService from 'app/services/sessionSrv'
 import indexCtrl from 'app/controllers/index'
 import loginCtrl from 'app/controllers/login'
-import sidemenuCtrl from 'app/controllers/sidemenu'
 import restrictedCtrl from 'app/controllers/restricted'
 import user from 'app/directives/user'
 
@@ -31,9 +30,13 @@ const app = angular
     .service('sessionService', sessionService)
     .controller('indexCtrl', indexCtrl)
     .controller('loginCtrl', loginCtrl)
-    .controller('sidemenuCtrl', sidemenuCtrl)
     .controller('restrictedCtrl', restrictedCtrl)
-    .directive('user', user);
+    .directive('user', user)
+    .config(function ($mdThemingProvider) {
+        $mdThemingProvider.theme('default')
+            .primaryPalette('cyan')
+            .dark();
+   });
 
 export default app;
 

@@ -12,7 +12,6 @@ import "app/resources/fonts/material-icons.css!";
 
 // Common
 import "jquery";
-import "angular";
 import "angular-messages";
 import "angular-material";
 import "angular-cookies";
@@ -25,6 +24,7 @@ import "angular-formly-material";
 
 // Lib
 import 'app/lib/lb-services';
+
 
 import app from 'app/app';
 

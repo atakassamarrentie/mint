@@ -1,7 +1,7 @@
 {
   "ids": {
     "User": 2,
-    "AccessToken": 122,
+    "AccessToken": 124,
     "ACL": 3,
     "RoleMapping": 2,
     "Role": 3,
@@ -13,7 +13,8 @@
       "1": "{\"username\":\"ajuhos\",\"password\":\"$2a$10$ekyRqPIoab9DXZUGKun3rOh30QsnoAgAuw4KqTqCahZE838p8c5/i\",\"email\":\"akos.juhos@t-systems.com\",\"emailVerified\":true,\"firstname\":\"Akos\",\"lastname\":\"Juhos\",\"active\":\"Y\",\"id\":1,\"firstName\":\"Akos\",\"lastName\":\"Juhos\"}"
     },
     "AccessToken": {
-      "RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4": "{\"id\":\"RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4\",\"ttl\":1209600,\"created\":\"2016-08-25T12:10:12.541Z\",\"userId\":1}"
+      "RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4": "{\"id\":\"RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4\",\"ttl\":1209600,\"created\":\"2016-08-25T12:10:12.541Z\",\"userId\":1}",
+      "XS4EG3fu0BDNr3Y3A5Itm9PT7puPaTegM3CXPFOpjI8FVUrolbKjcwidYjeTarwM": "{\"id\":\"XS4EG3fu0BDNr3Y3A5Itm9PT7puPaTegM3CXPFOpjI8FVUrolbKjcwidYjeTarwM\",\"ttl\":1209600,\"created\":\"2016-08-29T16:58:56.285Z\",\"userId\":1}"
     },
     "ACL": {
       "2": "{\"model\":\"UserExt\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"admin\",\"id\":2}"

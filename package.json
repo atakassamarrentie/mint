@@ -29,5 +29,19 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "mint"
+  "description": "mint",
+  "jspm": {
+    "directories": {
+      "baseURL": "client"
+    },
+    "dependencies": {
+      "angular-ui-bootstrap": "npm:angular-ui-bootstrap@^2.1.3",
+      "bootstrap": "github:twbs/bootstrap@^3.3.7"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
 }

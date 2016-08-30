@@ -22,9 +22,11 @@ System.config({
     "angular-messages": "github:angular/bower-angular-messages@1.5.8",
     "angular-resource": "github:angular/bower-angular-resource@1.5.8",
     "angular-route": "github:angular/bower-angular-route@1.5.8",
+    "angular-ui-bootstrap": "npm:angular-ui-bootstrap@2.1.3",
     "api-check": "npm:api-check@7.5.5",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
+    "bootstrap": "github:twbs/bootstrap@3.3.7",
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.27",
     "jquery": "npm:jquery@3.1.0",
@@ -69,6 +71,9 @@ System.config({
     },
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
+    },
+    "github:twbs/bootstrap@3.3.7": {
+      "jquery": "npm:jquery@3.1.0"
     },
     "npm:assert@1.4.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
