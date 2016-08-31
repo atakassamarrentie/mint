@@ -1,7 +1,7 @@
 {
   "ids": {
     "User": 2,
-    "AccessToken": 124,
+    "AccessToken": 146,
     "ACL": 3,
     "RoleMapping": 2,
     "Role": 3,
@@ -10,11 +10,14 @@
   },
   "models": {
     "UserExt": {
-      "1": "{\"username\":\"ajuhos\",\"password\":\"$2a$10$ekyRqPIoab9DXZUGKun3rOh30QsnoAgAuw4KqTqCahZE838p8c5/i\",\"email\":\"akos.juhos@t-systems.com\",\"emailVerified\":true,\"firstname\":\"Akos\",\"lastname\":\"Juhos\",\"active\":\"Y\",\"id\":1,\"firstName\":\"Akos\",\"lastName\":\"Juhos\"}"
+      "1": "{\"username\":\"ajuhos\",\"password\":\"$2a$10$T2mA.0sSDKFLDdNq.qpzV.weoXJPTKKHvH1thYvPlZ64ujF8LliUa\",\"email\":\"akos.juhos@t-systems.com\",\"emailVerified\":true,\"firstname\":\"Akos\",\"lastname\":\"Juhos\",\"active\":\"Y\",\"id\":1,\"firstName\":\"Akos\",\"lastName\":\"Juhos\",\"picture\":\"/assets/pictures/profile/ajuhos.jpg\"}"
     },
     "AccessToken": {
-      "RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4": "{\"id\":\"RBqHk3ogImrysM8LX0irqiZ0DRFDUw583jnWzMglAAIrwAz2PIaoyqdk1YMtz2F4\",\"ttl\":1209600,\"created\":\"2016-08-25T12:10:12.541Z\",\"userId\":1}",
-      "XS4EG3fu0BDNr3Y3A5Itm9PT7puPaTegM3CXPFOpjI8FVUrolbKjcwidYjeTarwM": "{\"id\":\"XS4EG3fu0BDNr3Y3A5Itm9PT7puPaTegM3CXPFOpjI8FVUrolbKjcwidYjeTarwM\",\"ttl\":1209600,\"created\":\"2016-08-29T16:58:56.285Z\",\"userId\":1}"
+      "0Bi29r1tRKXtVf8sVvMtY2tQyUFW0iGunB2CBPCmQ8Db7BYtAuKBhnSdfkJ71dTE": "{\"id\":\"0Bi29r1tRKXtVf8sVvMtY2tQyUFW0iGunB2CBPCmQ8Db7BYtAuKBhnSdfkJ71dTE\",\"ttl\":1209600,\"created\":\"2016-08-31T11:47:07.084Z\",\"userId\":1}",
+      "eD3Mf73Xz7Rf6dT3ZvQoYJk9z1oxUKEwh4MyI8VQkHerEBlNIrUg3qMxOuNcefNe": "{\"id\":\"eD3Mf73Xz7Rf6dT3ZvQoYJk9z1oxUKEwh4MyI8VQkHerEBlNIrUg3qMxOuNcefNe\",\"ttl\":1209600,\"created\":\"2016-08-31T11:54:05.080Z\",\"userId\":1}",
+      "rvtN6FPpWHZoubQYAcoo7M8zSTLENNqpGCHhEVb8B3XXunHYm2nNmxAhPoCbOHt8": "{\"id\":\"rvtN6FPpWHZoubQYAcoo7M8zSTLENNqpGCHhEVb8B3XXunHYm2nNmxAhPoCbOHt8\",\"ttl\":1209600,\"created\":\"2016-08-31T12:54:33.541Z\",\"userId\":1}",
+      "RteVPK7uybg6B8i4C94AMftqCMugoab75HcT7wllhDJ6xDDEKfC0gZrxoGsTCsQG": "{\"id\":\"RteVPK7uybg6B8i4C94AMftqCMugoab75HcT7wllhDJ6xDDEKfC0gZrxoGsTCsQG\",\"ttl\":1209600,\"created\":\"2016-08-31T12:59:04.710Z\",\"userId\":1}",
+      "sMF5t86uOogZvFFahKqMCffBNG0P26aMAupHjGkshpfqtkp42XqeIIS2yGm0rBWD": "{\"id\":\"sMF5t86uOogZvFFahKqMCffBNG0P26aMAupHjGkshpfqtkp42XqeIIS2yGm0rBWD\",\"ttl\":1209600,\"created\":\"2016-08-31T13:02:40.106Z\",\"userId\":1}"
     },
     "ACL": {
       "2": "{\"model\":\"UserExt\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"admin\",\"id\":2}"

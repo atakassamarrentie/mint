@@ -16,13 +16,12 @@
     'BlurAdmin.pages.charts',
     'BlurAdmin.pages.maps',
     'BlurAdmin.pages.profile',
-    'BlurAdmin.pages.signin'
   ])
     .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider, $stateProvider, $windowProvider) {
-    $urlRouterProvider.otherwise('dashboard')
+    $urlRouterProvider.otherwise('/dashboard')
     
 
    

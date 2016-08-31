@@ -36,7 +36,7 @@ a.al-logo {
 
 .al-user-profile {
   float: right;
-  margin-right: 12px;
+  margin-right: 70px;
   transition: all .15s ease-in-out;
   padding: 0;
   width: 36px;
@@ -153,10 +153,11 @@ a.collapse-menu-link {
 
 @media (max-width: $resXXS) {
   .user-profile{
-    min-width: 136px;
+    min-width: 256px;
+    
   }
   a.refresh-data {
-    margin-right: 10px;
+    margin-right: 70px;
   }
   a.collapse-menu-link {
     margin-left: 10px;
@@ -169,4 +170,5 @@ a.collapse-menu-link {
 
 .profile-toggle-link{
   cursor: pointer;
+  min-width: 300px;
 }

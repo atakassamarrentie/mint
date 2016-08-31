@@ -43,10 +43,8 @@
   "files": {
     "loopback#static": 
       {
-        "params": "$!../client"
+        "params": "$!../bluradmin/release"
       }
-      
-    
   },
   "final": {
     "loopback#urlNotFound": {}
