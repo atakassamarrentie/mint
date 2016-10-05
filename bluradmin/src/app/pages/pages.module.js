@@ -8,24 +8,45 @@
   angular.module('BlurAdmin.pages', [
     'ui.router',
 
+
     'BlurAdmin.pages.dashboard',
     'BlurAdmin.pages.ui',
-    'BlurAdmin.pages.components',
+    //'BlurAdmin.pages.components',
     'BlurAdmin.pages.form',
-    'BlurAdmin.pages.tables',
-    'BlurAdmin.pages.charts',
-    'BlurAdmin.pages.maps',
-    'BlurAdmin.pages.profile',
+    //'BlurAdmin.pages.tables',
+    //'BlurAdmin.pages.charts',
+    //'BlurAdmin.pages.maps',
+    //'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.product',
+    'BlurAdmin.pages.productCategory',
+    'BlurAdmin.pages.client',
+    'BlurAdmin.pages.ordersAndSales'
+
   ])
     .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider, $stateProvider, $windowProvider) {
-    $urlRouterProvider.otherwise('/dashboard')
-    
+    $urlRouterProvider.otherwise('/product')
 
-   
+
     baSidebarServiceProvider.addStaticItem({
+      title: 'Products',
+      icon: 'ion-bag',
+      subMenu: [
+        {
+          title: 'Product List',
+          stateRef: 'product'
+        },
+        {
+          title: 'Product Category',
+          stateRef: 'productCategory'
+        }
+      ]
+    })
+
+
+  /*  baSidebarServiceProvider.addStaticItem({
       title: 'Pages',
       icon: 'ion-document',
       subMenu: [{
@@ -58,7 +79,7 @@
             disabled: true
           }]
         }]
-    });
+    });*/
   }
 
 })();

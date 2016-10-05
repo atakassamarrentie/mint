@@ -6,8 +6,9 @@ export default [
 
 function sessionService($cookies, User) {
     this.logout = () => {
-        User.logout({ access_token: this.token }).$promise.then(
-            (res) => { this.token = null
+        
+        User.logout({ access_token: self.token }).$promise.then(
+            (res) => { self.token = null
                 $cookies.remove('token')
                 $cookies.remove('user')  
                 },

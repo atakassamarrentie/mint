@@ -1,0 +1,123 @@
+<div ng-hide="newItem.$visible">
+    <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new client +</button>
+</div>
+<div ng-show="newItem.$visible">
+
+    <form editable-form name="newItem" onbeforesave="addNewItem($data)">
+        <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
+        <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
+    </form>
+
+    <div ba-panel>
+        <div class="row" align="right">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <span editable-text="newClient.first_name" e-name="first_name" e-form="newItem" onbeforesave="checkEmpty($data, 'First Name')">
+         </span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <span editable-text="newClient.last_name" e-name="last_name" e-form="newItem" onbeforesave="checkEmpty($data, 'Last Name')">
+         </span>
+                </div>
+            </div>
+        </div>
+        <div class="row" align="right">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="phone_number">Phone Number</label>
+                    <span editable-text="newClient.phone_number" e-name="phone_number" e-form="newItem">
+         </span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <span editable-text="newClient.email" e-name="email" e-form="newItem">
+         </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table st-safe-src="clientCollection" st-table="displayedCollection" class="table table-striped">
+
+    <thead>
+        <tr class="sortable">
+            <th st-sort="id" st-sort-default>ID</th>
+            <th st-sort="first_name">First Name</th>
+            <th st-sort="last_name">Last Name</th>
+            <th st-sort="phone_number">Phone numbers</th>
+            <th st-sort="email">E-mail</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>
+                <input st-search="first_name" placeholder="search for first name" class="input-sm form-control" type="search" />
+            </th>
+            <th>
+                <input st-search="last_name" placeholder="search for last name" class="input-sm form-control" type="search" />
+            </th>
+            <th>
+                <input st-search="phone_number" placeholder="search for phone number" class="input-sm form-control" type="search" />
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="item in displayedCollection">
+            <td class="table-id">{{item.id}}</td>
+            <td>
+                <span editable-text="item.first_name" e-name="first_name" e-form="rowform">
+        {{item.first_name}}
+        </span>
+            </td>
+            <td>
+                <span editable-text="item.last_name" e-name="last_name" e-form="rowform">
+        {{item.last_name}}
+        </span>
+            </td>
+            <td>
+                <span editable-text="item.phone_number" e-name="phone_number" e-form="rowform">
+        {{item.phone_number}}
+        </span>
+            </td>
+            <td>
+                <span editable-text="item.email" e-name="email" e-form="rowform">
+        {{item.email}}
+        </span>
+            </td>
+            <td style="min-width:200px">
+                <div ng-show="!rowform.$visible">
+                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
+                    <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+                </div>
+                <form editable-form name="rowform" onbeforesave="updateClient($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
+                    <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
+                    <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-center">
+                <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+            </td>
+        </tr>
+    </tfoot>
+
+</table>
+
+
+<div class="form-group select-page-size-wrap" layout="row">
+    Rows per page
+    <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25,50,100]">
+      </select>
+</div>

@@ -1,0 +1,205 @@
+<div ba-panel ba-panel-title="Orders">
+    <div ng-hide="newItem.$visible">
+        <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new order +</button>
+    </div>
+    <div ng-show="newItem.$visible">
+
+        <form editable-form name="newItem" onbeforesave="addNewItem($data)">
+            <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
+            <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
+        </form>
+
+        <div ba-panel>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="name">Product Name</label>
+                        <span editable-text="newProduct.name" e-name="name" e-form="newItem" onbeforesave="checkName($data)">
+         </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="reorder">Reorder Point</label>
+                        <span editable-number="newProduct.reorder" e-name="reorder" e-form="newItem" onbeforesave="checkEmpty($data, 'Reorder Point')">
+         </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="purchase_price">Purchase Price</label>
+                        <span editable-number="newProduct.purchase_price" e-name="purchase_price" e-form="newItem" onbeforesave="checkEmpty($data,'Purchase Price')">
+         </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="sell_price">Sell Price</label>
+                        <span editable-number="newProduct.sell_price" e-name="sell_price" e-form="newItem" onbeforesave="checkEmpty($data, 'Sell Price')">
+         </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="productCategoryId">Product Category</label>
+                            <span editable-select="newProduct.productCategory.id" e-name="productCategoryId" e-form="newItem" e-ng-options="s.id as s.category_name for s in productCategory">
+        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table st-safe-src="ordersCollection" st-table="displayedOrdersCollection" class="table table-striped">
+
+        <thead>
+            <tr class="sortable">
+                <th st-sort="id" st-sort-default>ID</th>
+                <th st-sort="order_date">Order date</th>
+                <th st-sort="expected_date">Expected date</th>
+                <th st-sort="quantity">Reorder Point</th>
+            </tr>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    <input st-search="order_date" placeholder="search for order date" class="input-sm form-control" type="search" />
+                </th>
+                <th>
+                    <input st-search="expected_date" placeholder="search for product expected date" class="input-sm form-control" type="search"
+                    />
+                </th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="item in displayedOrdersCollection">
+                <td class="table-id">{{item.id}}</td>
+                <td>
+                    <span editable-date="item.order_date" e-name="order_date" e-form="roworderform" onbeforesave="checkEmpty($data,'Order Date')">
+        {{item.order_date | date:"yyyy-MM-dd"}}
+        </span>
+                </td>
+                <td>
+                    <span editable-date="item.expected_date" e-name="expected_date" e-form="roworderform">
+        {{item.expected_date | date:"yyyy-MM-dd"}}
+        </span>
+                </td>
+                <td>
+                    <span editable-number="item.quantity" e-name="quantity" e-form="roworderform">
+          {{item.quantity}}
+        </span>
+                </td>
+
+                <td style="min-width:200px">
+                    <div ng-show="!roworderform.$visible">
+                        <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="roworderform.$show()"><i class="ion-edit"></i></button>
+                        <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+                    </div>
+                    <form editable-form name="roworderform" onbeforesave="updateProduct($data, item.id)" ng-show="roworderform.$visible" shown="inserted == item">
+                        <button type="submit" class="btn btn-success" ng-disabled="roworderform.$waiting">save</button>
+                        <button type="button" class="btn btn-warning" ng-disabled="roworderform.$waiting" ng-click="roworderform.$cancel()">cancel</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="form-group select-page-size-wrap" layout="row">
+        Rows per page
+        <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25,50,100]">
+      </select>
+    </div>
+</div>
+<div ba-panel ba-panel-title="Sales" ba-panel-class="with-scroll">
+    <table st-safe-src="productCollection" st-table="displayedCollection" class="table table-striped">
+
+        <thead>
+            <tr class="sortable">
+                <th st-sort="id" st-sort-default>ID</th>
+                <th st-sort="name">Product Name</th>
+                <th st-sort="productCategory.category_name">Product Category</th>
+                <th st-sort="reorder">Reorder Point</th>
+                <th st-sort="purchase_price">Purchase Price</th>
+                <th st-sort="sell_price">Sell Price</th>
+            </tr>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    <input st-search="name" placeholder="search for name" class="input-sm form-control" type="search" />
+                </th>
+                <th>
+                    <input st-search="productCategory.category_name" placeholder="search for product category" class="input-sm form-control"
+                        type="search" />
+                </th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="item in displayedCollection">
+                <td class="table-id">{{item.id}}</td>
+                <td>
+                    <span editable-text="item.name" e-name="name" e-form="roworderform" onbeforesave="checkName($data, item.id)">
+        {{item.name}}
+        </span>
+                </td>
+                <td>
+                    <span editable-select="item.productCategory.id" e-name="productCategoryId" e-form="roworderform" e-ng-options="s.id as s.category_name for s in productCategory">
+        {{showCategory(item.productCategory.id)}}
+        </span>
+                </td>
+                <td>
+                    <span editable-number="item.reorder" e-name="reorder" e-form="roworderform" style="width:100%" class="mytextarea">
+        {{item.reorder}}
+        </span>
+                </td>
+                <td>
+                    <span editable-number="item.purchase_price" e-name="purchase_price" e-form="roworderform">
+          {{item.purchase_price}}
+        </span>
+                </td>
+                <td>
+                    <span editable-number="item.sell_price" e-name="sell_price" e-form="roworderform">
+        {{item.sell_price}}
+        </span>
+                </td>
+                <td style="min-width:200px">
+                    <div ng-show="!roworderform.$visible">
+                        <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="roworderform.$show()"><i class="ion-edit"></i></button>
+                        <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+                    </div>
+                    <form editable-form name="roworderform" onbeforesave="updateProduct($data, item.id)" ng-show="roworderform.$visible" shown="inserted == item">
+                        <button type="submit" class="btn btn-success" ng-disabled="roworderform.$waiting">save</button>
+                        <button type="button" class="btn btn-warning" ng-disabled="roworderform.$waiting" ng-click="roworderform.$cancel()">cancel</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="form-group select-page-size-wrap" layout="row">
+        Rows per page
+        <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25,50,100]">
+      </select>
+    </div>
+</div>

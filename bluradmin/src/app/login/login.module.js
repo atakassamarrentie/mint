@@ -8,23 +8,24 @@
   angular.module('BlurAdmin.login', ['ui.router'])
     .controller('loginCtrl', loginCtrl)
     .service('sessionService', sessionService)
-    .config(function(LoopBackResourceProvider) {
- 
-    // Use a custom auth header instead of the default 'Authorization'
-    LoopBackResourceProvider.setAuthHeader('X-Access-Token');
- 
-    // Change the URL where to access the LoopBack REST API server
-    LoopBackResourceProvider.setUrlBase('http://127.0.0.1:4000/api');
+    .config(function (LoopBackResourceProvider) {
+
+      // Use a custom auth header instead of the default 'Authorization'
+      LoopBackResourceProvider.setAuthHeader('X-Access-Token');
+
+      // Change the URL where to access the LoopBack REST API server
+      LoopBackResourceProvider.setUrlBase('http://127.0.0.1:4000/api');
 
     })
 
 
-  function loginCtrl($cookies, $scope, sessionService) {
+  function loginCtrl($cookies, $scope, $state, sessionService) {
     $scope.loginState = true
     $scope.sessionService = sessionService
     $scope.sessionService.token = $scope.sessionService.token || $cookies.get('token')
     sessionService.token = sessionService.token || $cookies.get('token')
     sessionService.user = $cookies.getObject('user') || sessionService.user
+    $state.go('dashboard')
   }
 
   function sessionService($cookies, $state, $http, UserExt) {
@@ -42,23 +43,23 @@
     }
 
     self.login = function (user) {
-   
+
       UserExt.login({ username: user.name, password: user.password }).$promise.then(
         function (res) {
           self.response = res
           self.error = null
           self.token = res.id
-          
+
           self.user = res.user
           $cookies.put('token', res.id)
           $cookies.putObject('user', res.user)
-                  $state.go('dashboard')
+          $state.go('dashboard')
         },
         function (err) {
           self.error = err
           self.response = null
-  
-  
+
+
         }
       )
     }

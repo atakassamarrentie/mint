@@ -39,5 +39,29 @@
   "UserExt": {
     "dataSource": "db",
     "public": true
+  },
+  "Product": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Product_category": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Client": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Payment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Order": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Sale": {
+    "dataSource": "db",
+    "public": true
   }
 }

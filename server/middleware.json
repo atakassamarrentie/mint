@@ -41,10 +41,9 @@
     }
   },
   "files": {
-    "loopback#static": 
-      {
-        "params": "$!../bluradmin/release"
-      }
+    "loopback#static": {
+      "params": "$!../bluradmin/release"
+    }
   },
   "final": {
     "loopback#urlNotFound": {}

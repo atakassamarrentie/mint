@@ -23,6 +23,7 @@ System.config({
     "angular-resource": "github:angular/bower-angular-resource@1.5.8",
     "angular-route": "github:angular/bower-angular-route@1.5.8",
     "angular-ui-bootstrap": "npm:angular-ui-bootstrap@2.1.3",
+    "angular-ui-router": "github:angular-ui/angular-ui-router-bower@0.3.1",
     "api-check": "npm:api-check@7.5.5",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
@@ -30,6 +31,9 @@ System.config({
     "core-js": "npm:core-js@1.2.7",
     "css": "github:systemjs/plugin-css@0.1.27",
     "jquery": "npm:jquery@3.1.0",
+    "github:angular-ui/angular-ui-router-bower@0.3.1": {
+      "angular": "github:angular/bower-angular@1.5.8"
+    },
     "github:angular/bower-angular-animate@1.5.8": {
       "angular": "github:angular/bower-angular@1.5.8"
     },

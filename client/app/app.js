@@ -6,6 +6,7 @@ import indexCtrl from 'app/controllers/index'
 import loginCtrl from 'app/controllers/login'
 import restrictedCtrl from 'app/controllers/restricted'
 import user from 'app/directives/user'
+import sideMenuCtrl from 'app/controllers/sidemenu'
 
 
 
@@ -31,6 +32,7 @@ const app = angular
     .controller('indexCtrl', indexCtrl)
     .controller('loginCtrl', loginCtrl)
     .controller('restrictedCtrl', restrictedCtrl)
+    .controller('sideMenuCtrl', sideMenuCtrl)
     .directive('user', user)
     .config(function ($mdThemingProvider) {
         $mdThemingProvider.theme('default')
