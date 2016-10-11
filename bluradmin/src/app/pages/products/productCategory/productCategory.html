@@ -4,23 +4,28 @@
 <div ng-show="newItem.$visible">
 
   <form editable-form name="newItem" onbeforesave="addNewItem($data)">
-    <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
-    <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
-  </form>
 
-  <div ba-panel>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="form-group">
-          <label for="category_name">Product Category Name</label>
-          <span editable-text="newProductCategory.category_name" e-name="category_name" e-form="newItem" onbeforesave="checkName($data)">
+
+
+
+    <div ba-panel class="panel bootstrap-panel">
+      <div class="panel-heading">Add new order</div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label for="category_name">Product Category Name</label>
+              <span editable-text="newProductCategory.category_name" e-name="category_name" e-form="newItem" onbeforesave="checkName($data)">
          </span>
+            </div>
+          </div>
         </div>
       </div>
+      <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
+      <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
     </div>
-  </div>
 </div>
-
+</form>
 
 <table st-safe-src="productCategoryCollection" st-table="displayedCollection" class="table table-striped">
 

@@ -31,6 +31,7 @@
           sidebarMeta: {
             icon: 'ion-android-laptop',
             order: 200,
+            role: 'admin'
           },
           data: {
             requireLogin: true // this property will apply to all children of 'app'

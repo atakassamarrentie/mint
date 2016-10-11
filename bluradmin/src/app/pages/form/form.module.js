@@ -19,6 +19,7 @@
           sidebarMeta: {
             icon: 'ion-compose',
             order: 250,
+            role: 'admin'
           },
           data: {
             requireLogin: true // this property will apply to all children of 'app'

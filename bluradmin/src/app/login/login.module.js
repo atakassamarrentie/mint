@@ -25,7 +25,9 @@
     $scope.sessionService.token = $scope.sessionService.token || $cookies.get('token')
     sessionService.token = sessionService.token || $cookies.get('token')
     sessionService.user = $cookies.getObject('user') || sessionService.user
-    $state.go('dashboard')
+    $state.go('users')
+
+     
   }
 
   function sessionService($cookies, $state, $http, UserExt) {
@@ -53,7 +55,7 @@
           self.user = res.user
           $cookies.put('token', res.id)
           $cookies.putObject('user', res.user)
-          $state.go('dashboard')
+          $state.go('client')
         },
         function (err) {
           self.error = err

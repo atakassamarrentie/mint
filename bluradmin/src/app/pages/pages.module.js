@@ -16,12 +16,12 @@
     //'BlurAdmin.pages.tables',
     //'BlurAdmin.pages.charts',
     //'BlurAdmin.pages.maps',
-    //'BlurAdmin.pages.profile',
+    'BlurAdmin.pages.profile',
     'BlurAdmin.pages.product',
     'BlurAdmin.pages.productCategory',
     'BlurAdmin.pages.client',
-    'BlurAdmin.pages.ordersAndSales'
-
+    'BlurAdmin.pages.ordersAndSales',
+    'BlurAdmin.pages.users'
   ])
     .config(routeConfig);
 
@@ -29,18 +29,30 @@
   function routeConfig($urlRouterProvider, baSidebarServiceProvider, $stateProvider, $windowProvider) {
     $urlRouterProvider.otherwise('/product')
 
-
     baSidebarServiceProvider.addStaticItem({
       title: 'Products',
       icon: 'ion-bag',
+      role: 'admin',
       subMenu: [
         {
           title: 'Product List',
-          stateRef: 'product'
+          stateRef: 'product',
         },
         {
           title: 'Product Category',
           stateRef: 'productCategory'
+        }
+      ]
+    })
+
+     baSidebarServiceProvider.addStaticItem({
+      title: 'Users',
+      icon: 'ion-person',
+      role: 'admin',
+      subMenu: [
+        {
+          title: 'User List',
+          stateRef: 'users',
         }
       ]
     })

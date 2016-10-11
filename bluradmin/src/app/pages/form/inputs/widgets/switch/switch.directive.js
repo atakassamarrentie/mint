@@ -5,19 +5,19 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.form')
+  angular.module('BlurAdmin.pages.client')
       .directive('switch', switchDirective);
 
   /** @ngInject */
   function switchDirective($timeout) {
     return {
-      restrict: 'EA',
+      restrict: 'E',
       replace: true,
       scope: {
         ngModel: '='
       },
       template: function(el, attrs) {
-        return '<div class="switch-container ' + (attrs.color || '') + '"><input type="checkbox" ng-model="ngModel"></div>';
+        return '<div class="switch-container ' + (attrs.color || '') + '"><input type="checkbox" ng-model="ngModel" data-on-text="' + (attrs.onText || 'ON') + '" data-off-text="' + (attrs.offText || 'OFF') + '"></div>';
       },
       link: function (scope, elem, attr) {
         $timeout(function(){
