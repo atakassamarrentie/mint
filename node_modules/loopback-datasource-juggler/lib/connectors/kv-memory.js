@@ -1,8 +1,11 @@
 'use strict';
 
+var g = require('strong-globalize')();
+
 var assert = require('assert');
 var Connector = require('loopback-connector').Connector;
 var debug = require('debug')('loopback:connector:kv-memory');
+var minimatch = require('minimatch');
 var util = require('util');
 
 exports.initialize = function initializeDataSource(dataSource, cb) {
@@ -71,7 +74,9 @@ KeyValueMemoryConnector.prototype._removeIfExpired = function(modelName, key) {
     debug('Removing expired key', key);
     delete store[key];
     item = undefined;
+    return true;
   }
+  return false;
 };
 
 KeyValueMemoryConnector.prototype.get =
@@ -116,11 +121,13 @@ function(modelName, key, value, options, callback) {
 
 KeyValueMemoryConnector.prototype.expire =
 function(modelName, key, ttl, options, callback) {
+  this._removeIfExpired(modelName, key);
+
   var store = this._getStoreForModel(modelName);
 
   if (!(key in store)) {
     return process.nextTick(function() {
-      var err = new Error('Cannot expire unknown key ' + key);
+      var err = new Error(g.f('Cannot expire unknown key %j', key));
       err.statusCode = 404;
       callback(err);
     });
@@ -140,7 +147,7 @@ function(modelName, key, options, callback) {
   // key is unknown
   if (!(key in store)) {
     return process.nextTick(function() {
-      var err = new Error('Cannot get TTL for unknown key ' + key);
+      var err = new Error(g.f('Cannot get TTL for unknown key %j', key));
       err.statusCode = 404;
       callback(err);
     });
@@ -153,6 +160,39 @@ function(modelName, key, options, callback) {
     callback(null, ttl);
   });
 };
+
+KeyValueMemoryConnector.prototype.iterateKeys =
+function(modelName, filter, options, callback) {
+  var store = this._getStoreForModel(modelName);
+  var self = this;
+  var checkFilter = createMatcher(filter.match);
+
+  var keys = Object.keys(store).filter(function(key) {
+    return !self._removeIfExpired(modelName, key) && checkFilter(key);
+  });
+
+  debug('ITERATE KEYS %j -> %s keys', modelName, keys.length);
+
+  var ix = 0;
+  return {
+    next: function(cb) {
+      var value = ix < keys.length ? keys[ix++] : undefined;
+      setImmediate(function() { cb(null, value); });
+    },
+  };
+};
+
+function createMatcher(pattern) {
+  if (!pattern) return function matchAll() { return true; };
+
+  return minimatch.filter(pattern, {
+    nobrace: true,
+    noglobstar: true,
+    dot: true,
+    noext: true,
+    nocomment: true,
+  });
+}
 
 KeyValueMemoryConnector.prototype.disconnect = function(callback) {
   if (this._cleanupTimer)

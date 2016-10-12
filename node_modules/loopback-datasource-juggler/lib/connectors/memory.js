@@ -252,6 +252,36 @@ Memory.prototype.updateOrCreate = function(model, data, options, callback) {
   });
 };
 
+Memory.prototype.patchOrCreateWithWhere =
+Memory.prototype.upsertWithWhere = function(model, where, data, options, callback) {
+  var self = this;
+  var primaryKey = this.idName(model);
+  var filter = { where: where };
+  var nodes = self._findAllSkippingIncludes(model, filter);
+  if (nodes.length === 0) {
+    return self._createSync(model, data, function(err, id) {
+      if (err) return process.nextTick(function() { callback(err); });
+      self.saveToFile(id, function(err, id) {
+        self.setIdValue(model, data, id);
+        callback(err, self.fromDb(model, data), { isNewInstance: true });
+      });
+    });
+  }
+  if (nodes.length === 1) {
+    var primaryKeyValue = nodes[0][primaryKey];
+    self.updateAttributes(model, primaryKeyValue, data, options, function(err, data) {
+      callback(err, data, { isNewInstance: false });
+    });
+  } else {
+    process.nextTick(function() {
+      var error = new Error('There are multiple instances found.' +
+        'Upsert Operation will not be performed!');
+      error.statusCode = 400;
+      callback(error);
+    });
+  }
+};
+
 Memory.prototype.findOrCreate = function(model, filter, data, callback) {
   var self = this;
   var nodes = self._findAllSkippingIncludes(model, filter);
@@ -491,11 +521,15 @@ function applyFilter(filter) {
       // then, we attempt to emulate mongo db matching. Helps for embedded relations
       var dotIndex = key.indexOf('.');
       var subValue = obj[key.substring(0, dotIndex)];
-      if (dotIndex !== -1 && Array.isArray(subValue)) {
+      if (dotIndex !== -1) {
         var subFilter = { where: {}};
         var subKey = key.substring(dotIndex + 1);
         subFilter.where[subKey] = where[key];
-        return subValue.some(applyFilter(subFilter));
+        if (Array.isArray(subValue)) {
+          return subValue.some(applyFilter(subFilter));
+        } else if (typeof subValue === 'object' && subValue !== null) {
+          return applyFilter(subFilter)(subValue);
+        }
       }
 
       return false;

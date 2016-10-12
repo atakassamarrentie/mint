@@ -49,8 +49,8 @@ function createAdmin(adminRole) {
                         {email: result.email}]
                     }
                 }, {
-                        firstname: result.firstname,
-                        lastname: result.lastname,
+                        firstName: result.firstname,
+                        lastName: result.lastname,
                         username: result.username,
                         email: result.email,
                         password: result.password,

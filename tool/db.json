@@ -1,0 +1,34 @@
+{
+  "ids": {
+    "User": 1,
+    "AccessToken": 1,
+    "ACL": 2,
+    "RoleMapping": 1,
+    "Role": 2,
+    "Note": 1,
+    "Product": 1,
+    "Product_category": 1,
+    "Client": 1,
+    "Payment": 1,
+    "Order": 1,
+    "Sale": 1
+  },
+  "models": {
+    "User": {},
+    "AccessToken": {},
+    "ACL": {
+      "1": "{\"model\":\"UserExt\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"admin\",\"id\":1}"
+    },
+    "RoleMapping": {},
+    "Role": {
+      "1": "{\"name\":\"admin\",\"created\":\"2016-10-11T15:16:28.380Z\",\"modified\":\"2016-10-11T15:16:28.380Z\",\"id\":1}"
+    },
+    "Note": {},
+    "Product": {},
+    "Product_category": {},
+    "Client": {},
+    "Payment": {},
+    "Order": {},
+    "Sale": {}
+  }
+}

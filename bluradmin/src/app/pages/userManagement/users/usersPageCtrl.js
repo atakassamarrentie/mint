@@ -33,12 +33,11 @@
 
         $scope.changePassword = function (item, row, button) {
             if (button.length >= 8) {
-                 UserExt.update({ where: { id: item.id } },
-                {
-                  password: "asdasdasd"
-                }, function(result){
-                    row.passwordField = false
+                UserExt.findOne({ where: {id: item.id}}, function(result){
+                    result.updateAttribute('password', button)
                 })
+                    row.passwordField = false
+                
                 
             } else {
 

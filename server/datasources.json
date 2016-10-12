@@ -3,5 +3,14 @@
     "name": "db",
     "connector": "memory",
     "file": "db.json"
+  },
+  "mysql": {
+    "name": "mysql",
+    "connector": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "Semmise",
+    "database": "mint"
   }
 }
