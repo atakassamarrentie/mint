@@ -31,7 +31,7 @@
   },
   "Role": {
     "dataSource": "mysql",
-    "public": false
+    "public": true
   },
   "Note": {
     "dataSource": "db"
@@ -41,27 +41,27 @@
     "public": true
   },
   "Product": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "Product_category": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "Client": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "Payment": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "Order": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   },
   "Sale": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": true
   }
 }
