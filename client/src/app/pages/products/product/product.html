@@ -8,9 +8,9 @@
 
     <div ba-panel class="panel bootstrap-panel">
       <div class="panel-heading">Add new order</div>
-      <div class="panel-body">
+      <div class="panel-body" align='right'>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-4">
             <div class="form-group">
               <label for="name">Product Name</label>
               <span editable-text="newProduct.name" e-name="name" e-form="newItem" onbeforesave="checkName($data)">
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-4">
               <div class="form-group">
                 <label for="productCategoryId">Product Category</label>
                 <span editable-select="newProduct.productCategory.id" e-name="productCategoryId" e-form="newItem" e-ng-options="s.id as s.category_name for s in productCategory">

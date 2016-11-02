@@ -27,7 +27,7 @@
   },
   "RoleMapping": {
     "dataSource": "mysql",
-    "public": false
+    "public": true
   },
   "Role": {
     "dataSource": "mysql",

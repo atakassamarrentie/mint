@@ -23,12 +23,16 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: $foreground-color;
+    background: #393939;
     cursor: pointer;
   }
 
   ::-webkit-scrollbar-track {
     background: $background-color;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: transparent;
   }
 
   // For Internet Explorer

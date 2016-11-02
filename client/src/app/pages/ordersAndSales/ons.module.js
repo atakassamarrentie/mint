@@ -1,7 +1,10 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.ordersAndSales', [])
+    angular.module('BlurAdmin.pages.ordersAndSales', [
+        'BlurAdmin.pages.ordersAndSales.orders',
+        //'BlurAdmin.pages.ordersAndSales.sales'
+    ])
         .config(routeConfig);
 
     /** @ngInject */
@@ -9,19 +12,18 @@
         $stateProvider
             .state('ons', {
                 url: '/ons',
-                templateUrl: 'app/pages/ordersAndSales/ons.html',
-                controller: 'onsPageCtrl',
-                title: 'Orders and Sales',
+                template: '<ui-view></ui-view>',
+                abstract: true,
+                title: 'Orders & Sales',
+                
                 sidebarMeta: {
                     icon: 'ion-cash',
-                    order: 20,
-                    role: ['s','blablabal']
+                    order: 40
+
                 },
                 data: {
-                    requireLogin: true, // this property will apply to all children of 'app'
-                    role: true
+                    requireLogin: true // this property will apply to all children of 'app'
                 }
             });
     }
-
 })();

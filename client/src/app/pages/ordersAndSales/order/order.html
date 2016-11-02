@@ -1,0 +1,147 @@
+
+    <button type="button" class="btn btn-info" ng-click="newItem.$show(); setDate()">Add new product +</button>
+</div>
+<div ng-show="newItem.$visible">
+    NewOrder: {{newItem.productCategoryId}}
+    <form editable-form name="newItem" onbeforesave="addNewItem($data)">
+
+
+        <div ba-panel class="panel bootstrap-panel">
+            <div class="panel-heading">Add new order</div>
+            <div class="panel-body" align='left'>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="name">Product Name</label>
+                            
+                        </div>
+                    </div>
+                       <div class="col-sm-2">
+                        <div class="form-group">
+                            
+                            <span editable-select="newOrder.product_name" e-ng-model="product.select" e-name="product" e-form="newItem" onbeforesave="checkName($data)"
+                                e-ng-options="s.name for s in filteredProducts track by s.id" e-ng-change="productChanged($data)">
+         </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="productCategoryId">Product Category</label>
+                            <span editable-select="newOrder.productCategory.id" e-name="productCategoryId" e-form="newItem" e-ng-options="s.id as s.category_name for s in productCategory"
+                                e-ng-change="productCategoryChanged($data)">
+                                
+        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="reorder">Reorder Point</label>
+                        <span editable-date="newOrder.ordDate" e-name="ordDate" e-form="newItem" onbeforesave="checkEmpty($data, 'Reorder Point')">
+                            {{ (newOrder.ordDate | date:"dd/MM/yyyy") || 'empty' }}
+         </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="purchase_price">Purchase Price</label>
+                        <span editable-number="newOrder.purchase_price" e-name="purchase_price" e-form="newItem" onbeforesave="checkEmpty($data,'Purchase Price')">
+         </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="sell_price">Sell Price</label>
+                        <span editable-number="newOrder.sell_price" e-name="sell_price" e-form="newItem" onbeforesave="checkEmpty($data, 'Sell Price')">
+         </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
+        <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
+</div>
+</div>
+</form>
+<table st-safe-src="productCollection" st-table="displayedCollection" class="table table-striped">
+
+    <thead>
+        <tr class="sortable">
+            <th st-sort="id" st-sort-default>ID</th>
+            <th st-sort="name">Product Name</th>
+            <th st-sort="productCategory.category_name">Product Category</th>
+            <th st-sort="reorder">Reorder Point</th>
+            <th st-sort="purchase_price">Purchase Price</th>
+            <th st-sort="sell_price">Sell Price</th>
+        </tr>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                <input st-search="name" placeholder="search for name" class="input-sm form-control" type="search" />
+            </th>
+            <th>
+                <input st-search="productCategory.category_name" placeholder="search for product category" class="input-sm form-control"
+                    type="search" />
+            </th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="item in displayedCollection">
+            <td class="table-id">{{item.id}}</td>
+            <td>
+                <span editable-text="item.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, item.id)">
+        {{item.name}}
+        </span>
+            </td>
+            <td>
+                <span editable-select="item.productCategory.id" e-name="productCategoryId" e-form="rowform" e-ng-options="s.id as s.category_name for s in productCategory">
+        {{showCategory(item.productCategory.id)}}
+        </span>
+            </td>
+            <td>
+                <span editable-number="item.reorder" e-name="reorder" e-form="rowform" style="width:100%" class="mytextarea">
+        {{item.reorder}}
+        </span>
+            </td>
+            <td>
+                <span editable-number="item.purchase_price" e-name="purchase_price" e-form="rowform">
+          {{item.purchase_price}}
+        </span>
+            </td>
+            <td>
+                <span editable-number="item.sell_price" e-name="sell_price" e-form="rowform">
+        {{item.sell_price}}
+        </span>
+            </td>
+            <td style="min-width:200px">
+                <div ng-show="!rowform.$visible">
+                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
+                    <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+                </div>
+                <form editable-form name="rowform" onbeforesave="updateProduct($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
+                    <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
+                    <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-center">
+                <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="form-group select-page-size-wrap" layout="row">
+    Rows per page
+    <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25,50,100]">
+      </select>
+</div>

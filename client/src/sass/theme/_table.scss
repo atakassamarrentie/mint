@@ -51,6 +51,7 @@
   }
 }
 
+
 .editable-wrap .btn-group.form-control {
   background-color: transparent;
 }
@@ -65,6 +66,10 @@
   td {
     width: 20%;
   }
+}
+
+.editable-wrap .editable-controls > select {
+  min-width: 170px;
 }
 
 .editable-table-button {
@@ -194,8 +199,25 @@ input.search-input {
     }
     input {
       line-height: 15px;
-      height: 30px;
+      
     }
+  }
+}
+
+.table {
+  .editable-checklist{
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: scroll;
+    border: 1px #ededed solid;
+  }
+  
+}
+
+.table {
+  .editable-checklist label {
+    display: block;
+    max-height: 18px;
   }
 }
 

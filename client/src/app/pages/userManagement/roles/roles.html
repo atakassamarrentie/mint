@@ -20,15 +20,15 @@
             <td class="table-id">{{item.id}}</td>
             <td>{{item.username}}</td>
             <td>
-                <span editable-checklist="item.roles" e-name="username" e-ng-options="s.value as s.text for s in roles" e-form="rowform">
-        {{showRoles()}}
+                <span editable-checklist="item.roleIds" e-name="roles" e-ng-options="s.id as s.name for s in allRoles" e-form="rowform">
+        {{showRoles(item.roleIds)}}
         </span>
             </td>
             <td style="min-width:200px">
-                <div ng-show="!rowform.$visible" ng-hide="row.passwordField">
+                <div ng-show="!rowform.$visible">
                     <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
                 </div>
-                <form editable-form name="rowform" onbeforesave="updateClient($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
+                <form editable-form name="rowform" onbeforesave="updateClient($data, item.id)" ng-show="rowform.$visible">
                     <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
                     <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
                 </form>
