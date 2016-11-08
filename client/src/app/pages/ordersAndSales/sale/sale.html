@@ -1,0 +1,177 @@
+<div ng-hide="newItem.$visible">
+    <button type="button" class="btn btn-info" ng-click="newItem.$show(); clearFields()">Add new sale +</button>
+</div>
+{{sessionService.user.id}}
+<div ng-hide="!newItem.$visible">
+    <form editable-form name="newItem" onbeforesave="addNewItem($data)">
+        <div ba-panel class="panel bootstrap-panel">
+            <div class="panel-heading">Add new sale</div>
+            <div class="panel-body" align='left'>
+                <table>
+                    <tbody>
+                        <tr height="30px">
+                            <td width="130px"><label for="name">Product Name</label></td>
+                            <td width="200px"><span editable-select="newsale.product" e-name="product" e-form="newItem" onbeforesave="checkEmpty($data, 'Product Name')"
+                                    e-ng-options="s.name for s in filteredProducts track by s.id" e-ng-change="productChanged($data)"></span></td>
+                            <td width="130px"><label for="productCategoryId">Product Category</label></td>
+                            <td width="200px">
+                                <span editable-select="newsale.productCategory" e-name="productCategoryId" e-form="newItem" e-ng-options="s.id as s.category_name for s in productCategory"
+                                    e-ng-change="productCategoryChanged($data)" onbeforesave="checkEmpty($data, 'Product Category')"></span>
+                            </td>
+                        </tr>
+                        <tr height="30px">
+                            <td><label for="sale_date">Sale Date</label></td>
+                            <td> <span editable-date="newsale.sale_date" e-name="sale_date" e-form="newItem" onbeforesave="checkEmpty($data, 'Sale Date')"></span></td>
+
+                        </tr>
+                        <tr height="35px">
+                            <td><label for="partner">Client</label></td>
+                            <td>
+                                <span editable-select2="newsale.client.first_name" e-placeholder="Client name" e-view-field="first_name"
+                                    e-select-choices="item in clients |  filter: $select.search" ">
+        {{ newsale.client || '-' }}
+    </span></td>
+                        </tr>
+              
+                        <tr height="30px ">
+                            <td><label for="quantity ">Quantity</label></td>
+                            <td><span editable-number="newsale.quantity " e-name="quantity " e-form="newItem
+                                    " e-ng-change="quantityChanged($data) "></span></td>
+                        </tr>
+                        <tr height="30px ">
+                            <td><label for="price ">Price</label></td>
+                            <td>
+                                <input type="text " ng-readonly=!customPrice.value ng-value="productvalue.price " " ng-model="productvalue.price
+                                    " ng-change="setTotal(productvalue.price) " onkeypress='return event.charCode >= 48 && event.charCode <= 57'> $</td>
+                            <td><label for="total ">Total</label></td>
+                            <td><input type="text " readonly ng-value="productvalue.totalprice " ng-model="productvalue.totalprice ">{{price}} $</td>
+                        </tr>
+                        <tr height="30px ">
+                            <td><label for="quantity ">Custom Price</label></td>
+                            <td>
+                                <toggle-switch type="checkbox " color="primary " ng-model="customPrice.value
+                                    " on-label="YES " off-label="NO " on-change="switchChanged() "></toggle-switch>
+                                {{customPrice.value}}
+                            </td>
+                        </tr>
+                        <tr height="30px ">
+                            <td><label for="quantity ">Payment Method</label></td>
+                            <td colspan="3 ">
+                                <a href="# " editable-radiolist="newsale.paymentId " e-name="paymentId " e-form="newItem
+                                    " e-ng-options="s.id as s.name for s in ::payments track by s.id " onbeforesave="checkEmpty($data, 'Payment Method') ">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit " class="btn btn-success " ng-disabled="newItem.$waiting ">save</button>
+            <button type="button " class="btn btn-warning " ng-disabled="newItem.$waiting " ng-click="newItem.$cancel() ">cancel</button>
+        </div>
+    </form>
+</div>
+
+<table st-safe-src="salesCollection " st-table="displayedCollection " class="table table-striped " st-set-filter="myFilter ">
+    <thead>
+        <tr class="sortable ">
+            <th st-sort="id " st-sort-default>ID</th>
+            <th st-sort="sale_date ">sale Date</th>
+            <th st-sort="expected_date ">Exp. Arrival Date</th>
+            <th st-sort="product_name ">Product Name</th>
+            <th st-sort="product_category ">Product Category</th>
+            <th st-sort="partner.name ">Partner</th>
+            <th st-sort="quantity ">Quantity</th>
+            <th st-sort="price ">Price</th>
+            <th st-sort="total ">Total</th>
+            <th st-sort="payment.name ">Payment</th>
+            <th st-sort="userId ">User ID</th>
+            <th st-sort="username ">Username</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th><input type="date " st-search="sale_date " /></th>
+            <th><input type="date " st-search="expected_date " /></th>
+            <th><input st-search="product_name " placeholder="search " class="input-sm form-control " type="search " /></th>
+            <th><select st-search="product_category " st-input-event="change " st-delay=0 ng-model="dummy " class="form-control
+                                    input-sm ">
+                        <option value=" ">
+                            All items
+                        </option>
+                        <option ng-repeat="item in salesCollection | unique: 'product_category' " value="{{item.product_category}} ">
+                            {{ item.product_category }}
+                        </option>
+                    </select></th>
+            <th><select st-search="partner.name " st-input-event="change " st-delay=0 ng-model="dummy " class="form-control
+                                    input-sm ">
+                        <option value=" ">
+                            All items
+                        </option>
+                        <option ng-repeat="item in salesCollection | unique: 'partner.name' " value="{{item.partner.name}} ">
+                            {{ item.partner.name }}
+                        </option>
+                    </select></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th><select st-search="payment.name " st-input-event="change " st-delay=0 ng-model="dummy " class="form-control
+                                    input-sm ">
+                        <option value=" ">
+                            All items
+                        </option>
+                        <option ng-repeat="item in salesCollection | unique: 'payment.name' " value="{{item.payment.name}} ">
+                            {{ item.payment.name }}
+                        </option>
+                    </select></th>
+            <th><input st-search="userId " placeholder="search " class="input-sm form-control " type="search " /></th>
+            <th><input st-search="username " placeholder="search " class="input-sm form-control " type="search " /></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="item in displayedCollection ">
+            <td ng-class="table-id ">{{item.id}}</td>
+            <td><span editable-date="item.sale_date " e-name="sale_date " e-form="rowform ">{{item.sale_date | date: "MM-dd-yyyy "}}</span></td>
+            <td><span editable-date="item.expected_date " e-name="expected_date " e-form="rowform " ng-class="checkIsOlder(item.expected_date) ">
+                    {{item.expected_date | date: "MM-dd-yyyy "}}
+                </span></td>
+            <td>{{item.product_name}}</td>
+            <td>{{item.product_category}}</td>
+            <td>{{item.partner.name}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.price}} $</td>
+            <td>{{item.total}} $</td>
+            <td>{{item.payment.name}}</td>
+            <td>{{item.userId}}</td>
+            <td>{{item.username}}</td>
+            <td style="min-width:200px ">
+                <div ng-show="!rowform.$visible ">
+                    <button type="button " class="btn btn-info btn-icon " data-toggle="modal " ng-click="rowform.$show()
+                                    "><i class="ion-edit "></i></button>
+                    <button type="button " class="btn btn-danger btn-icon " data-toggle="modal " ng-click="deleteItem(item)
+                                    "><i class="ion-trash-b "></i></button>
+                    <button type="button " class="btn btn-success " ng-click="completeItem(item) ">Completed</button>
+                </div>
+                <form editable-form name="rowform " onbeforesave="updatesale($data, item) " ng-show="rowform.$visible
+                                    " shown="inserted==item ">
+                    <button type="submit " class="btn btn-success " ng-disabled="rowform.$waiting ">save</button>
+                    <button type="button " class="btn btn-warning " ng-disabled="rowform.$waiting " ng-click="rowform.$cancel() ">cancel</button>
+                </form>
+
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6 " class="text-center ">
+                <div st-pagination=" " st-items-by-page="smartTablePageSize " st-displayed-pages="10 "></div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="form-group select-page-size-wrap " layout="row ">
+    Rows per page
+    <select class="form-control selectpicker show-tick " title="Rows on page " selectpicker ng-model="smartTablePageSize
+                                    " ng-options="i for i in [5,10,15,20,25,50,100] ">
+      </select>
+</div>

@@ -14,7 +14,12 @@
         $scope.newProduct = {}
         $scope.productCategory = {}
 
-        $scope.productCollection = Product.find({ filter: { include: 'productCategory' } })
+        $scope.productCollection = Product.find({ filter: { include: 'productCategory' } }, function (result) {
+            $scope.productCollection.forEach(function (item, index) {
+                $scope.productCollection[index].fulfilled = item.reorder >= item.inventory
+            })
+        })
+
         $scope.displayedCollection = [].concat($scope.productCollection);
 
         Product_category.find({}, function (res) {
@@ -24,11 +29,20 @@
         })
 
         $scope.addNewItem = function (data) {
+            data.inventory = 0
             Product.create(data, function (result) {
-                console.log(result)
-                toastr.success('New product has been added successfully with id ' + result.id );
-                $scope.newProduct = angular.copy({})
-                $scope.productCollection = Product.find({ filter: { include: 'productCategory' } })
+
+                toastr.success('New product has been added successfully with id ' + result.id);
+
+
+                $scope.productCollection = Product.find({ filter: { include: 'productCategory' } }, function (result) {
+                    $scope.productCollection.forEach(function (item, index) {
+                        $scope.productCollection[index].fulfilled = item.reorder >= item.inventory
+                    })
+                })
+
+                $scope.displayedCollection = [].concat($scope.productCollection);
+
             })
         }
 
@@ -42,8 +56,14 @@
         $scope.updateProduct = function (data, id) {
             data.id = id
             Product.upsert(data, function (result) {
-                console.log(result)
                 toastr.success('Product ' + id + ' has been updated successfully');
+            })
+            $scope.displayedCollection.forEach(function (item, index) {
+                if (item.id == id){
+                    $scope.displayedCollection[index].fulfilled = data.reorder >= data.inventory
+                    console.log()
+                }
+                
             })
         }
 
@@ -56,7 +76,6 @@
         }
 
         $scope.checkName = function (data, id) {
-            console.log(data, id)
             var d = $q.defer();
             id = id || ''
             if (!data) {
@@ -64,7 +83,6 @@
                 d.reject('')
             } else {
                 Product.find({ filter: { where: { and: [{ name: data }, { id: { neq: id } }] } } }, function (res) {
-                    console.log(res.length)
                     if (res.length !== 0) {
                         toastr.error('Product Name must be unique');
                         d.reject('')

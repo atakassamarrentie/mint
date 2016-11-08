@@ -14,7 +14,7 @@
                 title: 'Product Categories',
                 role: 'admin',
                 sidebarMeta:{
-                    order: 10
+                    order: 200
                 },
                 data: {
                     requireLogin: true // this property will apply to all children of 'app'

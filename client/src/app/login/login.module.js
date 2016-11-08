@@ -28,10 +28,10 @@
     if (!sessionService.role && sessionService.user) {
       UserExt.getRolesById({ id: sessionService.user.id }, function (result) {
         sessionService.role = result.roles
-        $state.go('usermgmt.users')
+        $state.go('ons.sales')
       })
     } else {
-      $state.go('usermgmt.users')
+      $state.go('ons.sales')
     }
 
 

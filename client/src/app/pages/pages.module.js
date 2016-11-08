@@ -18,13 +18,14 @@
     'BlurAdmin.pages.product',
     'BlurAdmin.pages.client',
     'BlurAdmin.pages.ordersAndSales',
-    'BlurAdmin.pages.userMgmt'
+    'BlurAdmin.pages.userMgmt',
+    'BlurAdmin.pages.partners'
   ])
     .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider, $stateProvider, $windowProvider) {
-    $urlRouterProvider.otherwise('/product')
+    $urlRouterProvider.otherwise('/sales')
 
  /*   baSidebarServiceProvider.addStaticItem({
       title: 'Products',

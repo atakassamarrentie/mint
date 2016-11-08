@@ -16,6 +16,7 @@
           templateUrl: 'app/pages/ui/buttons/buttons.html',
           controller: 'ButtonPageCtrl',
           title: 'Buttons',
+          role: 'extra',
           sidebarMeta: {
             order: 100,
           },

@@ -1,5 +1,7 @@
 'use strict';
-
-module.exports = function(Payment) {
-
-};
+var schedule = require('node-schedule');
+module.exports = function (Payment) {
+    /*var j = schedule.scheduleJob('* * * * * *', function () {
+        console.log('Done');
+    })*/
+}

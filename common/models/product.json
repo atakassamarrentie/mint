@@ -20,6 +20,10 @@
     },
     "sell_price": {
       "type": "number"
+    },
+    "inventory":{
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],

@@ -5,12 +5,12 @@
     "file": "db.json"
   },
   "mysql": {
-    "name": "mysql",
-    "connector": "mysql",
     "host": "localhost",
     "port": 3306,
+    "database": "mint",
     "username": "root",
     "password": "Semmise",
-    "database": "mint"
+    "name": "mysql",
+    "connector": "mysql"
   }
 }

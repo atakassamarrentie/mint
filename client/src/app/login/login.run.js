@@ -8,8 +8,6 @@
   function testRun($rootScope, $window, sessionService, UserExt, $state, $urlRouter) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
       var requireLogin = toState.data.requireLogin;
-      console.log(toState.role)
-      console.log(sessionService.role)
 
       try {
 

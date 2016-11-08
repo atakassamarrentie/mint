@@ -63,5 +63,9 @@
   "Sale": {
     "dataSource": "mysql",
     "public": true
+  },
+  "Partners": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

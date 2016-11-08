@@ -14,7 +14,7 @@
                 title: 'Product',
                 role: 'admin',
                 sidebarMeta: {
-                    order: 200
+                    order: 100
                 },
                 data: {
                     requireLogin: true // this property will apply to all children of 'app'
