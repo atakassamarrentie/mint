@@ -11,7 +11,7 @@
                 url: '/sales',
                 templateUrl: 'app/pages/ordersAndSales/sale/sale.html',
                 controller: 'salePageCtrl',
-                title: 'Sales',
+                title: 'Product Sales',
                 role: 'admin',
                 sidebarMeta: {
                     order: 300

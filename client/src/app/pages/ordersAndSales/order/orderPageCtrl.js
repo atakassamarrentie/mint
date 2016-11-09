@@ -67,7 +67,6 @@
 
                 Order.create(data, function (result) {
                     toastr.success('New order has been added successfully with id ' + result.id);
-
                     $scope.ordersCollection = Order.find({ filter: { include: ['product', 'partner', 'payment'], where: { completed: false } } }, function (result) {
                         $scope.ordersCollection.forEach(function (item) {
                             item.expected_date = new Date(item.expected_date)
@@ -76,9 +75,9 @@
                         $scope.displayedCollection = [].concat($scope.ordersCollection);
                     })
                 })
-
             })
         }
+
         $scope.setTotal = function (prc) {
             console.log(prc)
             $scope.productvalue.totalprice = prc * $scope.newItem.$editables[5].scope.$data

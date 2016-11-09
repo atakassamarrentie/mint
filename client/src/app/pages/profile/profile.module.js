@@ -16,6 +16,10 @@
           title: 'Profile',
           templateUrl: 'app/pages/profile/profile.html',
           controller: 'ProfilePageCtrl',
+          role: 'admin',
+          params: {
+            userId: null
+          },
           data: {
             requireLogin: true // this property will apply to all children of 'app'
           }

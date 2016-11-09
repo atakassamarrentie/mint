@@ -9,8 +9,13 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal) {
+  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal, $stateParams, UserExt) {
     $scope.picture = $filter('profilePicture')('Nasta');
+    $scope.params = $stateParams
+    console.log($scope.params.userId)
+    UserExt.find({filter: {where: {id: $scope.params.userId }}}, function(res){
+      $scope.user = res[0]
+    })
 
     $scope.removePicture = function () {
       $scope.picture = $filter('appImage')('theme/no-photo.png');

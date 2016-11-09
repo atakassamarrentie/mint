@@ -1,7 +1,7 @@
 <div ng-hide="newItem.$visible">
     <button type="button" class="btn btn-info" ng-click="newItem.$show(); clearFields()">Add new order +</button>
 </div>
-{{sessionService.user.id}}
+
 <div ng-hide="!newItem.$visible">
     <form editable-form name="newItem" onbeforesave="addNewItem($data)">
         <div ba-panel class="panel bootstrap-panel">
@@ -81,8 +81,8 @@
         </tr>
         <tr>
             <th></th>
-            <th><input type="date" st-search="order_date" /></th>
-            <th><input type="date" st-search="expected_date" /></th>
+            <th><input type="date" st-search="order_date" style="width:130px;"/></th>
+            <th><input type="date" st-search="expected_date" style="width:130px;"/></th>
             <th><input st-search="product_name" placeholder="search" class="input-sm form-control" type="search" /></th>
             <th><select st-search="product_category" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm">
                         <option value="">
@@ -128,11 +128,10 @@
             <td>{{item.product_category}}</td>
             <td>{{item.partner.name}}</td>
             <td>{{item.quantity}}</td>
-            <td>{{item.price}} $</td>
-            <td>{{item.total}} $</td>
+            <td style="white-space:nowrap">{{item.price}} $</td>
+            <td style="white-space:nowrap">{{item.total}} $</td>
             <td>{{item.payment.name}}</td>
-            <td>{{item.userId}}</td>
-            <td>{{item.username}}</td>
+            <td title="ID: {{item.userId}}">{{item.username}}</td>
             <td style="min-width:200px">
                 <div ng-show="!rowform.$visible">
                     <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>

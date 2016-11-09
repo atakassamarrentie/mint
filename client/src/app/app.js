@@ -21,6 +21,8 @@ angular.module('BlurAdmin', [
 
   'BlurAdmin.theme',
   'BlurAdmin.pages',
-  'BlurAdmin.login'
+  'BlurAdmin.main.login',
+  'BlurAdmin.main.register',
+  'BlurAdmin.main.index'
   
 ]);

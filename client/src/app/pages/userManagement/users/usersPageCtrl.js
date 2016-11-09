@@ -10,7 +10,7 @@
 
 
     /** @ngInject */
-    function usersPageCtrl($rootScope, $scope, UserExt, $filter, $myModal, toastr, $q) {
+    function usersPageCtrl($rootScope, $state, $scope, UserExt, $filter, $myModal, toastr, $q) {
 
         $scope.userCollection = UserExt.find()
         $scope.displayedCollection = [].concat($scope.userCollection);
@@ -50,7 +50,8 @@
                     firstName: data.firstName,
                     lastName: data.lastName,
                     username: data.username,
-                    email: data.email
+                    email: data.email,
+                    employee: data.employee
                 },
                 function (result) {
                     console.log(result)
@@ -75,6 +76,17 @@
             }
             return d.promise
         }
+
+        $scope.viewProfile = function (item) {
+            console.log(item)
+            $state.go('profile', { userId: item.id });
+        }
+
+        $scope.yesno = [
+
+            { value: true, text: 'yes' },
+            { value: false, text: 'no' },
+        ]
 
         $scope.checkEmail = function (data, id) {
             var d = $q.defer();

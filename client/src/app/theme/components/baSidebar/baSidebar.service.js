@@ -24,6 +24,7 @@
         var isMenuCollapsed = shouldMenuBeCollapsed();
 
         this.getMenuItems = function (userRoles) {
+          console.log("roles: ", userRoles)
           var states = defineMenuItemStates();
           var menuItems = states.filter(function (item) {
             if (item.abstract) return true

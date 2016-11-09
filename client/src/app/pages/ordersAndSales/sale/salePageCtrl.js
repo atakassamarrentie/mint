@@ -9,12 +9,12 @@
         .controller('salePageCtrl', salePageCtrl)
 
     /** @ngInject */
-    function salePageCtrl($rootScope, $scope, Sale, Product, Client, Product_category, Payment, sessionService, $filter, $myModal, toastr, $q) {
+    function salePageCtrl($rootScope, UserExt, $scope, Sale, Product, Client, Product_category, Payment, sessionService, $filter, $myModal, toastr, $q) {
         $scope.productvalue = {}
         $scope.customPrice = {}
         $scope.payments = Payment.find();
-        $scope.salesCollection = Sale.find({ filter: { include: ['product', 'client', 'payment'] } }, function (result) {
-            console.log(result)
+        $scope.employee = UserExt.find({ filter: { where: { employee: true } } })
+        $scope.salesCollection = Sale.find({ filter: { include: ['product', 'client', 'payment', 'employee'] } }, function (result) {
             $scope.salesCollection.forEach(function (item) {
                 item.sale_date = new Date(item.sale_date)
             })
@@ -28,6 +28,7 @@
         $scope.displayedCollection = [].concat($scope.salesCollection);
 
         $scope.addNewItem = function (data) {
+            console.log(data)
             Product_category.find({ filter: { where: { id: data.productCategoryId } } }, function (result) {
                 data.product_category = result[0].category_name
                 data.price = $scope.productvalue.price
@@ -35,12 +36,14 @@
                 data.product_name = data.product.name
                 data.userId = sessionService.user.id
                 data.username = sessionService.user.username
+                data.clientId = data.clientId.id
+                data.employeeId = data.employee.id
+                data.soldBy = data.employee.username
                 Sale.create(data, function (result) {
-                    toastr.success('New order has been added successfully with id ' + result.id);
-                    $scope.ordersCollection = Sale.find({ filter: { include: ['product', 'partner', 'payment'], where: { completed: false } } }, function (result) {
+                    toastr.success('New sale has been added successfully with id ' + result.id);
+                    $scope.salesCollection = Sale.find({ filter: { include: ['product', 'client', 'payment', 'employee'] } }, function (result) {
                         $scope.salesCollection.forEach(function (item) {
-                            item.expected_date = new Date(item.expected_date)
-                            item.order_date = new Date(item.order_date)
+                            item.sale_date = new Date(item.sale_date)
                         })
                         $scope.displayedCollection = [].concat($scope.salesCollection);
                     })
@@ -57,8 +60,7 @@
         })
 
         $scope.setTotal = function (prc) {
-            console.log(prc)
-            $scope.productvalue.totalprice = prc * $scope.newItem.$editables[4].scope.$data
+            $scope.productvalue.totalprice = prc * $scope.newItem.$editables[5].scope.$data
             $scope.productvalue.price = prc
         }
 
@@ -94,19 +96,40 @@
         }
 
         $scope.switchChanged = function () {
-            console.log('changed')
             $scope.productvalue.price = $scope.productvalue.defaultPrice
-            $scope.productvalue.totalprice = $scope.productvalue.defaultPrice * $scope.newItem.$editables[4].scope.$data
+            $scope.productvalue.totalprice = $scope.productvalue.defaultPrice * $scope.newItem.$editables[5].scope.$data
         }
 
         $scope.quantityChanged = function (data) {
             $scope.productvalue.totalprice = $scope.productvalue.price * data
         }
 
+        $scope.deleteItem = function (item) {
+            var rowId = $scope.salesCollection.indexOf(item)
+            var message = "Do you really want to delete sale " + item.name + " (with id " + item.id + ")"
+            var title = "Confirm"
+            $myModal.open('sm', title, message, item.id, rowId)
+        };
+
+
+        $rootScope.confirmedDelete = function (id, itemRow) {
+            Sale.destroyById({ id: id }, function (result) {
+                if (result.count == 0) {
+                    toastr.error('Error: Cannot find sale with id ' + id);
+                } else {
+                    if (itemRow !== -1) {
+                        $scope.salesCollection.splice(itemRow, 1)
+                    }
+                    toastr.success('Sale ' + id + ' has been deleted successfully');
+                }
+            })
+        }
+
         $scope.calcOrder = function (data) {
-            $scope.productvalue.price = data.purchase_price
-            $scope.productvalue.defaultPrice = data.purchase_price
-            $scope.productvalue.totalprice = $scope.newItem.$editables[4].scope.$data * data.purchase_price
+            console.log(data)
+            $scope.productvalue.price = data.sell_price
+            $scope.productvalue.defaultPrice = data.sell_price
+            $scope.productvalue.totalprice = $scope.newItem.$editables[5].scope.$data * data.sell_price
         }
     }
 })();

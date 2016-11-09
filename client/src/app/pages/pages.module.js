@@ -16,6 +16,7 @@
     'BlurAdmin.pages.maps',
     'BlurAdmin.pages.profile',
     'BlurAdmin.pages.product',
+    'BlurAdmin.pages.service',
     'BlurAdmin.pages.client',
     'BlurAdmin.pages.ordersAndSales',
     'BlurAdmin.pages.userMgmt',

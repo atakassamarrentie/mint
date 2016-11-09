@@ -21,7 +21,7 @@
     "sell_price": {
       "type": "number"
     },
-    "inventory":{
+    "inventory": {
       "type": "number",
       "required": true
     }

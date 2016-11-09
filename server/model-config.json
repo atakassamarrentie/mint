@@ -23,7 +23,7 @@
   },
   "ACL": {
     "dataSource": "mysql",
-    "public": false
+    "public": true
   },
   "RoleMapping": {
     "dataSource": "mysql",
@@ -48,6 +48,14 @@
     "dataSource": "mysql",
     "public": true
   },
+  "Service": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Service_category": {
+    "dataSource": "mysql",
+    "public": true
+  },
   "Client": {
     "dataSource": "mysql",
     "public": true
@@ -64,7 +72,15 @@
     "dataSource": "mysql",
     "public": true
   },
+  "Saleservice": {
+    "dataSource": "mysql",
+    "public": true
+  },
   "Partners": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "Logging": {
     "dataSource": "mysql",
     "public": true
   }

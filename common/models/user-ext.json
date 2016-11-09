@@ -20,6 +20,11 @@
     "picture": {
       "type": "string",
       "required": false
+    },
+    "employee": {
+      "type": "boolean",
+      "required": false,
+      "default": false
     }
   },
   "validations": [],

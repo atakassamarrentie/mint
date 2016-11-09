@@ -11,14 +11,13 @@
             <th st-sort="price">Price</th>
             <th st-sort="total">Total</th>
             <th st-sort="payment.name">Payment</th>
-            <th st-sort="userId">User ID</th>
             <th st-sort="username">Username</th>
             <th>&nbsp;</th>
         </tr>
         <tr>
             <th></th>
-            <th><input type="date" st-search="order_date" /></th>
-            <th><input type="date" st-search="expected_date" /></th>
+            <th><input type="date" st-search="order_date"  style="width:130px;"/></th>
+            <th><input type="date" st-search="expected_date"  style="width:130px;"/></th>
             <th><input st-search="product_name" placeholder="search" class="input-sm form-control" type="search" /></th>
             <th><select st-search="product_category" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm">
                         <option value="">
@@ -47,7 +46,6 @@
                             {{ item.payment.name }}
                         </option>
                     </select></th>
-            <th><input st-search="userId" placeholder="search" class="input-sm form-control" type="search" /></th>
             <th><input st-search="username" placeholder="search" class="input-sm form-control" type="search" /></th>
             <th></th>
         </tr>
@@ -64,11 +62,10 @@
             <td>{{item.product_category}}</td>
             <td>{{item.partner.name}}</td>
             <td>{{item.quantity}}</td>
-            <td>{{item.price}} $</td>
-            <td>{{item.total}} $</td>
+            <td style="white-space:nowrap">{{item.price}} $</td>
+            <td style="white-space:nowrap">{{item.total}} $</td>
             <td>{{item.payment.name}}</td>
-            <td>{{item.userId}}</td>
-            <td>{{item.username}}</td>
+            <td title="{{item.userId}}">{{item.username}}</td>
             <td style="min-width:100px">
                 <div ng-show="!rowform.$visible">
                     <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>

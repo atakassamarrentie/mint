@@ -10,11 +10,29 @@
       "type": "date",
       "required": true
     },
+    "product_name": {
+      "type": "string",
+      "required": true
+    },
+    "product_category": {
+      "type": "string"
+    },
     "quantity": {
       "type": "number",
       "required": true
     },
+    "price": {
+      "type": "number",
+      "required": true
+    },
+    "total": {
+      "type": "number",
+      "required": true
+    },
     "username": {
+      "type": "string"
+    },
+    "soldBy": {
       "type": "string"
     }
   },
@@ -36,6 +54,11 @@
       "foreignKey": ""
     },
     "user": {
+      "type": "belongsTo",
+      "model": "UserExt",
+      "foreignKey": ""
+    },
+    "employee": {
       "type": "belongsTo",
       "model": "UserExt",
       "foreignKey": ""

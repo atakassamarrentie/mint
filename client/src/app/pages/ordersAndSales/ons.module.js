@@ -4,7 +4,8 @@
     angular.module('BlurAdmin.pages.ordersAndSales', [
         'BlurAdmin.pages.ordersAndSales.orders',
         'BlurAdmin.pages.ordersAndSales.completedOrders',
-        'BlurAdmin.pages.ordersAndSales.sales'
+        'BlurAdmin.pages.ordersAndSales.sales',
+        'BlurAdmin.pages.ordersAndSales.servicesales'
     ])
         .config(routeConfig);
 

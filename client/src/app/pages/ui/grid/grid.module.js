@@ -15,6 +15,7 @@
           url: '/grid',
           templateUrl: 'app/pages/ui/grid/grid.html',
           title: 'Grid',
+          role: 'default',
           sidebarMeta: {
             order: 400,
           },

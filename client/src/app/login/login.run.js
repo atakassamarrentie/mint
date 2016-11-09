@@ -7,6 +7,7 @@
   /** @ngInject */
   function testRun($rootScope, $window, sessionService, UserExt, $state, $urlRouter) {
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+      
       var requireLogin = toState.data.requireLogin;
 
       try {
@@ -21,8 +22,8 @@
       } catch (e) {
         console.log(e)
 
-        
-          event.preventDefault()
+
+        event.preventDefault()
       }
       /*if (sessionService.hasOwnProperty('user')) {
         UserExt.getRolesById({ id: sessionService.user.id }, function (result) {

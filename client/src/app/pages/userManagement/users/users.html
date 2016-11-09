@@ -1,5 +1,5 @@
 <div ng-hide="newItem.$visible">
-    <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new client +</button>
+    <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new user +</button>
 </div>
 <div ng-show="newItem.$visible">
 
@@ -8,7 +8,7 @@
 
 
         <div ba-panel class="panel bootstrap-panel">
-            <div class="panel-heading">Add new client</div>
+            <div class="panel-heading">Add new user</div>
             <div class="panel-body">
                 <div class="row" align="right">
                     <div class="col-sm-6">
@@ -65,6 +65,7 @@
             <th st-sort="lastName">Last Name</th>
             <th st-sort="username">Username</th>
             <th st-sort="email">E-mail</th>
+            <th st-sort="employee">Employee</th>
         </tr>
         <tr>
             <th></th>
@@ -103,23 +104,33 @@
         {{item.email}}
         </span>
             </td>
+            <td>
+                <span editable-select="item.employee" e-name="employee" e-form="rowform" e-ng-options="s.value as s.text for s in yesno">
+                    
+        {{item.employee}}
+    
+        </span>
+            </td>
             <td style="min-width:200px">
                 <div ng-show="!rowform.$visible" ng-hide="row.passwordField">
                     <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
                     <button type="button" class="btn btn-warning btn-icon" data-toggle="modal" ng-click="row.passwordField=true; pwdbutton=null"><i class="ion-key"></i></button>
                     <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" ng-click="viewProfile(item)">Profile</button>
                 </div>
                 <div ng-show="row.passwordField">
                     <div class="input-group">
                         <input type="Password" class="form-control" ng-class="pwdbutton.length >=8 ? 'with-success-addon' : 'with-danger-addon'" placeholder="password" ng-model="pwdbutton">
                         <span class="input-group-btn">
       <button class="btn"  ng-class="pwdbutton.length >=8 ? 'btn-success' : 'btn-danger'" type="button" ng-click="changePassword(item, row, pwdbutton)">OK</button>
+      
   </span>
                     </div>
                 </div>
                 <form editable-form name="rowform" onbeforesave="updateClient($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
                     <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
                     <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
+                    
                 </form>
             </td>
         </tr>

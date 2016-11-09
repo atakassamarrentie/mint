@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.login', ['ui.router'])
+  angular.module('BlurAdmin.main.login', ['ui.router'])
     .controller('loginCtrl', loginCtrl)
     .service('sessionService', sessionService)
     .config(function (LoopBackResourceProvider) {
@@ -19,8 +19,11 @@
     })
 
 
-  function loginCtrl($cookies, $scope, $state, sessionService, UserExt) {
+  function loginCtrl($cookies, $scope, $state, sessionService, UserExt, $rootScope) {
     $scope.loginState = true
+    $scope.regPage = function () {
+      sessionService.reg = true
+    }
     sessionService.token = sessionService.token || $cookies.get('token')
     sessionService.user = $cookies.getObject('user') || sessionService.user
     $scope.sessionService = sessionService
@@ -28,17 +31,14 @@
     if (!sessionService.role && sessionService.user) {
       UserExt.getRolesById({ id: sessionService.user.id }, function (result) {
         sessionService.role = result.roles
-        $state.go('ons.sales')
+        $state.go('usermgmt.users')
       })
     } else {
-      $state.go('ons.sales')
+      $state.go('usermgmt.users')
     }
-
-
-
   }
 
-  function sessionService($cookies, $state, $http, UserExt) {
+  function sessionService($cookies, $state, $http, UserExt, $q, $timeout, $rootScope, $window) {
     var self = this
 
     self.logout = function () {
@@ -47,7 +47,13 @@
           $cookies.remove('token')
           $cookies.remove('user')
           self.user = null
-          self.token = null
+          
+          
+          $rootScope = $rootScope.$new(true);
+           $window.localStorage.clear()
+           self.token = null
+           $window.location.reload();
+           
         },
         function (err) { self.error = err }
       )
@@ -68,16 +74,28 @@
             $cookies.putObject('user', res.user)
             $state.go('client')
           })
-
-
         },
         function (err) {
           self.error = err
           self.response = null
-
-
         }
       )
+    }
+
+    self.register = function (user) {
+      return $q(function (resolve, reject) {
+        UserExt.create(user, function (res) {
+          self.error = null
+          self.response = res
+          resolve(res)
+        }, function (err) {
+          console.log("ssErr: ", self.error)
+          self.response = null
+          reject(err.data.error.details.messages)
+        })
+
+      })
+
     }
   }
 })();

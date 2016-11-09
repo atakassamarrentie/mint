@@ -1,0 +1,27 @@
+{
+  "name": "Service",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "sell_price": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "serviceCategory": {
+      "type": "belongsTo",
+      "model": "Service",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
