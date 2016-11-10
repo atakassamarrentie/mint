@@ -10,7 +10,7 @@
 
 
     /** @ngInject */
-    function clientPageCtrl($rootScope, $scope, Client, UserExt, $filter, $myModal, toastr, $q) {
+    function clientPageCtrl($rootScope, $scope, Client, UserExt, $filter, $myModal, $clientPropModal, toastr, $q) {
 
         $scope.clientCollection = Client.find()
         $scope.displayedCollection = [].concat($scope.clientCollection);
@@ -29,10 +29,10 @@
                         username: data.username,
                         email: data.email,
                         password: randomPass
-                    }, function(result){
+                    }, function (result) {
                         console.log(result)
                     })
-                    
+
 
                 }
             })
@@ -53,6 +53,24 @@
             var title = "Confirm"
             $myModal.open('sm', title, message, item.id, rowId)
         };
+
+        $scope.editItem = function (item) {
+            var rowId = $scope.clientCollection.indexOf(item)
+            var dialog = $clientPropModal.open('lg', item, rowId, false)
+            dialog.result.then(function () {
+                $scope.clientCollection = Client.find()
+                $scope.displayedCollection = [].concat($scope.clientCollection);
+            })
+
+        }
+
+        $scope.createItem = function () {
+            var dialog = $clientPropModal.open('lg', null, null, true)
+            dialog.result.then(function () {
+                $scope.clientCollection = Client.find()
+                $scope.displayedCollection = [].concat($scope.clientCollection);
+            })
+        }
 
         $scope.checkUserName = function (data, switchUser) {
             $scope.switchUser = switchUser
