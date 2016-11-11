@@ -14,7 +14,7 @@
       LoopBackResourceProvider.setAuthHeader('X-Access-Token');
 
       // Change the URL where to access the LoopBack REST API server
-      LoopBackResourceProvider.setUrlBase('http://127.0.0.1:4000/api');
+      LoopBackResourceProvider.setUrlBase('https://127.0.0.1:4000/api');
 
     })
 

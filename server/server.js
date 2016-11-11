@@ -10,12 +10,14 @@ var path = require('path');
 var app = module.exports = loopback();
 var options = {
   key: sslConfig.privateKey,
-  cert: sslConfig.certificate
+  cert: sslConfig.certificate,
+  ca: sslConfig.cafile
 };
 
 
 app.use(loopback.token({ model: app.models.accessToken }));
 app.start = function () {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   // start the web server
   var host = app.get('host')
   var port = app.get('port')
