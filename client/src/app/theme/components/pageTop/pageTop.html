@@ -10,11 +10,13 @@
   <div class="user-profile clearfix" ng-controller="pageTopCtrl">
     <div class="al-user-profile" uib-dropdown>
       <a uib-dropdown-toggle class="profile-toggle-link">
-        
-        {{sessionService.user.firstName}} {{sessionService.user.lastName}}  
-        <img ng-src="{{sessionService.user.picture}}">
+        <ng-avatar string="{{sessionService.user.firstName}} {{sessionService.user.lastName}}" auto-color=true text-shadow=true></ng-avatar>
       </a>
-      <ul  class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
+      <ul class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
+        <div class="dropdownHeader">
+            <h4>{{sessionService.user.firstName}} {{sessionService.user.lastName}}</h4>
+        </div>
+
         <li><i class="dropdown-arr"></i></li>
         <li><a href="#/profile"><i class="fa fa-user"></i>Profile</a></li>
         <li><a href><i class="fa fa-cog"></i>Settings</a></li>

@@ -9,86 +9,28 @@
     .controller('ProfilePageCtrl', ProfilePageCtrl);
 
   /** @ngInject */
-  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal, $stateParams, UserExt) {
-    $scope.picture = $filter('profilePicture')('Nasta');
-    $scope.params = $stateParams
-    console.log($scope.params.userId)
-    UserExt.find({filter: {where: {id: $scope.params.userId }}}, function(res){
+  function ProfilePageCtrl($scope, fileReader, $filter, $uibModal, $stateParams, UserExt, sessionService) {
+    $scope.sessionService = sessionService
+    if ($stateParams.hasOwnProperty('userId') && $stateParams.userId !== null) {
+      $scope.userId = $stateParams.userId
+      if ($scope.userId == sessionService.user.id) {
+        $scope.owner = true
+      } else {
+        $scope.owner = false
+      }
+    } else {
+      $scope.userId = sessionService.user.id
+      $scope.owner = true
+    }
+
+
+
+    UserExt.find({ filter: { where: { id: $scope.userId } } }, function (res) {
       $scope.user = res[0]
+      $scope.avatar = res[0].firstName + ' ' + res[0].lastName
     })
 
-    $scope.removePicture = function () {
-      $scope.picture = $filter('appImage')('theme/no-photo.png');
-      $scope.noPicture = true;
-    };
 
-    $scope.uploadPicture = function () {
-      var fileInput = document.getElementById('uploadFile');
-      fileInput.click();
-
-    };
-
-    $scope.socialProfiles = [
-      {
-        name: 'Facebook',
-        href: 'https://www.facebook.com/akveo/',
-        icon: 'socicon-facebook'
-      },
-      {
-        name: 'Twitter',
-        href: 'https://twitter.com/akveo_inc',
-        icon: 'socicon-twitter'
-      },
-      {
-        name: 'Google',
-        icon: 'socicon-google'
-      },
-      {
-        name: 'LinkedIn',
-        href: 'https://www.linkedin.com/company/akveo',
-        icon: 'socicon-linkedin'
-      },
-      {
-        name: 'GitHub',
-        href: 'https://github.com/akveo',
-        icon: 'socicon-github'
-      },
-      {
-        name: 'StackOverflow',
-        icon: 'socicon-stackoverflow'
-      },
-      {
-        name: 'Dribbble',
-        icon: 'socicon-dribble'
-      },
-      {
-        name: 'Behance',
-        icon: 'socicon-behace'
-      }
-    ];
-
-    $scope.unconnect = function (item) {
-      item.href = undefined;
-    };
-
-    $scope.showModal = function (item) {
-      $uibModal.open({
-        animation: false,
-        controller: 'ProfileModalCtrl',
-        templateUrl: 'app/pages/profile/profileModal.html'
-      }).result.then(function (link) {
-          item.href = link;
-        });
-    };
-
-    $scope.getFile = function () {
-      fileReader.readAsDataUrl($scope.file, $scope)
-          .then(function (result) {
-            $scope.picture = result;
-          });
-    };
-
-    $scope.switches = [true, true, false, true, true, false];
   }
 
 })();

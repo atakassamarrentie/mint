@@ -29,6 +29,7 @@
           url: '/inputs',
           templateUrl: 'app/pages/form/inputs/inputs.html',
           title: 'Form Inputs',
+          role: 'admin',
           sidebarMeta: {
             order: 0,
           },

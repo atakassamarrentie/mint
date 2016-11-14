@@ -18,6 +18,7 @@ angular.module('BlurAdmin', [
   'ngCookies',
   'angular.filter',
   'toggle-switch',
+  'ngAvatar',
 
   'BlurAdmin.theme',
   'BlurAdmin.pages',

@@ -229,6 +229,9 @@ a.sn-link {
     input{
       font-weight: $font-light;
     }
+    input[disabled]{
+      color: #666666;
+    }
   }
 }
 
