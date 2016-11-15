@@ -70,52 +70,119 @@ module.exports = function (UserExt) {
 
 
   }
-  UserExt.isUsernameExists = function (req, username, cb) {
+  UserExt.isUsernameExists = function (req, username, id, cb) {
     console.log(username)
     if (typeof username == 'undefined') {
       return cb(null, false);
     }
-    UserExt.findOne({ where: { username: username } }, function (err, user) {
-      if (err || !user) {
-        return cb(null, false);
-      };
-      return cb(null, true);
-    });
+    if (typeof id == 'undefined') {
+      UserExt.findOne({ where: { username: username } }, function (err, user) {
+        if (err || !user) {
+          return cb(null, false);
+        };
+        return cb(null, true);
+      });
+    } else {
+      UserExt.findOne({ where: { and: [{ username: username }, { id: { neq: id } }] } }, function (err, user) {
+        if (err || !user) {
+          return cb(null, false);
+        };
+        return cb(null, true);
+      });
+    }
   }
 
-  UserExt.isEmailExists = function (req, email, cb) {
+  UserExt.isEmailExists = function (req, email, id, cb) {
     if (typeof email == 'undefined') {
       return cb(null, false);
     }
-    UserExt.findOne({ where: { email: email } }, function (err, email) {
-      if (err || !email) {
-        return cb(null, false);
-      };
-      return cb(null, true);
-    });
+    if (typeof id == 'undefined') {
+      UserExt.findOne({ where: { email: email } }, function (err, email) {
+        if (err || !email) {
+          return cb(null, false);
+        };
+        return cb(null, true);
+      });
+    } else {
+      UserExt.findOne({ where: { and:[ {email: email }, { id: { neq: id } } ] } }, function (err, email) {
+        if (err || !email) {
+          return cb(null, false);
+        };
+        return cb(null, true);
+      });
+    }
   }
-  
-  UserExt.remoteMethod(
-      'isUsernameExists', {
-         description: 'Returns true, if user exist',
-         http: {path: '/isUsernameExists',verb: 'get'},
-         accepts: [
-             {arg: 'req',type: 'object','http': {source: 'req'}},
-             {arg: 'username',type: 'string'}],
-         returns: {arg: 'result',type: 'boolean'}
-      }
-   )
 
-     UserExt.remoteMethod(
-      'isEmailExists', {
-         description: 'Returns true, if email exist',
-         http: {path: '/isEmailExists',verb: 'get'},
-         accepts: [
-             {arg: 'req',type: 'object','http': {source: 'req'}},
-             {arg: 'email',type: 'string'}],
-         returns: {arg: 'result',type: 'boolean'}
-      }
-   )
+  UserExt.changePassword = function (id, data, cb) {
+    console.log("userData: ", data)
+    if (!data.hasOwnProperty("oldPassword")) {
+      var err = new Error('oldPassword  cannot be blank');
+      err.statusCode = 401;
+      err.code = 'PROP_MISSING';
+      return cb(err)
+    }
+    console.log("New password: '" + data.newPassword + "'")
+    if ((!data.hasOwnProperty("newPassword")) || (data.newPassword == "")) {
+
+      var err = new Error('newPassword cannot be blank');
+      err.statusCode = 401;
+      err.code = 'PROP_MISSING';
+      console.log("Wooops!")
+      return cb(err)
+    }
+    UserExt.findById(id, function (err, myuser) {
+      if (err) return cb(err)
+      myuser.hasPassword(data.oldPassword, function (err, isMatch) {
+        if (err) return cb(err)
+        if (isMatch) {
+          myuser.updateAttribute('password', data.newPassword, function (err, user) {
+            if (err) return cb(err)
+            cb(null, { user })
+          });
+        } else {
+          var err = new Error('Old password is incorrect');
+          err.statusCode = 401;
+          err.code = 'ICR_PASSWORD';
+          cb(err)
+        }
+      })
+    })
+  }
+
+  UserExt.remoteMethod(
+    'changePassword', {
+      description: 'Change user password',
+      http: { path: '/:id/chagePassword', verb: 'post' },
+      accepts: [
+        { arg: 'id', type: 'number', required: true, description: 'User id' },
+        { arg: 'data', type: 'object', required: true, http: { source: 'body' } }
+      ]
+    }
+  )
+
+  UserExt.remoteMethod(
+    'isUsernameExists', {
+      description: 'Returns true, if user exist',
+      http: { path: '/isUsernameExists', verb: 'get' },
+      accepts: [
+        { arg: 'req', type: 'object', 'http': { source: 'req' } },
+        { arg: 'username', type: 'string' },
+        { arg: 'id', type: 'number' }],
+      returns: { arg: 'result', type: 'boolean' }
+    }
+  )
+
+  UserExt.remoteMethod(
+    'isEmailExists', {
+      description: 'Returns true, if email exist',
+      http: { path: '/isEmailExists', verb: 'get' },
+      accepts: [
+        { arg: 'req', type: 'object', 'http': { source: 'req' } },
+        { arg: 'email', type: 'string' },
+        { arg: 'id', type: 'number' }],
+      returns: { arg: 'result', type: 'boolean' }
+    }
+  )
 
   UserExt.remoteMethod('getRolesById', {
     http: { path: '/getRolesById', verb: 'get' },

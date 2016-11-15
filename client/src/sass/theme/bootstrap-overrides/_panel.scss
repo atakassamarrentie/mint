@@ -171,6 +171,21 @@ $panel-heading-font-size: 16px;
   font-weight: $font-light;
 }
 
+.trustpass-yep {
+  color: #006900;
+  opacity: 1.0 !important;
+}
+
+.trustpass-nope {
+  color: #B90000;
+}
+
+.trustpass-done {
+  background: transparent !important;
+}
+
+
+
 /*
 .panel-group .panel {
   border-radius: 0;

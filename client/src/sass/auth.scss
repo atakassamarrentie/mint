@@ -37,7 +37,7 @@ $text-color: #ffffff;
   width: 540px;
   margin: 0 auto;
   border-radius: 5px;
-  @include bg-translucent-dark(0.55);
+  background-color: rgba(0, 13, 17, 0.81);
   color: #fff;
   padding: 32px;
   h1 {

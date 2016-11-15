@@ -1,59 +1,85 @@
-<div ng-hide="newItem.$visible">
-    <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new user +</button>
+<div ng-hide="additem.visible">
+    <button type="button" class="btn btn-info" ng-click="additem.show()">Add new user +</button>
 </div>
-<div ng-show="newItem.$visible">
+<div ng-show="additem.visible" > 
+    <form name="newUserForm" onbeforesave="addNewItem($data)">
+        <div ba-panel class="profile-page" ng-controller="usersPageCtrl">
+            <div class="panel-heading">Add new User</div>
+            <div class="panel-body" align='right'>
 
-    <form editable-form name="newItem" onbeforesave="addNewItem($data)">
-
-
-
-        <div ba-panel class="panel bootstrap-panel">
-            <div class="panel-heading">Add new user</div>
-            <div class="panel-body">
-                <div class="row" align="right">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <span editable-text="newUser.firstName" e-name="firstName" e-form="newItem" onbeforesave="checkEmpty($data, 'First Name')">
-         </span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row clearfix">
+                            <label for="inputFirstName" class="col-sm-4 control-label">First Name</label>
+                            <div class="col-sm-8">
+                                <div class="form-group has-feedback ng-scope">
+                                    <input type="text" ng-model="newUser.firstName" id="firstName" name="firstName" class="form-control" required">
+                                    <i class="ion-locked form-control-feedback" ng-show="false"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <span editable-text="newUser.lastName" e-name="lastName" e-form="newItem" onbeforesave="checkEmpty($data, 'Last Name')">
-         </span>
+                    <div class="col-md-6">
+                        <div class="form-group row clearfix">
+                            <label for="inputFirstName" class="col-sm-4 control-label">Username</label>
+                            <div class="col-sm-8">
+                                <div class="form-group has-feedback ng-scope">
+                                    <input type="text" class="form-control" ng-model="newUser.username" id="username" name="username" value="{{newUser.username}}"
+                                        required ng-model-options="{ debounce: 1000 }" ng-change="unameValid()">
+                                    <i class="ion-locked form-control-feedback"></i>
+                                    <div ng-if="userErr.message" ng-class="userErr.error ? 'redrow' : 'greenrow'" style="padding-top: 10px;">{{userErr.message}}</div>
+                                    <div class="progress" style="height=10px; margin-bottom:0px" ng-show=pending>
+                                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                            aria-valuemax="100" style="width: 100%; height=10px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row" align="right">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <span editable-text="newUser.username" e-name="username" e-form="newItem" onbeforesave="checkUserName($data)">
-         </span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <span editable-email="newUser.email" e-name="email" e-form="newItem" onbeforesave="checkEmail($data)">
-         </span>
-                        </div>
-                    </div>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row clearfix">
+                            <label for="inputFirstName" class="col-sm-4 control-label">Last Name</label>
+                            <div class="col-sm-8">
+                                <div class="form-group has-feedback ng-scope">
+                                    <input type="text" ng-model="newUser.lastName" id="lastName" name="lastName" class="form-control" required>
+                                    <i class="ion-locked form-control-feedback" ng-show="false"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row clearfix">
+                            <label for="inputFirstName" class="col-sm-4 control-label">Email</label>
+                            <div class="col-sm-8">
+                                <div class="form-group has-feedback ng-scope">
+                                    <input type="text" class="form-control" ng-model="newUser.email" id="email" name="email"
+                                         required ng-model-options="{ debounce: 1000 }" ng-change="mailValid()">
+                                    <i class="ion-locked form-control-feedback"></i>
+                                    <div ng-if="mailErr.message" ng-class="mailErr.error ? 'redrow' : 'greenrow'" style="padding-top: 10px;">{{mailErr.message}}</div>
+                                    <div class="progress" style="height=10px; margin-bottom:0px" ng-show=pending2>
+                                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                            aria-valuemax="100" style="width: 100%; height=10px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12" align="right">
-                <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
-                <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
-            </div>
+   <div class="col-sm-12" align="right">
+            <button type="submit" class="btn btn-success" ng-disabled="newUserForm.$invalid" ng-click="addNewItem()">save</button>
+            <button type="button" class="btn btn-warning" ng-disabled="newUserForm.$reset()" ng-click="resetForm()">cancel</button>
         </div>
 
+            </div>
+        </div>
+     
     </form>
 </div>
-
-
 
 
 <table st-safe-src="userCollection" st-table="displayedCollection" class="table table-striped">
@@ -84,53 +110,29 @@
     <tbody>
         <tr ng-repeat="item in displayedCollection">
             <td class="table-id">{{item.id}}</td>
-            <td>
-                <span editable-text="item.firstName" e-name="firstName" e-form="rowform">
-        {{item.firstName}}
-        </span>
-            </td>
-            <td>
-                <span editable-text="item.lastName" e-name="lastName" e-form="rowform">
-        {{item.lastName}}
-        </span>
-            </td>
-            <td>
-                <span editable-text="item.username" e-name="username" e-form="rowform">
-        {{item.username}}
-        </span>
-            </td>
-            <td>
-                <span editable-text="item.email" e-name="email" e-form="rowform">
-        {{item.email}}
-        </span>
-            </td>
-            <td>
-                <span editable-select="item.employee" e-name="employee" e-form="rowform" e-ng-options="s.value as s.text for s in yesno">
-                    
-        {{item.employee}}
-    
-        </span>
-            </td>
+            <td>{{item.firstName}}</td>
+            <td>{{item.lastName}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.employee}}</td>
             <td style="min-width:200px">
-                <div ng-show="!rowform.$visible" ng-hide="row.passwordField">
-                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
+                <div ng-hide="row.passwordField">
                     <button type="button" class="btn btn-warning btn-icon" data-toggle="modal" ng-click="row.passwordField=true; pwdbutton=null"><i class="ion-key"></i></button>
                     <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
                     <button type="button" class="btn btn-success" data-toggle="modal" ng-click="viewProfile(item)">Profile</button>
                 </div>
                 <div ng-show="row.passwordField">
                     <div class="input-group">
-                        <input type="Password" class="form-control" ng-class="pwdbutton.length >=8 ? 'with-success-addon' : 'with-danger-addon'" placeholder="password" ng-model="pwdbutton">
+                        <input type="Password" class="form-control" ng-class="pwdbutton.length >=8 ? 'with-success-addon' : 'with-danger-addon'"
+                            placeholder="password" ng-model="pwdbutton">
                         <span class="input-group-btn">
       <button class="btn"  ng-class="pwdbutton.length >=8 ? 'btn-success' : 'btn-danger'" type="button" ng-click="changePassword(item, row, pwdbutton)">OK</button>
       
   </span>
                     </div>
                 </div>
-                <form editable-form name="rowform" onbeforesave="updateClient($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
-                    <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
-                    <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
-                    
+
+
                 </form>
             </td>
         </tr>

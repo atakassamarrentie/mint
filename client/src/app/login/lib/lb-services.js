@@ -4487,6 +4487,43 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
 
             /**
              * @ngdoc method
+             * @name lbServices.UserExt#changePassword
+             * @methodOf lbServices.UserExt
+             *
+             * @description
+             *
+             * Change user password
+             *
+             * @param {Object=} parameters Request parameters.
+             *
+             *   This method does not accept any parameters.
+             *   Supply an empty object or omit this argument altogether.
+             *
+             * @param {Object} postData Request data.
+             *
+             *  - `id` – `{number}` - User id
+             *
+             *  - `data` – `{object}` -
+             *
+             * @param {function(Object,Object)=} successCb
+             *   Success callback with two arguments: `value`, `responseHeaders`.
+             *
+             * @param {function(Object)=} errorCb Error callback with one argument:
+             *   `httpResponse`.
+             *
+             * @returns {Object} An empty reference that will be
+             *   populated with the actual data once the response is returned
+             *   from the server.
+             *
+             * This method returns no data.
+             */
+            "changePassword": {
+              url: urlBase + "/UserExts/:id/chagePassword",
+              method: "POST",
+            },
+
+            /**
+             * @ngdoc method
              * @name lbServices.UserExt#isUsernameExists
              * @methodOf lbServices.UserExt
              *
@@ -4499,6 +4536,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *  - `req` – `{object=}` -
              *
              *  - `username` – `{string=}` -
+             *
+             *  - `id` – `{number=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -4533,6 +4572,8 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' &&
              *  - `req` – `{object=}` -
              *
              *  - `email` – `{string=}` -
+             *
+             *  - `id` – `{number=}` -
              *
              * @param {function(Object,Object)=} successCb
              *   Success callback with two arguments: `value`, `responseHeaders`.

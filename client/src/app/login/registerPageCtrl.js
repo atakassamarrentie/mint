@@ -41,7 +41,7 @@
 
         $scope.mailValid = function () {
             var email = $scope.reg.email
-            $scope.mailErr = {message : ""}
+            $scope.mailErr = { message: "" }
             if (email) {
                 $scope.regForm.email.$setValidity("custom", false)
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -68,11 +68,26 @@
             $scope.userErr = $scope.mailErr = ""
             sessionService.register(user)
                 .then(function (resolve) {
-                    sessionService.reg=false
+                    sessionService.reg = false
                 },
                 function (reject) {
                     errorHandler(reject)
                 })
+        }
+
+        $scope.confirmPassword = function () {
+            $scope.passMatch = {}
+            console.log($scope.reg.password == $scope.reg.passwordConfirm)
+            
+            if ($scope.reg.password == $scope.reg.passwordConfirm) {
+                $scope.passMatch.error = false
+                $scope.passMatch.message = "Password Match"
+                $scope.regForm.passwordConfirm.$setValidity('confirmed', true)
+            } else {
+                $scope.passMatch.error = true
+                $scope.passMatch.message = "Password do NOT match"
+                $scope.regForm.passwordConfirm.$setValidity('confirmed', false)
+            }
         }
 
         function errorHandler(errors) {

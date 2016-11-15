@@ -19,11 +19,12 @@ angular.module('BlurAdmin', [
   'angular.filter',
   'toggle-switch',
   'ngAvatar',
-
+  'trTrustpass',
+  
   'BlurAdmin.theme',
   'BlurAdmin.pages',
   'BlurAdmin.main.login',
   'BlurAdmin.main.register',
   'BlurAdmin.main.index'
-  
+
 ]);
