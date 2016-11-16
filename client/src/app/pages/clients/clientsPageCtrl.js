@@ -10,40 +10,52 @@
 
 
     /** @ngInject */
-    function clientPageCtrl($rootScope, $scope, Client, UserExt, $filter, $myModal, $clientPropModal, toastr, $q) {
+    function clientPageCtrl($rootScope, $scope, Client, UserExt, Sale, Saleservice, $filter, $myModal, $clientPropModal, toastr, $q) {
 
         $scope.clientCollection = Client.find()
-        $scope.displayedCollection = [].concat($scope.clientCollection);
+        $scope.prodBought = {}
+        $scope.serviceBought = {}
 
         $scope.addNewItem = function (data) {
             Client.create(data, function (result) {
                 toastr.success('New client has been added successfully with id ' + result.id);
                 $scope.newItem = angular.copy({})
-                $scope.userCollection = Client.find()
-                if ($scope.switchUser) {
-                    var randomPass = Math.random().toString(36).slice(-8)
-                    console.log(randomPass)
-                    UserExt.create({
-                        firstName: data.first_name,
-                        lastName: data.last_name,
-                        username: data.username,
-                        email: data.email,
-                        password: randomPass
-                    }, function (result) {
-                        console.log(result)
-                    })
+                $scope.clientCollection = Client.find()
+                $scope.displayedCollection = [].concat($scope.clientCollection);
+            })
+        }
 
+        $scope.prodBought.open = function () {
+            Sale.find({ filter: { where: { clientId: $scope.newClient.id } } }, function (result) {
+                $scope.prodBought.sum = 0
+                result.forEach(function (item) {
+                    $scope.prodBought.sum += item.total
+                })
+                $scope.prodBoughtCollection = result
+                $scope.displayedprodBoughtCollection = [].concat($scope.prodBoughtCollection);
 
-                }
+            })
+
+        }
+
+        $scope.serviceBought.open = function () {
+            Saleservice.find({ filter: { where: { clientId: $scope.newClient.id } } }, function (result) {
+                $scope.serviceBought.sum = 0
+                result.forEach(function (item) {
+                    $scope.serviceBought.sum += item.total
+                })
+                $scope.serviceBoughtCollection = result
+                $scope.displayedserviceBoughtCollection = [].concat($scope.serviceBoughtCollection);
+
             })
         }
 
         $scope.updateClient = function (data, id) {
-            console.log("update")
             data.id = id
             Client.upsert(data, function (result) {
-                console.log(result)
                 toastr.success('Client ' + id + ' has been updated successfully');
+                $scope.clientCollection = Client.find()
+                $scope.displayedCollection = [].concat($scope.clientCollection);
             })
         }
 
@@ -55,6 +67,7 @@
         };
 
         $scope.editItem = function (item) {
+            $scope.editable = false
             var rowId = $scope.clientCollection.indexOf(item)
             var dialog = $clientPropModal.open('lg', item, rowId, false)
             dialog.result.then(function () {
@@ -64,8 +77,16 @@
 
         }
 
+        $scope.edit = function () {
+            $scope.editable = true
+        }
+
+
+
         $scope.createItem = function () {
+            
             var dialog = $clientPropModal.open('lg', null, null, true)
+            $scope.editable = true
             dialog.result.then(function () {
                 $scope.clientCollection = Client.find()
                 $scope.displayedCollection = [].concat($scope.clientCollection);
@@ -75,14 +96,12 @@
         $scope.checkUserName = function (data, switchUser) {
             $scope.switchUser = switchUser
             if (switchUser) {
-                console.log(data)
                 var d = $q.defer();
                 if (!data) {
                     toastr.error('Username cannot be empty');
                     d.reject('')
                 } else {
                     UserExt.find({ filter: { where: { username: data } } }, function (res) {
-                        console.log(res.length)
                         if (res.length !== 0) {
                             toastr.error('Username must be unique');
                             d.reject('')
@@ -120,7 +139,6 @@
                     d.reject('')
                 } else {
                     Client.find({ filter: { where: { email: data } } }, function (res) {
-                        console.log(res.length)
                         if (res.length !== 0) {
                             toastr.error('Email must be unique');
                             d.reject('')
@@ -131,5 +149,6 @@
                 return d.promise
             }
         }
+
     }
 })();

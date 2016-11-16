@@ -109,6 +109,19 @@
     },
     "hairColor":{
       "type": "string"
+    },
+    "invoice":{
+      "type": "string"
+    },
+    "cutFreq": {
+      "type": "string"
+    },
+    "colorFreq": {
+      "type": "string"
+    },
+    "membership": {
+      "type": "string",
+      "default": "1"
     }
   },
   "validations": [],

@@ -11,7 +11,7 @@
                 url: '/order',
                 templateUrl: 'app/pages/ordersAndSales/order/order.html',
                 controller: 'orderPageCtrl',
-                title: 'Orders',
+                title: 'Pending Orders',
                 role: 'admin',
                 sidebarMeta: {
                     order: 200

@@ -34,15 +34,11 @@
             <td>{{item.first_name}}</td>
             <td>{{item.last_name}}</td>
             <td>{{item.email}}</td>
-            <td style="min-width:200px">
+            <td style="min-width:200px" align="right">
                 <div ng-show="!rowform.$visible">
-                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="editItem(item)"><i class="ion-edit"></i></button>
+                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="editItem(item)"><i class="ion-search"></i></button>
                     <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
                 </div>
-                <form editable-form name="rowform" onbeforesave="updateClient($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
-                    <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
-                    <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
-                </form>
             </td>
         </tr>
     </tbody>

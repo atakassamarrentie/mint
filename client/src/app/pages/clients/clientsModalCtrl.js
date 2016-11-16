@@ -12,6 +12,7 @@
     .factory('$clientPropModal', clientPorpModal)
 
 
+
   function myModalFactory($uibModal) {
     var open = function (size, title, message, id, rowId) {
       return $uibModal.open({
@@ -51,7 +52,8 @@
           items: function () {
             return {
               item: item,
-              rowId: rowId
+              rowId: rowId,
+              newItem: newItem
             }
           }
         }
@@ -61,6 +63,8 @@
       open: open
     }
   }
+
+
 
   /** @ngInject */
   function clientModalCtrl($rootScope, $scope, $uibModalInstance, items) {
@@ -76,6 +80,7 @@
 
   function clientPropModalCtrl($rootScope, $scope, Client, $uibModalInstance, items) {
     var vm = this
+    $scope.editable = items.newItem
     $scope.newClient = {}
     $scope.submitClient = function (client) {
       if (client.hasOwnProperty('id')) {
@@ -99,4 +104,6 @@
       vm.confirm();
     }
   }
+
+
 })();

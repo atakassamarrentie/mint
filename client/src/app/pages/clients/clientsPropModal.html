@@ -3,219 +3,279 @@
     <i class="ion-flame modal-icon"></i><span> Add new client</span>
   </div>
   <div class="modal-body">
-    <div ba-panel ba-panel-class="profile-page">
-      <div class="panel-content">
+    <div class="profile-page">
+      <div class="panel-content" ng-controller="clientPageCtrl">
         <form name="newClientForm" ng-submit="submitClient(newClient)">
-          <h3 class="with-line">General Information</h3>
 
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputTitle" class="col-sm-4 control-label">Title</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.title" class="form-control" name="inputTitle" id="inputTitle" placeholder="">
+          <uib-accordion>
+
+            <uib-accordion-group is-open="true" heading="General Information" panel-class="bootstrap-panel panel-primary accordion-panel panel-default">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputTitle" class="col-sm-4 control-label">Title</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.title" class="form-control" name="inputTitle" id="inputTitle" placeholder="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputGender" class="col-sm-4 control-label">Gender</label>
-                <div class="col-sm-8">
-                  <select class="form-control" ng-model="newClient.gender" selectpicker required>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputGender" class="col-sm-4 control-label">Gender</label>
+                    <div class="col-sm-8">
+                      <select class="form-control" ng-model="newClient.gender" selectpicker required ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputFirstName" class="col-sm-4 control-label">First Name</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.first_name" class="form-control" id="inputFirstName" placeholder="" value="" required>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputFirstName" class="col-sm-4 control-label">First Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.first_name" class="form-control" id="inputFirstName" placeholder="" value="" required ng-disabled="!editable">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputLastName" class="col-sm-4 control-label">Last Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.last_name" class="form-control" id="inputLastName" placeholder="" value="" required ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputLastName" class="col-sm-4 control-label">Last Name</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.last_name" class="form-control" id="inputLastName" placeholder="" value="" required>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputBirthday" class="col-sm-4 control-label">Birthday</label>
+                    <div class="col-sm-8">
+                      <input type="date" ng-model="newClient.birth" class="form-control" id="inputBirthday" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputBirthday" class="col-sm-4 control-label">Birthday</label>
-                <div class="col-sm-8">
-                  <input type="date" ng-model="newClient.birth" class="form-control" id="inputBirthday" placeholder="" value="">
+            </uib-accordion-group>
+
+            <uib-accordion-group is-open="false" heading="Contact Information" panel-class="bootstrap-panel panel-primary accordion-panel panel-default">
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputEmail" class="col-sm-4 control-label">Email</label>
+                    <div class="col-sm-8">
+                      <input type="email" ng-model="newClient.email" class="form-control" id="inputEmail" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputPhone" class="col-sm-4 control-label">Phone</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.phone" class="form-control" id="inputPhone" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputPhone2" class="col-sm-4 control-label">2nd Phone</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.phone2" class="form-control" id="inputPhone2" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputPhoneOffice" class="col-sm-4 control-label">Office Phone</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.phoneOffice" class="form-control" id="inputPhoneOffice" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </uib-accordion-group>
+
+            <uib-accordion-group is-open="false" heading="Customer Information" panel-class="bootstrap-panel panel-primary accordion-panel panel-default">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="type" class="col-sm-4 control-label">Membership</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.membership" class=" form-control" selectpicker ng-disabled="!editable">
+                        <option selected="selected" value="1" >Standard</option>
+                        <option value="2">Bronze</option>
+                        <option value="3">Silver</option>
+                        <option value="4">Gold</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
-
-
-          <h3 class="with-line">Contact Information</h3>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputEmail" class="col-sm-4 control-label">Email</label>
-                <div class="col-sm-8">
-                  <input type="email" ng-model="newClient.email" class="form-control" id="inputEmail" placeholder="" value="">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputStartDate" class="col-sm-4 control-label">Start Date</label>
+                    <div class="col-sm-8">
+                      <input type="date" ng-model="newClient.startDate" class="form-control" id="inputStartDate" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputPhone" class="col-sm-4 control-label">Phone</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.phone" class="form-control" id="inputPhone" placeholder="" value="">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputPhone2" class="col-sm-4 control-label">2nd Phone</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.phone2" class="form-control" id="inputPhone2" placeholder="" value="">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputPhoneOffice" class="col-sm-4 control-label">Office Phone</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.phoneOffice" class="form-control" id="inputPhoneOffice" placeholder="" value="">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <h3 class="with-line">Customer Information</h3>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputStartDate" class="col-sm-4 control-label">Start Date</label>
-                <div class="col-sm-8">
-                  <input type="date" ng-model="newClient.startDate" class="form-control" id="inputStartDate" placeholder="" value="">
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="type" class="col-sm-4 control-label">Customer Type</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.custType" class=" form-control" selectpicker>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="type" class="col-sm-4 control-label">Customer Type</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.custType" class=" form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="1">Dominant</option>
                     <option value="2">Dinamic</option>
                     <option value="3">Human</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <h4 class="with-line">Hair</h4><br>
+              <h3 class="with-line">Hair</h3><br>
 
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputHairLength" class="col-sm-4 control-label">Length</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.hairLength" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="cutFreq" class="col-sm-4 control-label">Cut Frequency</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.cutFreq" class="form-control" selectpicker ng-disabled="!editable">
+                    <option disabled selected value> -- select an option -- </option>
+                    <option value="1">Weekly</option>
+                    <option value="2">Every two weeks</option>
+                    <option value="3">Every three weeks</option>
+                    <option value="4">Every four weeks</option>
+                    <option value="5">Every five weeks</option>
+                    <option value="6">Every six weeks</option>
+                    <option value="7">Every seven weeks</option>
+                    <option value="8">Every eight weeks</option>
+                  </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="colorFreq" class="col-sm-4 control-label">Color Frequency</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.colorFreq" class="form-control" selectpicker ng-disabled="!editable">
+                    <option disabled selected value> -- select an option -- </option>
+                    <option value="1">Weekly</option>
+                    <option value="2">Every two weeks</option>
+                    <option value="3">Every three weeks</option>
+                    <option value="4">Every four weeks</option>
+                    <option value="5">Every five weeks</option>
+                    <option value="6">Every six weeks</option>
+                    <option value="7">Every seven weeks</option>
+                    <option value="8">Every eight weeks</option>
+                    <option value="9">Every nine weeks</option>
+                    <option value="10">Every ten weeks</option>
+                    <option value="11">Every eleven weeks</option>
+                    <option value="12">Every twelve weeks</option>
+                  </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputHairLength" class="col-sm-4 control-label">Length</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.hairLength" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="1">Long</option>
                     <option value="2">Medium</option>
                     <option value="3">Short</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputVolume" class="col-sm-4 control-label">Volume</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.volume" class="form-control" selectpicker>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputVolume" class="col-sm-4 control-label">Volume</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.volume" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Much</option>
                     <option value="false">Less</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputThickness" class="col-sm-4 control-label">Thickness</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.thickness" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputThickness" class="col-sm-4 control-label">Thickness</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.thickness" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Thick</option>
                     <option value="false">Thin</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputGreasy" class="col-sm-4 control-label">Greasy</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.greasy" class="form-control" selectpicker>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputGreasy" class="col-sm-4 control-label">Greasy</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.greasy" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputWavy" class="col-sm-4 control-label">Wavy</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.wavy" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputWavy" class="col-sm-4 control-label">Wavy</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.wavy" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputCurly" class="col-sm-4 control-label">Curly</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.curly" class="form-control" selectpicker>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputCurly" class="col-sm-4 control-label">Curly</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.curly" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputColor" class="col-sm-4 control-label">Color</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.hairColor" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputColor" class="col-sm-4 control-label">Color</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.hairColor" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="1">Black</option>
                     <option value="2">Brown</option>
@@ -226,161 +286,270 @@
                     <option value="7">Gray</option>
                     <option value="8">White</option>
                   </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <h4 class="with-line">Services</h4><br>
+              <h3 class="with-line">Services</h3><br>
 
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputHighLights" class="col-sm-4 control-label">Hihglights</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.highlights" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputHighLights" class="col-sm-4 control-label">Hihglights</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.highlights" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputHighLightsNoRea" class="col-sm-4 control-label">If not, why?</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.highlightsNoRea" class="form-control" id="inputHighLightsNoRea" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputHighLightsNoRea" class="col-sm-4 control-label">If not, why?</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.highlightsNoRea" class="form-control" id="inputHighLightsNoRea" placeholder="" value="">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputKeratin" class="col-sm-4 control-label">Keratin</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.keratin" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputKeratin" class="col-sm-4 control-label">Keratin</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.keratin" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputKeratinNoRea" class="col-sm-4 control-label">If not, why?</label>
+                    <div class="col-sm-8">
+                      <input ng-model="newClient.keratinNoRea" type="text" class="form-control" id="inputKeratinNoRea" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputKeratinNoRea" class="col-sm-4 control-label">If not, why?</label>
-                <div class="col-sm-8">
-                  <input ng-model="newClient.keratinNoRea" type="text" class="form-control" id="inputKeratinNoRea" placeholder="" value="">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputMassage" class="col-sm-4 control-label">Massage</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.massage" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputMassage" class="col-sm-4 control-label">Massage</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.massage" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputMassageNoRea" class="col-sm-4 control-label">If not, why?</label>
+                    <div class="col-sm-8">
+                      <input ng-model="newClient.massageNoRea" type="text" class="form-control" id="inputMassageNoRea" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputMassageNoRea" class="col-sm-4 control-label">If not, why?</label>
-                <div class="col-sm-8">
-                  <input ng-model="newClient.massageNoRea" type="text" class="form-control" id="inputMassageNoRea" placeholder="" value="">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputDepilation" class="col-sm-4 control-label">Depilation</label>
-                <div class="col-sm-8">
-                  <select ng-model="newClient.depilation" class="form-control" selectpicker>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputDepilation" class="col-sm-4 control-label">Depilation</label>
+                    <div class="col-sm-8">
+                      <select ng-model="newClient.depilation" class="form-control" selectpicker ng-disabled="!editable">
                     <option disabled selected value> -- select an option -- </option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
                   </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputDepilationNoRea" class="col-sm-4 control-label">If not, why?</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.depilationNoRea" class="form-control" id="inputDepilationNoRea" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputDepilationNoRea" class="col-sm-4 control-label">If not, why?</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.depilationNoRea" class="form-control" id="inputDepilationNoRea" placeholder="" value="">
+
+              <h3 class="with-line">Consumption</h3><br>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputCofee" class="col-sm-4 control-label">Coffee</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.coffee" class="form-control" id="inputCofee" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <h4 class="with-line">Consumption</h4><br>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputCofee" class="col-sm-4 control-label">Coffee</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.coffee" class="form-control" id="inputCofee" placeholder="" value="">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputTee" class="col-sm-4 control-label">Tee</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.tee" class="form-control" id="inputTee" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputTee" class="col-sm-4 control-label">Tee</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.tee" class="form-control" id="inputTee" placeholder="" value="">
+
+              <h3 class="with-line">Next Family Event</h3><br>
+
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="nextFamEvName" class="col-sm-4 control-label">Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.nextFamEvName" class="form-control" id="inputTee" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputnextFamEvDate" class="col-sm-4 control-label">Date</label>
+                    <div class="col-sm-8">
+                      <input type="date" ng-model="newClient.nextFamEvDate" class="form-control" id="inputnextFamEvDate" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <h4 class="with-line">Next Family Event</h4><br>
+              <h3 class="with-line">Invoice</h3><br>
 
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputnextFamEvName" class="col-sm-4 control-label">Name</label>
-                <div class="col-sm-8">
-                  <input type="text" ng-model="newClient.nextFamEvName" class="form-control" id="inputTee" placeholder="" value="">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="nit" class="col-sm-4 control-label">NIT</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.nit" class="form-control" id="inputTee" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row clearfix">
+                    <label for="inputnextFamEvDate" class="col-sm-4 control-label">Invoice</label>
+                    <div class="col-sm-8">
+                      <input type="text" ng-model="newClient.invoice" class="form-control" id="inputnextFamEvDate" placeholder="" value="" ng-disabled="!editable">
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group row clearfix">
-                <label for="inputnextFamEvDate" class="col-sm-4 control-label">Date</label>
-                <div class="col-sm-8">
-                  <input type="date" ng-model="newClient.nextFamEvDate" class="form-control" id="inputnextFamEvDate" placeholder="" value="">
+
+            </uib-accordion-group>
+
+
+
+            <uib-accordion-group is-open="prodBought.accordion" panel-class="bootstrap-panel panel-primary accordion-panel panel-default"
+              ng-show='newClient.id'>
+              <uib-accordion-heading>
+                <div ng-click="prodBought.open()">Product Purchases</div>
+              </uib-accordion-heading>
+              <div ng-show="!prodBoughtCollection.length">This customer don't have any purchase yet</div>
+              <div ng-show="prodBoughtCollection.length">
+                <h3 class="with-line">Total income from Products: {{prodBought.sum}}</h3><br>
+                <table st-safe-src="prodBoughtCollection" st-table="displayedprodBoughtCollection" class="table table-striped">
+                  <thead>
+                    <tr class="sortable">
+                      <th st-sort="sale_date" st-sort-default>Date</th>
+                      <th st-sort="product_name" st-sort-default>Product</th>
+                      <th st-sort="quantity">Quantity</th>
+                      <th st-sort="total">Total Price</th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+                    <tr ng-repeat="item in displayedprodBoughtCollection">
+                      <td>{{item.sale_date}}</td>
+                      <td>{{item.product_name}}</td>
+                      <td>{{item.quantity}}</td>
+                      <td>{{item.total}}</td>
+                    </tr>
+                  </tbody>
+
+                  <tfoot>
+                    <tr>
+                      <td colspan="6" class="text-center">
+                        <div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div>
+                      </td>
+                    </tr>
+                  </tfoot>
+
+                </table>
+              </div>
+            </uib-accordion-group>
+            <uib-accordion-group is-open="serviceBought.accordion" panel-class="bootstrap-panel panel-primary accordion-panel panel-default"
+              ng-show='newClient.id'>
+              <div ng-show="!serviceBoughtCollection.length">This customer don't have any purchase yet</div>
+              <div ng-show="serviceBoughtCollection.length">
+                <uib-accordion-heading>
+                  <div ng-click="serviceBought.open()">Service Purchases</div>
+                </uib-accordion-heading>
+                <h3 class="with-line">Total income from Services: {{serviceBought.sum}}</h3><br>
+                <table st-safe-src="serviceBoughtCollection" st-table="displayedserviceBoughtCollection" class="table table-striped">
+                  <thead>
+                    <tr class="sortable">
+                      <th st-sort="sale_date" st-sort-default>Date</th>
+                      <th st-sort="product_name" st-sort-default>Product</th>
+                      <th st-sort="quantity">Quantity</th>
+                      <th st-sort="total">Total Price</th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+                    <tr ng-repeat="item in displayedserviceBoughtCollection">
+                      <td>{{item.sale_date}}</td>
+                      <td>{{item.product_name}}</td>
+                      <td>{{item.quantity}}</td>
+                      <td>{{item.total}}</td>
+                    </tr>
+                  </tbody>
+
+                  <tfoot>
+                    <tr>
+                      <td colspan="6" class="text-center">
+                        <div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div>
+                      </td>
+                    </tr>
+                  </tfoot>
+
+                </table>
+              </div>
+            </uib-accordion-group>
+
+            <uib-accordion-group is-open="false" heading="Notes" panel-class="bootstrap-panel panel-primary accordion-panel panel-default">
+
+              <div class="row">
+                <div class="col-md-12">
+                  <textarea ng-model="newClient.note" class="form-control" id="inputTee" rows="5" style="resize: none;" ng-disabled="!editable"></textarea>
                 </div>
               </div>
-            </div>
-          </div>
+            </uib-accordion-group>
 
-          <h4 class="with-line">Notes</h4><br>
 
-          <div class="row">
-            <div class="col-md-12">
-              <textarea ng-model="newClient.note" class="form-control" id="inputTee" rows="5" style="resize: none;"></textarea>
-            </div>
-          </div>
+          </uib-accordion>
+
+
+
           <br><br><br>
-
-
-
-
-          <button type="submit" class="btn btn-success btn-auth" ng-disabled="newClientForm.$invalid">Submit</button>
-          <button type="button" class="btn btn-warning" ng-click="vm.cancel()">Cancel</button>
+          <div ng-show="editable" style="display: inline-block"><button type="submit" class="btn btn-success btn-auth" ng-disabled="newClientForm.$invalid">Submit</button></div>
+          <div ng-show="!editable" style="display: inline-block"><button type="button" class="btn btn-info" ng-click="edit()">Edit</button></div>
+          <div style="display: inline-block"><button type="button" class="btn btn-warning" ng-click="vm.cancel()">Close</button></div>
+          
         </form>
       </div>
     </div>
