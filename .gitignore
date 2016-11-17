@@ -21,3 +21,4 @@ client/bower_components
 client/node_modules
 server/private
 server/ssl-config.js
+client/src/app/login/login.module.js
