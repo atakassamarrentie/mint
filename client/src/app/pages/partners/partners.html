@@ -1,0 +1,109 @@
+<div ng-hide="newItem.$visible">
+  <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new partner +</button>
+</div>
+<div ng-show="newItem.$visible">
+
+  <form editable-form name="newItem" onbeforesave="addNewItem($data)">
+
+
+    <div ba-panel class="panel bootstrap-panel">
+      <div class="panel-heading">Add new partner</div>
+      <div class="panel-body" align='right'>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="name">Partner Name</label>
+              <span editable-text="newPartner.name" e-name="name" e-form="newItem" onbeforesave="checkName($data)">
+         </span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="reorder">Contact Name</label>
+              <span editable-text="newPartner.contName" e-name="contName" e-form="newItem">
+         </span>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="purchase_price">Contact Phone</label>
+              <span editable-text="newPartner.contPhone" e-name="contPhone" e-form="newItem">
+         </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
+      <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
+    </div>
+</div>
+</form>
+<table st-safe-src="partnersCollection" st-table="displayedCollection" class="table table-striped">
+
+  <thead>
+    <tr class="sortable">
+      <th st-sort="id" st-sort-default>ID</th>
+      <th st-sort="name">Partner Name</th>
+      <th st-sort="contName">Contact Name</th>
+      <th st-sort="contPhone">Contact Phone</th>
+    </tr>
+    <tr>
+      <th>
+
+      </th>
+      <th>
+        <input st-search="name" placeholder="search for name" class="input-sm form-control" type="search" />
+      </th>
+      <th>
+        <input st-search="productCategory.category_name" placeholder="search for product category" class="input-sm form-control"
+          type="search" />
+      </th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat="item in displayedCollection">
+      <td class="table-id">{{item.id}}</td>
+      <td>
+        <span editable-text="item.name" e-name="name" e-form="rowform" onbeforesave="checkName($data, item.id)">
+        {{item.name}}
+        </span>
+      </td>
+      <td>
+        <span editable-text="item.contName" e-name="contName" e-form="rowform">
+        {{item.contName}}
+        </span>
+      </td>
+      <td>
+        <span editable-text="item.contPhone" e-name="contPhone" e-form="rowform" style="width:100%" class="mytextarea">
+        {{item.contPhone}}
+        </span>
+      </td>
+      <td style="min-width:200px" align="right">
+        <div ng-show="!rowform.$visible">
+          <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
+          <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+        </div>
+        <form editable-form name="rowform" onbeforesave="updatePartner($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
+          <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
+          <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
+        </form>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="6" class="text-center">
+        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<div class="form-group select-page-size-wrap" layout="row">
+  Rows per page
+  <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25,50,100]">
+      </select>
+</div>

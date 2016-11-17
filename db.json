@@ -1,0 +1,134 @@
+{
+  "ids": {
+    "User": 2,
+    "AccessToken": 171,
+    "ACL": 3,
+    "RoleMapping": 2,
+    "Role": 3,
+    "Note": 1,
+    "UserExt": 9,
+    "Product": 79,
+    "Product_category": 13,
+    "Client": 13,
+    "payment": 4,
+    "Order": 12
+  },
+  "models": {
+    "UserExt": {
+      "1": "{\"username\":\"ajuhos\",\"password\":\"$2a$10$T2mA.0sSDKFLDdNq.qpzV.weoXJPTKKHvH1thYvPlZ64ujF8LliUa\",\"email\":\"akos.juhos@t-systems.com\",\"emailVerified\":true,\"firstname\":\"Akoss\",\"lastname\":\"Juhos\",\"active\":\"Y\",\"id\":1,\"firstName\":\"Akos\",\"lastName\":\"Juhos\",\"picture\":\"/assets/pictures/profile/ajuhos.jpg\"}",
+      "7": "{\"firstName\":\"akos\",\"lastName\":\"test2\",\"username\":\"test2\",\"password\":\"asdasdasd\",\"email\":\"test2@casdf.com\",\"id\":7}",
+      "8": "{\"firstName\":\"test\",\"lastName\":\"test\",\"username\":\"test\",\"password\":\"$2a$10$2220zsc68S33BxaPmqFH9.QNpmWX7Vdf5EQzdIiICZe1o70pebEx6\",\"email\":\"test@test.com\",\"id\":8}"
+    },
+    "AccessToken": {
+      "0Bi29r1tRKXtVf8sVvMtY2tQyUFW0iGunB2CBPCmQ8Db7BYtAuKBhnSdfkJ71dTE": "{\"id\":\"0Bi29r1tRKXtVf8sVvMtY2tQyUFW0iGunB2CBPCmQ8Db7BYtAuKBhnSdfkJ71dTE\",\"ttl\":1209600,\"created\":\"2016-08-31T11:47:07.084Z\",\"userId\":1}",
+      "eD3Mf73Xz7Rf6dT3ZvQoYJk9z1oxUKEwh4MyI8VQkHerEBlNIrUg3qMxOuNcefNe": "{\"id\":\"eD3Mf73Xz7Rf6dT3ZvQoYJk9z1oxUKEwh4MyI8VQkHerEBlNIrUg3qMxOuNcefNe\",\"ttl\":1209600,\"created\":\"2016-08-31T11:54:05.080Z\",\"userId\":1}",
+      "rvtN6FPpWHZoubQYAcoo7M8zSTLENNqpGCHhEVb8B3XXunHYm2nNmxAhPoCbOHt8": "{\"id\":\"rvtN6FPpWHZoubQYAcoo7M8zSTLENNqpGCHhEVb8B3XXunHYm2nNmxAhPoCbOHt8\",\"ttl\":1209600,\"created\":\"2016-08-31T12:54:33.541Z\",\"userId\":1}",
+      "RteVPK7uybg6B8i4C94AMftqCMugoab75HcT7wllhDJ6xDDEKfC0gZrxoGsTCsQG": "{\"id\":\"RteVPK7uybg6B8i4C94AMftqCMugoab75HcT7wllhDJ6xDDEKfC0gZrxoGsTCsQG\",\"ttl\":1209600,\"created\":\"2016-08-31T12:59:04.710Z\",\"userId\":1}",
+      "sMF5t86uOogZvFFahKqMCffBNG0P26aMAupHjGkshpfqtkp42XqeIIS2yGm0rBWD": "{\"id\":\"sMF5t86uOogZvFFahKqMCffBNG0P26aMAupHjGkshpfqtkp42XqeIIS2yGm0rBWD\",\"ttl\":1209600,\"created\":\"2016-08-31T13:02:40.106Z\",\"userId\":1}",
+      "vEsG4MEAkvfurfYHHY6eltnqDAYYeLLhUDuD6F8Eb1BZedo2pBdAKLIGHHKSDvMR": "{\"id\":\"vEsG4MEAkvfurfYHHY6eltnqDAYYeLLhUDuD6F8Eb1BZedo2pBdAKLIGHHKSDvMR\",\"ttl\":1209600,\"created\":\"2016-09-06T07:00:58.002Z\",\"userId\":1}",
+      "IHRsA7GzaPEAeoRwUl2dQmAp8os1btyqFlppYqoQkf8pXzWgZ2YzecYSBy4e1u0T": "{\"id\":\"IHRsA7GzaPEAeoRwUl2dQmAp8os1btyqFlppYqoQkf8pXzWgZ2YzecYSBy4e1u0T\",\"ttl\":1209600,\"created\":\"2016-09-06T07:04:50.940Z\",\"userId\":1}",
+      "J0mrTMo9Ws3wB6m9PrkNq1WfQAHwcSIplPNuLHihce6EZwScSR8d81wD0Og9DQ7W": "{\"id\":\"J0mrTMo9Ws3wB6m9PrkNq1WfQAHwcSIplPNuLHihce6EZwScSR8d81wD0Og9DQ7W\",\"ttl\":1209600,\"created\":\"2016-09-28T08:18:38.676Z\",\"userId\":1}",
+      "nu0mgPTJ8AfoJShhJbFu2CKaiGumRpLPuDMoiK6TQJv3HM4kc5xpJlReNKg6O58S": "{\"id\":\"nu0mgPTJ8AfoJShhJbFu2CKaiGumRpLPuDMoiK6TQJv3HM4kc5xpJlReNKg6O58S\",\"ttl\":1209600,\"created\":\"2016-09-28T10:46:14.949Z\",\"userId\":1}",
+      "I0Kr8D55jDn7oPXuHFDNXZMYwrmqfNRB6S5ktwUT4vNX8BbCclLQz6rEtvjpqoxo": "{\"id\":\"I0Kr8D55jDn7oPXuHFDNXZMYwrmqfNRB6S5ktwUT4vNX8BbCclLQz6rEtvjpqoxo\",\"ttl\":1209600,\"created\":\"2016-09-28T14:12:36.574Z\",\"userId\":1}",
+      "tN5hgyNaYxB4tV1aQsXY3izKTVFiyjT5OMJXfOsrmW8rW97YrQOiAM67G1bR70J1": "{\"id\":\"tN5hgyNaYxB4tV1aQsXY3izKTVFiyjT5OMJXfOsrmW8rW97YrQOiAM67G1bR70J1\",\"ttl\":1209600,\"created\":\"2016-09-28T14:12:45.855Z\",\"userId\":1}",
+      "GDVDiN53O3C62AMe0T74NxHLYa85VcLuhz0sT1ZTZDHhPnqpJFrJinZ0REWO2D8M": "{\"id\":\"GDVDiN53O3C62AMe0T74NxHLYa85VcLuhz0sT1ZTZDHhPnqpJFrJinZ0REWO2D8M\",\"ttl\":1209600,\"created\":\"2016-10-03T10:41:54.803Z\",\"userId\":1}",
+      "FEDA0ZnrBKvVNjISGo4OCWrjkZoeHSoDrfP9vZD4ZbSVowYbdAzSi9mZgZ0m2Eq2": "{\"id\":\"FEDA0ZnrBKvVNjISGo4OCWrjkZoeHSoDrfP9vZD4ZbSVowYbdAzSi9mZgZ0m2Eq2\",\"ttl\":1209600,\"created\":\"2016-10-11T07:51:58.786Z\",\"userId\":1}",
+      "W1yY7nwdjNfU1QSIoFX7pKsnwH0epgAFSlYJfIpjMaw9dbJ5L6DzOQ4KZseSHRTh": "{\"id\":\"W1yY7nwdjNfU1QSIoFX7pKsnwH0epgAFSlYJfIpjMaw9dbJ5L6DzOQ4KZseSHRTh\",\"ttl\":1209600,\"created\":\"2016-10-11T13:47:05.225Z\",\"userId\":1}",
+      "CNtBe3tHjqXgMXoAqsO1dqSSmE8yo3fRXJw3gU5cuLh0jJfuA5GKDCK7c99HyEvL": "{\"id\":\"CNtBe3tHjqXgMXoAqsO1dqSSmE8yo3fRXJw3gU5cuLh0jJfuA5GKDCK7c99HyEvL\",\"ttl\":1209600,\"created\":\"2016-10-11T14:12:04.741Z\",\"userId\":1}"
+    },
+    "ACL": {
+      "2": "{\"model\":\"UserExt\",\"property\":\"*\",\"accessType\":\"*\",\"permission\":\"ALLOW\",\"principalType\":\"ROLE\",\"principalId\":\"admin\",\"id\":2}"
+    },
+    "RoleMapping": {
+      "1": "{\"principalType\":\"USER\",\"principalId\":\"1\",\"roleId\":2,\"id\":1}"
+    },
+    "Role": {
+      "2": "{\"name\":\"admin\",\"created\":\"2016-08-25T07:20:21.284Z\",\"modified\":\"2016-08-25T07:20:21.284Z\",\"id\":2}"
+    },
+    "Note": {},
+    "Product": {
+      "13": "{\"name\":\"Kimia\",\"reorder\":69,\"purchase_price\":274,\"sell_price\":130,\"id\":13,\"productCategoryId\":3}",
+      "14": "{\"name\":\"Npath\",\"reorder\":32,\"purchase_price\":140,\"sell_price\":246,\"id\":14,\"productCategoryId\":10}",
+      "15": "{\"name\":\"Realfire\",\"reorder\":46,\"purchase_price\":474,\"sell_price\":222,\"id\":15,\"productCategoryId\":3}",
+      "16": "{\"name\":\"Dazzlesphere2\",\"reorder\":100,\"purchase_price\":369,\"sell_price\":149,\"id\":16,\"productCategoryId\":12}",
+      "17": "{\"name\":\"Flashset\",\"reorder\":74,\"purchase_price\":428,\"sell_price\":413,\"id\":17,\"productCategoryId\":1}",
+      "18": "{\"name\":\"Vitz\",\"reorder\":38,\"purchase_price\":384,\"sell_price\":341,\"id\":18}",
+      "19": "{\"name\":\"Twimm\",\"reorder\":22,\"purchase_price\":362,\"sell_price\":112,\"id\":19}",
+      "20": "{\"name\":\"Tambee\",\"reorder\":67,\"purchase_price\":355,\"sell_price\":326,\"id\":20}",
+      "21": "{\"name\":\"Aimbu\",\"reorder\":59,\"purchase_price\":201,\"sell_price\":150,\"id\":21}",
+      "22": "{\"name\":\"Twiyo\",\"reorder\":72,\"purchase_price\":146,\"sell_price\":96,\"id\":22}",
+      "23": "{\"name\":\"Zoomcast\",\"reorder\":3,\"purchase_price\":184,\"sell_price\":70,\"id\":23}",
+      "24": "{\"name\":\"Divavu\",\"reorder\":22,\"purchase_price\":196,\"sell_price\":373,\"id\":24}",
+      "25": "{\"name\":\"Twinte\",\"reorder\":30,\"purchase_price\":485,\"sell_price\":331,\"id\":25}",
+      "26": "{\"name\":\"Yodel\",\"reorder\":38,\"purchase_price\":270,\"sell_price\":356,\"id\":26}",
+      "27": "{\"name\":\"Dabtype\",\"reorder\":59,\"purchase_price\":287,\"sell_price\":466,\"id\":27,\"productCategoryId\":3}",
+      "29": "{\"name\":\"Fiveclub\",\"reorder\":18,\"purchase_price\":298,\"sell_price\":203,\"id\":29}",
+      "30": "{\"name\":\"Leexo\",\"reorder\":44,\"purchase_price\":233,\"sell_price\":440,\"id\":30}",
+      "31": "{\"name\":\"Thoughtblab\",\"reorder\":73,\"purchase_price\":239,\"sell_price\":155,\"id\":31}",
+      "32": "{\"name\":\"Yakidoo\",\"reorder\":67,\"purchase_price\":241,\"sell_price\":421,\"id\":32,\"productCategoryId\":1}",
+      "33": "{\"name\":\"Zoombox\",\"reorder\":33,\"purchase_price\":102,\"sell_price\":135,\"id\":33,\"productCategoryId\":2}",
+      "34": "{\"name\":\"Livepath\",\"reorder\":76,\"purchase_price\":286,\"sell_price\":495,\"id\":34,\"productCategoryId\":1}",
+      "35": "{\"name\":\"Leexo\",\"reorder\":95,\"purchase_price\":77,\"sell_price\":373,\"id\":35}",
+      "36": "{\"name\":\"Fivechat\",\"reorder\":8,\"purchase_price\":490,\"sell_price\":275,\"id\":36}",
+      "37": "{\"name\":\"Jabbercube\",\"reorder\":80,\"purchase_price\":364,\"sell_price\":403,\"id\":37}",
+      "38": "{\"name\":\"Fivebridge\",\"reorder\":11,\"purchase_price\":354,\"sell_price\":177,\"id\":38}",
+      "39": "{\"name\":\"Yombu\",\"reorder\":100,\"purchase_price\":101,\"sell_price\":89,\"id\":39}",
+      "40": "{\"name\":\"Voolith\",\"reorder\":12,\"purchase_price\":211,\"sell_price\":298,\"id\":40}",
+      "41": "{\"name\":\"Fivespan\",\"reorder\":23,\"purchase_price\":420,\"sell_price\":454,\"id\":41}",
+      "42": "{\"name\":\"Yodo\",\"reorder\":16,\"purchase_price\":262,\"sell_price\":454,\"id\":42}",
+      "43": "{\"name\":\"Eidel\",\"reorder\":82,\"purchase_price\":409,\"sell_price\":264,\"id\":43,\"productCategoryId\":1}",
+      "44": "{\"name\":\"Dazzlesphere\",\"reorder\":61,\"purchase_price\":175,\"sell_price\":285,\"id\":44,\"productCategoryId\":2}",
+      "45": "{\"name\":\"Youspan\",\"reorder\":84,\"purchase_price\":496,\"sell_price\":114,\"id\":45}",
+      "46": "{\"name\":\"Mybuzz\",\"reorder\":90,\"purchase_price\":76,\"sell_price\":497,\"id\":46}",
+      "48": "{\"name\":\"Jabbersphere\",\"reorder\":25,\"purchase_price\":393,\"sell_price\":395,\"id\":48}",
+      "49": "{\"name\":\"Youspan\",\"reorder\":96,\"purchase_price\":119,\"sell_price\":265,\"id\":49}",
+      "50": "{\"name\":\"Lazzy\",\"reorder\":45,\"purchase_price\":220,\"sell_price\":462,\"id\":50}",
+      "51": "{\"name\":\"Yakijo\",\"reorder\":71,\"purchase_price\":66,\"sell_price\":224,\"id\":51}",
+      "52": "{\"name\":\"Gabcube\",\"reorder\":67,\"purchase_price\":398,\"sell_price\":466,\"id\":52}",
+      "53": "{\"name\":\"Divape\",\"reorder\":82,\"purchase_price\":473,\"sell_price\":317,\"id\":53}",
+      "70": "{\"name\":\"asd\",\"reorder\":1,\"purchase_price\":2,\"sell_price\":3,\"id\":70}",
+      "71": "{\"name\":\"dsfads\",\"reorder\":2,\"purchase_price\":3,\"sell_price\":4,\"id\":71}",
+      "72": "{\"name\":\"asd2\",\"reorder\":1,\"purchase_price\":2,\"sell_price\":3,\"id\":72}",
+      "73": "{\"name\":\"asfd\",\"reorder\":1,\"purchase_price\":1,\"sell_price\":1,\"id\":73}",
+      "74": "{\"name\":\"Atakas\",\"reorder\":1,\"purchase_price\":2,\"sell_price\":3,\"id\":74}",
+      "75": "{\"name\":\"asdasdasd\",\"reorder\":1,\"purchase_price\":2,\"sell_price\":3,\"id\":75}",
+      "76": "{\"name\":\"Test\",\"reorder\":1,\"purchase_price\":1,\"sell_price\":1,\"id\":76}",
+      "77": "{\"name\":\"Test33\",\"reorder\":2,\"purchase_price\":2,\"sell_price\":2,\"productCategoryId\":1,\"id\":77}",
+      "78": "{\"name\":\"Test444\",\"reorder\":4,\"purchase_price\":4,\"sell_price\":4,\"productCategoryId\":2,\"id\":78}"
+    },
+    "Product_category": {
+      "3": "{\"category_name\":\"Hajfestek\",\"id\":3}",
+      "10": "{\"category_name\":\"Kiugro\",\"id\":10}",
+      "12": "{\"category_name\":\"Test\",\"id\":12}"
+    },
+    "Client": {
+      "1": "{\"first_name\":\"Akos23\",\"last_name\":\"Juhos\",\"phone_number\":\"+36708863890\",\"email\":\"akos2.juhos@t-systems.com\",\"id\":1}",
+      "4": "{\"first_name\":\"Akos\",\"last_name\":\"Juhos\",\"phone_number\":\"semmise\",\"id\":4}",
+      "5": "{\"first_name\":\"esta\",\"last_name\":\"dsafsdf\",\"id\":5}",
+      "7": "{\"first_name\":\"Test\",\"last_name\":\"Elek\",\"phone_number\":\"+36705458588\",\"email\":\"juhakos87@gmail.com\",\"username\":\"test\",\"id\":7}",
+      "8": "{\"first_name\":\"Atakas\",\"last_name\":\"Samarrentie\",\"phone_number\":\"\",\"id\":8}",
+      "9": "{\"first_name\":\"Atakas\",\"last_name\":\"Atakas\",\"email\":\"a@b,xom\",\"username\":\"asdasd\",\"id\":9}",
+      "10": "{\"first_name\":\"12\",\"last_name\":\"21\",\"email\":\"a\",\"username\":\"a\",\"id\":10}",
+      "11": "{\"first_name\":\"Atakas\",\"last_name\":\"Sam\",\"email\":\"a@b\",\"username\":\"1212\",\"id\":11}",
+      "12": "{\"first_name\":\"Asd\",\"last_name\":\"asd\",\"email\":\"a@b.com\",\"username\":\"asd\",\"id\":12}"
+    },
+    "payment": {
+      "1": "{\"name\":\"Keszpenz\",\"id\":1}",
+      "2": "{\"name\":\"Bankkartya\",\"id\":2}",
+      "3": "{\"name\":\"Csekk\",\"id\":3}"
+    },
+    "Order": {
+      "1": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":10,\"id\":1}",
+      "2": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":20,\"id\":2}",
+      "3": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":30,\"id\":3}",
+      "4": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":40,\"id\":4}",
+      "5": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":50,\"id\":5}",
+      "6": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":60,\"id\":6}",
+      "7": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":70,\"id\":7}",
+      "8": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":80,\"id\":8}",
+      "9": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":90,\"id\":9}",
+      "10": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":100,\"id\":10}",
+      "11": "{\"order_date\":\"2016-10-05T00:00:00.000Z\",\"expected_date\":\"2016-10-05T00:00:00.000Z\",\"quantity\":110,\"id\":11}"
+    }
+  }
+}
