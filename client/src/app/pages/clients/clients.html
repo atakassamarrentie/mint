@@ -1,4 +1,4 @@
-<div ng-hide="newItem.$visible">
+<div ng-show="writeAccess">
     <button type="button" class="btn btn-info" ng-click="createItem()">Add new client +</button>
 </div>
 
@@ -24,6 +24,7 @@
             <th>
                 <input st-search="email" placeholder="search for phone number" class="input-sm form-control" type="search" />
             </th>
+            <th></th>
         </tr>
     </thead>
 
@@ -34,10 +35,10 @@
             <td>{{item.first_name}}</td>
             <td>{{item.last_name}}</td>
             <td>{{item.email}}</td>
-            <td style="min-width:200px" align="right">
-                <div ng-show="!rowform.$visible">
+            <td style="min-width:50px" align="right">
+                <div>
                     <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="editItem(item)"><i class="ion-search"></i></button>
-                    <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+                    <button type="button" ng-show="writeAccess" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
                 </div>
             </td>
         </tr>

@@ -9,16 +9,18 @@ var httpsRedirect = require('./middleware/https-redirect');
 var path = require('path');
 var app = module.exports = loopback();
 var compression = require('compression');
+var EventEmitter = require('events').EventEmitter;
 var options = {
   key: sslConfig.privateKey,
   cert: sslConfig.certificate,
   ca: sslConfig.cafile
 };
-
+EventEmitter.prototype._maxListeners = 20;
 
 app.use(loopback.token({ model: app.models.accessToken }));
 app.start = function () {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
   // start the web server
   var host = app.get('host')
   var port = app.get('port')

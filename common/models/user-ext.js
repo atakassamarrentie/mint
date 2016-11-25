@@ -45,8 +45,8 @@ module.exports = function (UserExt) {
             return role.id;
           });
           if (!roleMappings.length) { oldRoleIds = [] }
-          var deleteRoles = oldRoleIds.filter(x => newRoles.roles.indexOf(x) < 0)
-          var createRoles = newRoles.roles.filter(x => oldRoleIds.indexOf(x) < 0)
+          var deleteRoles = oldRoleIds.filter(x => newRoles.indexOf(x) < 0)
+          var createRoles = newRoles.filter(x => oldRoleIds.indexOf(x) < 0)
           var createQuery = []
           createRoles.forEach(function (item) {
             var temp = {}
@@ -56,13 +56,17 @@ module.exports = function (UserExt) {
             createQuery.push(temp)
           })
           RoleMapping.create(createQuery)
-
-          deleteRoles.forEach(function (item) {
-
-            RoleMapping.destroyAll({ and: [{ principalId: id }, { roleId: item }, { principalType: "USER" }] }, function (err, res) {
-              if (err) { cb(err) }
+          Role.findOne({ where: { name: 'admin' } }, function (err, aid) {
+            
+            deleteRoles.forEach(function (item) {
+              if (aid.id !== item) {
+                RoleMapping.destroyAll({ and: [{ principalId: id }, { roleId: item }, { principalType: "USER" }] }, function (err, res) {
+                  if (err) { cb(err) }
+                })
+              }
             })
           })
+
 
           cb(null, true);
         });
@@ -104,7 +108,7 @@ module.exports = function (UserExt) {
         return cb(null, true);
       });
     } else {
-      UserExt.findOne({ where: { and:[ {email: email }, { id: { neq: id } } ] } }, function (err, email) {
+      UserExt.findOne({ where: { and: [{ email: email }, { id: { neq: id } }] } }, function (err, email) {
         if (err || !email) {
           return cb(null, false);
         };

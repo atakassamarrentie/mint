@@ -5,18 +5,23 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.userMgmt.users')
-    .controller('usersModalCtrl', usersModalCtrl)
-    .factory('$userModal', userModalFactory)
+  angular.module('BlurAdmin')
+    .controller('commonModalCtrl', commonModalCtrl)
+    .factory('$commonModal', commonModalFactory)
     
 
-  function userModalFactory($uibModal) {
+  function commonModalFactory($uibModal) {
     var open = function (size, title, message, id, rowId) {
+        console.log("size: ", size)
+        console.log("title: ", title)
+        console.log("message: ", message)
+        console.log("id: ", id)
+        console.log("rowId: ", rowId)
       return $uibModal.open({
-        controller: 'usersModalCtrl',
+        controller: 'commonModalCtrl',
         controllerAs: 'vm',
         animation: true,
-        templateUrl: 'app/pages/userManagement/users/usersModal.html',
+        templateUrl: 'app/pages/common/modals/commonModal.html',
         size: size,
         resolve: {
           items: function () {
@@ -36,7 +41,8 @@
   }
 
   /** @ngInject */
-  function usersModalCtrl($scope, $uibModalInstance, items) {
+  function commonModalCtrl($scope, $uibModalInstance, items) {
+    console.log(items)
     var vm = this
     vm.content = items
     vm.confirm = $uibModalInstance.close;

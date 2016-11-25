@@ -13,23 +13,25 @@
   function ProfilePageCtrl($scope, fileReader, $filter, $uibModal, $stateParams, UserExt, sessionService, toastr) {
     
     $scope.sessionService = sessionService
+    $scope.writeAccess = sessionService.role.indexOf('users_write') > -1 || sessionService.role.indexOf('admin') > -1
+
     if ($stateParams.hasOwnProperty('userId') && $stateParams.userId !== null) {
       $scope.userId = $stateParams.userId
       if ($scope.userId == sessionService.user.id) {
-        $scope.owner = true
+        $scope.owner = true || $scope.writeAccess
       } else {
-        $scope.owner = false
+        $scope.owner = false  || $scope.writeAccess
       }
     } else {
-      $scope.userId = sessionService.user.id
-      $scope.owner = true
+      $scope.userId = sessionService.user.id 
+      $scope.owner = true  || $scope.writeAccess
     }
 
 
 
-    UserExt.find({ filter: { where: { id: $scope.userId } } }, function (res) {
-      $scope.user = res[0]
-      $scope.avatar = res[0].firstName + ' ' + res[0].lastName
+    UserExt.findById({  id: $scope.userId }, function (res) {
+      $scope.user = res
+      $scope.avatar = res.firstName + ' ' + res.lastName
     })
 
     $scope.confirmPassword = function () {
@@ -44,7 +46,6 @@
     }
 
     $scope.changePassword = function () {
-      console.log('pass', $scope.oldPassword)
       UserExt.changePassword({ id: $scope.userId }, { oldPassword: $scope.oldPassword, newPassword: $scope.newPassword },
         function (success) {
           toastr.success('Password has been changed');
@@ -53,8 +54,10 @@
         function (error) {
           if (error.data.error.code == 'ICR_PASSWORD') {
             $scope.wrongOldPassword = true
+          } else {
+            toastr.error(error.data.error.message)
           }
-          console.log(error)
+          
 
         }
       )
@@ -69,7 +72,6 @@
         if (username.length >= 6) {
           $scope.pending = true
           UserExt.isUsernameExists({ username: username, id: $scope.user.id }, function (res) {
-            console.log(res)
             if (res.result) {
               $scope.userErr = { error: true, message: "Username already exists" }
             } else {
@@ -111,15 +113,12 @@
     }
 
     $scope.updateUser = function () {
-      console.log($scope.user)
-      
       UserExt.updateAll({where: { id: $scope.user.id } }, $scope.user, 
       function(success) {
         toastr.success('User has been updated successfully')
       },
       function(error) {
-        console.log(error)
-        toastr.error(error)
+        toastr.error(error.data.error.message)
       } )
     }
 

@@ -9,7 +9,7 @@
         .controller('registerPageCtrl', registerPageCtrl)
 
     /** @ngInject */
-    function registerPageCtrl($rootScope, sessionService, $scope, $filter, Partners, $myModal, toastr, $q, UserExt, $timeout) {
+    function registerPageCtrl($rootScope, sessionService, baSidebarService, $scope, $filter, Partners, toastr, $q, UserExt, $timeout) {
         $scope.regPage = function () {
             sessionService.reg = false
         }

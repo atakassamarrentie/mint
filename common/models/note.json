@@ -1,5 +1,9 @@
 {
   "name": "Note",
+  "mixins": {
+    "Logging": true,
+    "Admin": true
+  },
   "properties": {
     "title": {
       "type": "string",

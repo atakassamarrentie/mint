@@ -6,6 +6,7 @@
     "validateUpsert": true
   },
   "mixins": {
+    "Logging": true,
     "Admin": true
   },
   "properties": {
@@ -37,7 +38,7 @@
       "default": false
     },
     "phone": {
-      "type" : "string",
+      "type": "string",
       "required": false,
       "default": false
     }
@@ -51,6 +52,43 @@
       "through": "RoleMapping"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "users_read",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "users_write",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "users_write",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "sale_read",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "users_write",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

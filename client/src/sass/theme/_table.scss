@@ -59,6 +59,10 @@
   color: #B90000;
 }
 
+.yellowrow {
+  color: #FF8800;
+}
+
 
 .editable-wrap .btn-group.form-control {
   background-color: transparent;
@@ -69,7 +73,7 @@
     vertical-align: super;
   }
   .editable-controls input.editable-input {
-    width: 60px;
+    min-width: 60px;
   }
   td {
     width: 20%;
@@ -77,7 +81,7 @@
 }
 
 .editable-wrap .editable-controls > select {
-  min-width: 170px;
+  min-width: 110px;
 }
 
 .editable-table-button {
@@ -207,7 +211,9 @@ input.search-input {
     }
     input {
       line-height: 15px;
-      
+      width:100% !important;
+      box-sizing:border-box !important;
+      -moz-box-sizing:border-box !important;
     }
   }
 }
@@ -320,6 +326,7 @@ th {
 
 .table-striped > tbody > tr > td {
   border: none;
+  white-space:nowrap
 }
 .pagination > li > a,
 .pagination > li > span{

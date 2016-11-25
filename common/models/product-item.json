@@ -1,0 +1,37 @@
+{
+  "name": "ProductItem",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "mixins": {
+    "Logging": true,
+    "Admin": true,
+    "delete": true
+  },
+  "properties": {
+    "label": {
+      "type": "number",
+      "required": true
+    },
+    "invoice": {
+      "type": "number"
+    },
+    "deleted": {
+      "type": "boolean",
+      "required": false,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "product": {
+      "type": "belongsTo",
+      "model": "Product",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

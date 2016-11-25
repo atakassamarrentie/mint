@@ -1,4 +1,4 @@
-<div ng-hide="newItem.$visible">
+<div ng-show="!newItem.$visible && writeAccess">
   <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new service +</button>
 </div>
 <div ng-show="newItem.$visible">
@@ -57,9 +57,9 @@
       <th><input st-search="serviceCategory.category_name" placeholder="search for service category" class="input-sm form-control"
           type="search" /></th>
       <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th ng-show="writeAccess"></th>
+      
+      
  
     </tr>
   </thead>
@@ -83,7 +83,7 @@
         </span>
       </td>
       
-      <td style="min-width:100px">
+      <td style="min-width:100px; text-align: right" ng-show="writeAccess">
         <div ng-show="!rowform.$visible">
           <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
           <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>

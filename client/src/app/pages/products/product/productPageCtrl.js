@@ -10,10 +10,10 @@
 
 
     /** @ngInject */
-    function productPageCtrl($rootScope, $scope, Product, Product_category, $filter, $myModal, toastr, $q) {
+    function productPageCtrl($rootScope, $scope, Product, Product_category, sessionService, $filter, $productInvModal, $commonModal, toastr, $q) {
         $scope.newProduct = {}
         $scope.productCategory = {}
-
+        $scope.writeAccess = sessionService.role.indexOf('products_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.productCollection = Product.find({ filter: { include: 'productCategory' } }, function (result) {
             $scope.productCollection.forEach(function (item, index) {
                 $scope.productCollection[index].fulfilled = item.reorder >= item.inventory
@@ -43,6 +43,8 @@
 
                 $scope.displayedCollection = [].concat($scope.productCollection);
 
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
         }
 
@@ -50,21 +52,45 @@
             var rowId = $scope.productCollection.indexOf(item)
             var message = "Do you really want to delete product " + item.name + " (with id " + item.id + ")"
             var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
+            var dialog = $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function () {
+                Product.destroyById({ id: item.id }, function (result) {
+                    if (result.count == 0) {
+                        toastr.error('Error: Cannot find product with id ' + item.id);
+                    } else {
+                        if (rowId !== -1) {
+                            $scope.productCollection.splice(rowId, 1)
+                        }
+                        toastr.success('Product ' + item.id + ' has been deleted successfully');
+                    }
+                }, function (err) {
+                    toastr.error(err.data.error.message)
+                })
+            })
         };
 
         $scope.updateProduct = function (data, id) {
             data.id = id
             Product.upsert(data, function (result) {
                 toastr.success('Product ' + id + ' has been updated successfully');
-            })
-            $scope.displayedCollection.forEach(function (item, index) {
-                if (item.id == id){
-                    $scope.displayedCollection[index].fulfilled = data.reorder >= data.inventory
-                    console.log()
-                }
-                
-            })
+                $scope.displayedCollection.forEach(function (item, index) {
+                    if (item.id == id) {
+                        $scope.displayedCollection[index].fulfilled = data.reorder >= data.inventory
+                        console.log()
+                    }
+
+                })
+            }, function (err) {
+                toastr.error(err.data.error.message)
+            }
+            )
+
+        }
+
+        $scope.inventory = function(item) {
+            var rowId = $scope.productCollection.indexOf(item)
+            var title = "Inventory of " + item 
+            var invDialog = $productInvModal.open('lg', title, item.id, rowId)
         }
 
         $scope.showCategory = function (catId) {
@@ -93,19 +119,5 @@
             }
             return d.promise
         }
-
-        $rootScope.confirmedDelete = function (id, itemRow) {
-            Product.destroyById({ id: id }, function (result) {
-                if (result.count == 0) {
-                    toastr.error('Error: Cannot find product with id ' + id);
-                } else {
-                    if (itemRow !== -1) {
-                        $scope.productCollection.splice(itemRow, 1)
-                    }
-                    toastr.success('Product ' + id + ' has been deleted successfully');
-                }
-            })
-        }
-
     }
 })();

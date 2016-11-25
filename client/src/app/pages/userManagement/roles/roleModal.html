@@ -1,0 +1,44 @@
+<div class="modal-content">
+    <div class="modal-header bg-success">
+        <i class="ion-edit modal-icon"></i><span> Edit Roles</span>
+    </div>
+    <div class="modal-body">
+        <div class="profile-page">
+            <div class="panel-content">
+                <form name="rolesForm">
+                    <b>Read</b> User can acces the corresponging module, and can see it's content<br>
+                    <b>Read/Write:</b> User can create, update, modify and delete the items of the corresponding moudle
+                    <hr>
+                    
+                    <div ng-repeat="role in userRoles | orderBy: 'model'">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row clearfix">
+                                    <label for="inputTitle" class="col-sm-4 control-label">{{role.model | capitalize}}</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="role.right" name="role.right" ng-model="role.right" selectpicker>
+                                            <option selected="selected" value="">None</option>
+                                            <option value="read">Read</option>
+                                            <option value="write">Read/Write</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br><br><br>
+                    <div  style="display: inline-block"><button type="submit" class="btn btn-success btn-auth" ng-click="submitRoles({{rolesForm}})">Submit</button></div>
+                    <div style="display: inline-block"><button type="button" class="btn btn-warning" ng-click="vm.cancel()">Close</button></div>
+
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="modal-footer">
+
+    </div>
+</div>

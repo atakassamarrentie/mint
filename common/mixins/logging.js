@@ -7,13 +7,16 @@ module.exports = function (Model, options) {
         var Logging = Model.app.models.Logging;
         var context = loopback.getCurrentContext();
         var user = context.get('accessToken')
-        Logging.create({
+        if (user && user.hasOwnProperty('userId')){
+            Logging.create({
             userId: user.userId,
             date: new Date(),
             hook: "save",
             model: Model.definition.name,
             instance: ctx.instance
         })
+        }
+        
         next();
     })
     Model.observe('before delete', function (ctx, next) {

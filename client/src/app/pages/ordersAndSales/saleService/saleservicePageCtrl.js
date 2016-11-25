@@ -9,7 +9,8 @@
         .controller('saleservicePageCtrl', saleservicePageCtrl)
 
     /** @ngInject */
-    function saleservicePageCtrl($rootScope, UserExt, $scope, Saleservice, Service, Client, Service_category, Payment, sessionService, $filter, $myModal, toastr, $q) {
+    function saleservicePageCtrl($rootScope, UserExt, $scope, Saleservice, Service, Client, Service_category, Payment, sessionService, $filter, $commonModal, toastr, $q) {
+        $scope.writeAccess = sessionService.role.indexOf('sale_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.servicevalue = {}
         $scope.customPrice = {}
         $scope.payments = Payment.find();
@@ -39,14 +40,18 @@
                 data.clientId = data.clientId.id
                 data.employeeId = data.employee.id
                 data.soldBy = data.employee.username
+                data.clientName = $scope.newsale.client.first_name.first_name + ", " + $scope.newsale.client.first_name.last_name
                 Saleservice.create(data, function (result) {
                     toastr.success('New sale has been added successfully with id ' + result.id);
                     $scope.salesCollection = Saleservice.find({ filter: { include: ['service', 'client', 'payment', 'employee'] } }, function (result) {
                         $scope.salesCollection.forEach(function (item) {
                             item.sale_date = new Date(item.sale_date)
+                            $scope.displayedCollection = [].concat($scope.salesCollection);
                         })
-                        $scope.displayedCollection = [].concat($scope.salesCollection);
+
                     })
+                }, function (err) {
+                    toastr.error(err.data.error.message)
                 })
             })
         }
@@ -108,20 +113,28 @@
             var rowId = $scope.salesCollection.indexOf(item)
             var message = "Do you really want to delete sale " + item.name + " (with id " + item.id + ")"
             var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
+            var dialog = $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function () {
+                Saleservice.destroyById({ id: item.id }, function (result) {
+                    if (result.count == 0) {
+                        toastr.error('Error: Cannot find sale with id ' + item.id);
+                    } else {
+                        if (rowId !== -1) {
+                            $scope.salesCollection.splice(rowId, 1)
+                        }
+                        toastr.success('Service sale ' + item.id + ' has been deleted successfully');
+                    }
+                }, function (err) {
+                    toastr.error(err.data.error.message)
+                })
+            })
         };
 
-
-        $rootScope.confirmedDelete = function (id, itemRow) {
-            Saleservice.destroyById({ id: id }, function (result) {
-                if (result.count == 0) {
-                    toastr.error('Error: Cannot find sale with id ' + id);
-                } else {
-                    if (itemRow !== -1) {
-                        $scope.salesCollection.splice(itemRow, 1)
-                    }
-                    toastr.success('Saleservice ' + id + ' has been deleted successfully');
-                }
+        $scope.updateSale = function (data, item) {
+            Saleservice.upsert(item, function (result) {
+                toastr.success('Sale ' + item.id + ' has been updated successfully');
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
         }
 
@@ -130,5 +143,6 @@
             $scope.servicevalue.defaultPrice = data.sell_price
             $scope.servicevalue.totalprice = $scope.newItem.$editables[5].scope.$data * data.sell_price
         }
+
     }
 })();

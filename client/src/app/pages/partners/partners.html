@@ -1,4 +1,4 @@
-<div ng-hide="newItem.$visible">
+<div ng-show="!newItem.$visible && writeAccess">
   <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new partner +</button>
 </div>
 <div ng-show="newItem.$visible">
@@ -60,7 +60,8 @@
         <input st-search="productCategory.category_name" placeholder="search for product category" class="input-sm form-control"
           type="search" />
       </th>
-
+      <th></th>
+      <th ng-show="writeAccess"></th>
     </tr>
   </thead>
 
@@ -82,7 +83,7 @@
         {{item.contPhone}}
         </span>
       </td>
-      <td style="min-width:200px" align="right">
+      <td style="min-width:150px" align="right" ng-show="writeAccess">
         <div ng-show="!rowform.$visible">
           <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
           <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>

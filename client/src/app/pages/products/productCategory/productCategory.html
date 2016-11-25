@@ -1,4 +1,4 @@
-<div ng-hide="newItem.$visible">
+<div ng-show="!newItem.$visible && writeAccess">
   <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new product category +</button>
 </div>
 <div ng-show="newItem.$visible">
@@ -50,7 +50,7 @@
         {{item.category_name}}
         </span>
       </td>
-      <td style="min-width:200px">
+      <td style="min-width:200px; text-align: right" ng-show="writeAccess">
         <div ng-show="!rowform.$visible">
           <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
           <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
@@ -65,7 +65,7 @@
 
   <tfoot>
     <tr>
-      <td colspan="6" class="text-center">
+      <td colspan="3" class="text-center">
         <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
       </td>
     </tr>

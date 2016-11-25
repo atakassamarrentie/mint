@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/ordersAndSales/completedOrder/completedOrder.html',
                 controller: 'completedOrderPageCtrl',
                 title: 'Completed Orders',
-                role: 'admin',
+                role: ['admin','order_read','order_write'],
                 sidebarMeta: {
                     order: 200
                 },

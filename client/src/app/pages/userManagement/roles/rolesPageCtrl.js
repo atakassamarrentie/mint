@@ -5,15 +5,16 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.userMgmt.users')
+    angular.module('BlurAdmin.pages.userMgmt.roles')
         .controller('rolesPageCtrl', rolesPageCtrl)
 
 
     /** @ngInject */
-    function rolesPageCtrl($rootScope, $scope, UserExt, Role, $filter, $myModal, toastr, $q) {
-        var tempArray = []
+    function rolesPageCtrl($rootScope, $scope, $roleModal, UserExt, sessionService, Role, $filter, toastr, $q) {
+        $scope.writeAccess = sessionService.role.indexOf('users_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.allRoles = []
         UserExt.find({ filter: { include: 'roles' } }, function (result) {
+            var tempArray = []
             result.forEach(function (item) {
                 item['roleIds'] = []
                 item.roles.forEach(function (role) {
@@ -25,30 +26,49 @@
         })
         $scope.displayedCollection = [].concat($scope.userCollection);
         Role.find(function (result) {
-            result.forEach(function(role){
-                $scope.allRoles.push({id: role.id, name: role.name})
+            result.forEach(function (role) {
+                $scope.allRoles.push({ id: role.id, name: role.name })
             })
-            
+
         })
         //$scope.allRoles = [{id: 1}, {id: 2}]
 
         $scope.showRoles = function (roles) {
 
             var selected = []
-            
-                angular.forEach($scope.allRoles, function (s) {
-                    if (roles.indexOf(s.id) >= 0) {
-                        selected.push(s.name);
-                    }
-                });
-            
+
+            angular.forEach($scope.allRoles, function (s) {
+                if (roles.indexOf(s.id) >= 0) {
+                    selected.push(s.name);
+                }
+            });
+
             return selected.length ? selected.join(', ') : 'none'
 
         }
 
         $scope.updateClient = function (data, id) {
-            console.log(data, id)
-            UserExt.setRoles({id: id}, {newRoles: data})
+            UserExt.setRoles({ id: id }, { newRoles: data })
+        }
+
+        $scope.editRoles = function (item) {
+            var rowId = $scope.userCollection.indexOf(item)
+            var dialog = $roleModal.open('md', item, rowId)
+            dialog.result.then(function () {
+                UserExt.find({ filter: { include: 'roles' } }, function (result) {
+                    var tempArray = []
+                    result.forEach(function (item) {
+                        item['roleIds'] = []
+                        item.roles.forEach(function (role) {
+                            item.roleIds.push(role.id)
+                        })
+                        tempArray.push(item)
+                    })
+                    $scope.userCollection = (tempArray)
+                    $scope.displayedCollection = [].concat($scope.userCollection);
+                })
+
+            })
         }
 
         function myIndexOf(o) {

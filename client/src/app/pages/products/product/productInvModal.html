@@ -1,0 +1,82 @@
+<div class="modal-content">
+  <div class="modal-header bg-success">
+    <i class="ion-flame modal-icon"></i><span>Inventory</span>
+  </div>
+  <div class="modal-body">
+    <div class="profile-page">
+      <div class="panel-content">
+
+        <form name="newLabelForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="newLabel.label" class="col-sm-4 control-label">Label</label>
+                <div class="col-sm-8">
+                  <input type="number" ng-model="newLabel.label" class="form-control" name="newLabel" id="newLabel" placeholder="" ng-keyup="submitLabel($event)">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="newLabel.invoice" class="col-sm-4 control-label">Invoice</label>
+                <div class="col-sm-8">
+                    <input type="number" ng-model="newLabel.invoice" class="form-control" name="newInvoice" id="newInvoice" placeholder="" ng-keyup="submitLabel($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+
+
+        <br><br>
+        <table st-safe-src="productInvCollection" st-table="displayedInvCollection" class="table table-striped">
+
+          <thead>
+            <tr class="sortable">
+              <th st-sort="id" st-sort-default>ID</th>
+              <th st-sort="label" st-sort-default>label</th>
+              <th st-sort="label" st-sort-default>Invoice</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th><input st-search="lable" placeholder="search for label" class="input-sm form-control" type="search" /></th>
+              <th><input st-search="invoice" placeholder="search for invoice" class="input-sm form-control" type="search" /></th>
+              <th></th>
+              <th ng-show="writeAccess"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="item in displayedInvCollection">
+              <td class="table-id">{{item.id}}</td>
+              <td>{{item.label}}</td>
+              <td>{{item.invoice}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" class="text-center">
+                <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+
+
+        <br><br><br>
+        <div style="display: inline-block"><button type="button" ng-disabled="addVisible" class="btn btn-warning" ng-click="vm.cancel()">Close</button></div>
+
+
+      </div>
+    </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</div>

@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/ordersAndSales/saleService/saleservice.html',
                 controller: 'saleservicePageCtrl',
                 title: 'Service Sales',
-                role: 'admin',
+                role: ['admin','sale_read','sale_write'],
                 sidebarMeta: {
                     order: 300
                 },
@@ -21,5 +21,4 @@
                 }
             });
     }
-
 })();

@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/userManagement/users/users.html',
                 controller: 'usersPageCtrl',
                 title: 'Users',
-                role: ['admin'],
+                role: ['admin', 'users_read', 'users_write'],
                 sidebarMeta: {
                     order: 10
                 },

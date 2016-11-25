@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "mysql",
     "public": false
   },
   "AccessToken": {
@@ -34,7 +34,7 @@
     "public": true
   },
   "Note": {
-    "dataSource": "db"
+    "dataSource": "mysql"
   },
   "UserExt": {
     "dataSource": "mysql",
@@ -81,6 +81,10 @@
     "public": true
   },
   "Logging": {
+    "dataSource": "mysql",
+    "public": true
+  },
+  "ProductItem": {
     "dataSource": "mysql",
     "public": true
   }

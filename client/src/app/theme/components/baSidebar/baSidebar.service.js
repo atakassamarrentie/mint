@@ -24,15 +24,14 @@
         var isMenuCollapsed = shouldMenuBeCollapsed();
 
         this.getMenuItems = function (userRoles) {
-          console.log("roles: ", userRoles)
+          
           var states = defineMenuItemStates();
           var menuItems = states.filter(function (item) {
             if (item.abstract) return true
             return item.level == 0 && userRoles.some(function (v) {
-              return item.role.indexOf(v) >= 0
+              return item.role.indexOf(v) >= 0 || item.role.indexOf('everyone')  >= 0
             });
           });
-
           var menuBufferItems = []
 
           menuItems.forEach(function (item) {

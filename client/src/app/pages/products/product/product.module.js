@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/products/product/product.html',
                 controller: 'productPageCtrl',
                 title: 'Product',
-                role: 'admin',
+                role: ['admin', 'products_read', 'products_write'],
                 sidebarMeta: {
                     order: 100
                 },

@@ -9,9 +9,11 @@
         .controller('completedOrderPageCtrl', completedOrderPageCtrl)
 
     /** @ngInject */
-    function completedOrderPageCtrl($rootScope, $scope, Order, Product, Partners, Product_category, Payment, sessionService, $filter, $myModal, toastr, $q) {
+    function completedOrderPageCtrl($rootScope, $scope, Order, Product, Partners, Product_category, Payment, sessionService, $filter, $commonModal, toastr, $q) {
         $scope.payments = Payment.find();
         $scope.sessionService = sessionService
+        $scope.writeAccess = sessionService.role.indexOf('order_write') > -1 || sessionService.role.indexOf('admin') > -1
+
         $scope.completedOrdersCollection = Order.find({ filter: { include: ['product', 'partner', 'payment'], where: { completed: true } } }, function (result) {
             $scope.completedOrdersCollection.forEach(function (item) {
                 item.expected_date = new Date(item.expected_date)
@@ -53,11 +55,13 @@
             "total":
             "quantity":
             }*/
-    
+
 
         $scope.updateOrder = function (data, item) {
             Order.upsert(item, function (result) {
                 toastr.success('Order ' + item.id + ' has been updated successfully');
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
         }
 
@@ -104,35 +108,27 @@
         };
 
         $scope.deleteItem = function (item) {
+            console.log(item)
             var rowId = $scope.completedOrdersCollection.indexOf(item)
-            var message = "Do you really want to delete order " + item.name + " (with id " + item.id + ")"
+            var message = "Do you really want to delete order " + item.product_name + " (with id " + item.id + ")"
             var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
+            var dialog = $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function () {
+                Order.destroyById({ id: item.id }, function (result) {
+                    if (result.count == 0) {
+                        toastr.error('Error: Cannot find order with id ' + item.id);
+                    } else {
+                        if (rowId !== -1) {
+                            $scope.completedOrdersCollection.splice(rowId, 1)
+                        }
+                        toastr.success('Order ' + item.id + ' has been deleted successfully');
+                    }
+                }, function (err) {
+                    toastr.error(err.data.error.message)
+                })
+            })
         };
 
-
-        $rootScope.confirmedDelete = function (id, itemRow) {
-            Order.destroyById({ id: id }, function (result) {
-                if (result.count == 0) {
-                    toastr.error('Error: Cannot find order with id ' + id);
-                } else {
-                    if (itemRow !== -1) {
-                        $scope.completedOrdersCollection.splice(itemRow, 1)
-                    }
-                    toastr.success('Order ' + id + ' has been deleted successfully');
-                }
-            })
-        }
-
-        $scope.completeItem = function (item, itemRow) {
-            Order.prototype$updateAttributes({ id: item.id }, { completed: true }
-                , function (success) {
-                    toastr.success('Order successfully set to completed')
-                }, function (error) {
-                    toastr.error('Error: ' + error);
-                }).$promise
-            $scope.completedOrdersCollection.splice($scope.completedOrdersCollection.indexOf(item), 1)
-        }
 
     }
 })();

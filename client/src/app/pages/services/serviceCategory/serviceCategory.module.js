@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/services/serviceCategory/serviceCategory.html',
                 controller: 'serviceCategoryPageCtrl',
                 title: 'Service Categories',
-                role: 'admin',
+                role: ['admin','services_read','services_write'],
                 sidebarMeta:{
                     order: 200
                 },

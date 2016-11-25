@@ -6,7 +6,8 @@
     "validateUpsert": true
   },
   "mixins": {
-    "Logging": true
+    "Logging": true,
+    "Admin": true
   },
   "properties": {
     "title": {
@@ -96,7 +97,7 @@
       "type": "string"
     },
     "tee": {
-      "type" : "string"
+      "type": "string"
     },
     "nextFamEvName": {
       "type": "string"
@@ -104,13 +105,13 @@
     "nextFamEvDate": {
       "type": "date"
     },
-    "custType":{
+    "custType": {
       "type": "string"
     },
-    "hairColor":{
+    "hairColor": {
       "type": "string"
     },
-    "invoice":{
+    "invoice": {
       "type": "string"
     },
     "cutFreq": {
@@ -126,6 +127,31 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "client_read",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "client_write",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "client_write",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

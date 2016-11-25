@@ -9,11 +9,13 @@
         .controller('salePageCtrl', salePageCtrl)
 
     /** @ngInject */
-    function salePageCtrl($rootScope, UserExt, $scope, Sale, Product, Client, Product_category, Payment, sessionService, $filter, $myModal, toastr, $q) {
+    function salePageCtrl($rootScope, UserExt, $scope, Sale, Product, Client, Product_category, Payment, sessionService, $filter, $commonModal, toastr, $q) {
+        $scope.writeAccess = sessionService.role.indexOf('sale_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.productvalue = {}
         $scope.customPrice = {}
         $scope.payments = Payment.find();
         $scope.employee = UserExt.find({ filter: { where: { employee: true } } })
+
         $scope.salesCollection = Sale.find({ filter: { include: ['product', 'client', 'payment', 'employee'] } }, function (result) {
             $scope.salesCollection.forEach(function (item) {
                 item.sale_date = new Date(item.sale_date)
@@ -28,7 +30,6 @@
         $scope.displayedCollection = [].concat($scope.salesCollection);
 
         $scope.addNewItem = function (data) {
-            console.log(data)
             Product_category.find({ filter: { where: { id: data.productCategoryId } } }, function (result) {
                 data.product_category = result[0].category_name
                 data.price = $scope.productvalue.price
@@ -39,6 +40,7 @@
                 data.clientId = data.clientId.id
                 data.employeeId = data.employee.id
                 data.soldBy = data.employee.username
+                data.clientName = $scope.newsale.client.first_name.first_name + ", " + $scope.newsale.client.first_name.last_name 
                 Sale.create(data, function (result) {
                     toastr.success('New sale has been added successfully with id ' + result.id);
                     $scope.salesCollection = Sale.find({ filter: { include: ['product', 'client', 'payment', 'employee'] } }, function (result) {
@@ -47,7 +49,17 @@
                         })
                         $scope.displayedCollection = [].concat($scope.salesCollection);
                     })
+                }, function (err) {
+                    toastr.error(err.data.error.message)
                 })
+            })
+        }
+
+        $scope.updateSale = function (data, item) {
+            Sale.upsert(item, function (result) {
+                toastr.success('Sale ' + item.id + ' has been updated successfully');
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
         }
 
@@ -106,30 +118,31 @@
 
         $scope.deleteItem = function (item) {
             var rowId = $scope.salesCollection.indexOf(item)
-            var message = "Do you really want to delete sale " + item.name + " (with id " + item.id + ")"
+            var message = "Do you really want to delete sale " + item.product.name + " (with id " + item.id + ")"
             var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
+            var dialog = $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function () {
+                Sale.destroyById({ id: item.id }, function (result) {
+                    if (result.count == 0) {
+                        toastr.error('Error: Cannot find sale with id ' + item.id);
+                    } else {
+                        if (rowId !== -1) {
+                            $scope.salesCollection.splice(rowId, 1)
+                        }
+                        toastr.success('Sale ' + item.id + ' has been deleted successfully');
+                    }
+                }, function (err) {
+                    toastr.error(err.data.error.message)
+                })
+            })
         };
 
 
-        $rootScope.confirmedDelete = function (id, itemRow) {
-            Sale.destroyById({ id: id }, function (result) {
-                if (result.count == 0) {
-                    toastr.error('Error: Cannot find sale with id ' + id);
-                } else {
-                    if (itemRow !== -1) {
-                        $scope.salesCollection.splice(itemRow, 1)
-                    }
-                    toastr.success('Sale ' + id + ' has been deleted successfully');
-                }
-            })
-        }
-
         $scope.calcOrder = function (data) {
-            console.log(data)
             $scope.productvalue.price = data.sell_price
             $scope.productvalue.defaultPrice = data.sell_price
             $scope.productvalue.totalprice = $scope.newItem.$editables[5].scope.$data * data.sell_price
         }
-    }
+
+         }
 })();

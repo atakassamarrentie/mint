@@ -13,7 +13,7 @@
                 controller: 'partnersPageCtrl',
                 title: 'Partners',
                 disabled: true,
-                role: ['admin','bla'],
+                role: ['admin','partner_read', 'partner_write'],
                 sidebarMeta: {
                     icon: 'ion-ribbon-a',
                     order: 20

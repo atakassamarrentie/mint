@@ -10,9 +10,10 @@
 
 
     /** @ngInject */
-    function usersPageCtrl($rootScope, $state, $scope, UserExt, $filter, $myModal, toastr, $q) {
+    function usersPageCtrl($state, sessionService, $scope, UserExt, $filter, $commonModal, toastr, $q) {
         $scope.additem = { visible: false }
         $scope.newUser = {}
+        $scope.writeAccess = sessionService.role.indexOf('users_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.userCollection = UserExt.find()
         $scope.displayedCollection = [].concat($scope.userCollection);
 
@@ -30,7 +31,12 @@
                 toastr.success('User added successfully')
                 $scope.resetForm()
                 $scope.additem.visible = false
-                $scope.userCollection = UserExt.find()
+                $scope.userCollection = UserExt.find(function(success){
+                
+                })
+                
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
         }
 
@@ -46,9 +52,10 @@
             if (button.length >= 8) {
                 UserExt.prototype$updateAttributes({ id: item.id }, { password: button }
                     , function (success) {
-                        console.log(success)
+                        toastr.success('Password changed successfully')
+
                     }, function (error) {
-                        console.log(error)
+                        toastr.error(error.data.error.message)
                     }).$promise
                 row.passwordField = false
             }
@@ -59,7 +66,6 @@
         }
 
         $scope.updateClient = function (data, id) {
-            console.log("update")
             data.id = id
             UserExt.updateAll({ where: { id: id } },
                 {
@@ -70,7 +76,6 @@
                     employee: data.employee
                 },
                 function (result) {
-                    console.log(result)
                     toastr.success('Client ' + id + ' has been updated successfully');
                 })
         }
@@ -78,7 +83,6 @@
 
 
         $scope.viewProfile = function (item) {
-            console.log(item)
             $state.go('profile', { userId: item.id });
         }
 
@@ -143,20 +147,24 @@
             var rowId = $scope.userCollection.indexOf(item)
             var message = "Do you really want to delete User " + item.firstName + "," + item.lastName + "  (with id " + item.id + ")"
             var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
-        };
-
-        $rootScope.confirmedDelete = function (id, itemRow) {
-            UserExt.destroyById({ id: id }, function (result) {
+            var dialog =  $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function(result){
+                UserExt.destroyById({ id: item.id }, function (result) {
                 if (result.count == 0) {
-                    toastr.error('Error: Cannot find user with id ' + id);
+                    toastr.error('Error: Cannot find user with id ' + item.id);
                 } else {
-                    if (itemRow !== -1) {
-                        $scope.userCollection.splice(itemRow, 1)
+                    
+                    if (rowId !== -1) {
+                        $scope.userCollection.splice(rowId, 1)
+                        $scope.displayedCollection = [].concat($scope.userCollection)
                     }
-                    toastr.success('User ' + id + ' has been deleted successfully');
+                    toastr.success('User ' + item.id + ' has been deleted successfully');
                 }
+            }, function (err) {
+                toastr.error(err.data.error.message)
+            })
             })
         }
+
     }
 })();

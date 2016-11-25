@@ -1,4 +1,4 @@
-<div ng-hide="newItem.$visible">
+<div ng-show="!newItem.$visible && writeAccess">
     <button type="button" class="btn btn-info" ng-click="newItem.$show(); clearFields()">Add new order +</button>
 </div>
 
@@ -62,7 +62,7 @@
     </form>
 </div>
 
-<table st-safe-src="ordersCollection" st-table="displayedCollection" class="table table-striped" st-set-filter="myFilter">
+<table st-safe-src="ordersCollection" st-table="displayedCollection" class="table table-striped" st-set-filter="onsFilter">
     <thead>
         <tr class="sortable">
             <th st-sort="id" st-sort-default>ID</th>
@@ -70,14 +70,12 @@
             <th st-sort="expected_date">Exp. Arrival Date</th>
             <th st-sort="product_name">Product Name</th>
             <th st-sort="product_category">Product Category</th>
-            <th st-sort="partner.name">Partner</th>
+            <th st-sort="partnerName">Partner</th>
             <th st-sort="quantity">Quantity</th>
             <th st-sort="price">Price</th>
             <th st-sort="total">Total</th>
             <th st-sort="payment.name">Payment</th>
-            <th st-sort="userId">User ID</th>
             <th st-sort="username">Username</th>
-            <th>&nbsp;</th>
         </tr>
         <tr>
             <th></th>
@@ -92,12 +90,12 @@
                             {{ item.product_category }}
                         </option>
                     </select></th>
-            <th><select st-search="partner.name" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm" >
+            <th><select st-search="partnerName" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm" >
                         <option value="">
                             All items
                         </option>
-                        <option ng-repeat="item in ordersCollection | unique:'partner.name'" value="{{item.partner.name}}">
-                            {{ item.partner.name }}
+                        <option ng-repeat="item in ordersCollection | unique:'partnerName'" value="{{item.partnerName}}">
+                            {{ item.partnerName }}
                         </option>
                     </select></th>
                     <th></th>
@@ -111,9 +109,8 @@
                             {{ item.payment.name }}
                         </option>
                     </select></th>
-                    <th><input st-search="userId" placeholder="search" class="input-sm form-control" type="search" /></th>
                     <th><input st-search="username" placeholder="search" class="input-sm form-control" type="search" /></th>
-                    <th></th>
+                    <th ng-show="writeAccess"></th>
         </tr>
     </thead>
 
@@ -126,13 +123,13 @@
                 </span></td>
             <td>{{item.product_name}}</td>
             <td>{{item.product_category}}</td>
-            <td>{{item.partner.name}}</td>
+            <td>{{item.partnerName}}</td>
             <td>{{item.quantity}}</td>
             <td style="white-space:nowrap">{{item.price}} $</td>
             <td style="white-space:nowrap">{{item.total}} $</td>
             <td>{{item.payment.name}}</td>
             <td title="ID: {{item.userId}}">{{item.username}}</td>
-            <td style="min-width:200px">
+            <td style="min-width:200px" ng-show="writeAccess" align="right">
                 <div ng-show="!rowform.$visible">
                     <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
                     <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
@@ -148,7 +145,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="6" class="text-center">
+            <td colspan="12" class="text-center">
                 <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
             </td>
         </tr>

@@ -10,12 +10,13 @@
 
 
     /** @ngInject */
-    function clientPageCtrl($rootScope, $scope, Client, UserExt, Sale, Saleservice, $filter, $myModal, $clientPropModal, toastr, $q) {
+    function clientPageCtrl($rootScope, sessionService, $scope, Client, UserExt, Sale, Saleservice, $filter, $commonModal, $clientPropModal, toastr, $q) {
 
         $scope.clientCollection = Client.find()
         $scope.prodBought = {}
         $scope.serviceBought = {}
 
+        $scope.writeAccess = sessionService.role.indexOf('client_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.addNewItem = function (data) {
             Client.create(data, function (result) {
                 toastr.success('New client has been added successfully with id ' + result.id);
@@ -63,7 +64,21 @@
             var rowId = $scope.clientCollection.indexOf(item)
             var message = "Do you really want to delete client " + item.first_name + "," + item.last_name + "  (with id " + item.id + ")"
             var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
+            var dialog = $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function () {
+                Client.destroyById({ id: item.id }, function (result) {
+                    if (result.count == 0) {
+                        toastr.error('Error: Cannot find client with id ' + item.id);
+                    } else {
+                        if (rowId !== -1) {
+                            $scope.clientCollection.splice(rowId, 1)
+                        }
+                        toastr.success('Client ' + item.id + ' has been deleted successfully');
+                    }
+                }, function (error) {
+                    toastr.error(error.data.error.message)
+                })
+            })
         };
 
         $scope.editItem = function (item) {
@@ -84,7 +99,7 @@
 
 
         $scope.createItem = function () {
-            
+
             var dialog = $clientPropModal.open('lg', null, null, true)
             $scope.editable = true
             dialog.result.then(function () {
@@ -112,19 +127,6 @@
                 }
                 return d.promise
             }
-        }
-
-        $rootScope.confirmedDelete = function (id, itemRow) {
-            Client.destroyById({ id: id }, function (result) {
-                if (result.count == 0) {
-                    toastr.error('Error: Cannot find product with id ' + id);
-                } else {
-                    if (itemRow !== -1) {
-                        $scope.clientCollection.splice(itemRow, 1)
-                    }
-                    toastr.success('Product ' + id + ' has been deleted successfully');
-                }
-            })
         }
 
         $scope.checkEmpty = function (data, name) {

@@ -547,7 +547,7 @@
 
           <br><br><br>
           <div ng-show="editable" style="display: inline-block"><button type="submit" class="btn btn-success btn-auth" ng-disabled="newClientForm.$invalid">Submit</button></div>
-          <div ng-show="!editable" style="display: inline-block"><button type="button" class="btn btn-info" ng-click="edit()">Edit</button></div>
+          <div ng-show="!editable  && writeAccess" style="display: inline-block"><button type="button" class="btn btn-info" ng-click="edit()">Edit</button></div>
           <div style="display: inline-block"><button type="button" class="btn btn-warning" ng-click="vm.cancel()">Close</button></div>
           
         </form>

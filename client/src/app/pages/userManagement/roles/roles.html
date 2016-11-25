@@ -12,6 +12,8 @@
             <th>
                 <input st-search="username" placeholder="search for username" class="input-sm form-control" type="search" />
             </th>
+            <th></th>
+            <th ng-show="writeAccess"></th>
         </tr>
     </thead>
 
@@ -19,20 +21,12 @@
         <tr ng-repeat="item in displayedCollection">
             <td class="table-id">{{item.id}}</td>
             <td>{{item.username}}</td>
-            <td>
-                <span editable-checklist="item.roleIds" e-name="roles" e-ng-options="s.id as s.name for s in allRoles" e-form="rowform">
-        {{showRoles(item.roleIds)}}
-        </span>
-            </td>
-            <td style="min-width:200px" align="right">
-                <div ng-show="!rowform.$visible">
-                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
+            <td>{{showRoles(item.roleIds)}}</td>
+            <td style="min-width:200px" align="right" ng-show="writeAccess">
+                <div>
+                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="editRoles(item)"><i class="ion-edit"></i></button>
                 </div>
-                <form editable-form name="rowform" onbeforesave="updateClient($data, item.id)" ng-show="rowform.$visible">
-                    <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
-                    <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
-                </form>
-            </td>
+                           </td>
         </tr>
     </tbody>
 

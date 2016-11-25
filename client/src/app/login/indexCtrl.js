@@ -11,7 +11,7 @@
 
 
     /** @ngInject */
-    function indexPageCtrl($rootScope, $scope, $filter, Partners, $myModal, toastr, $q) {
+    function indexPageCtrl($rootScope, $scope, $filter, Partners, toastr, $q) {
         $scope.reg = false 
         $scope.reg = $rootScope.reg
     }

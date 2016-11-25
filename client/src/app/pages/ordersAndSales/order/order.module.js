@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/ordersAndSales/order/order.html',
                 controller: 'orderPageCtrl',
                 title: 'Pending Orders',
-                role: 'admin',
+                role: ['admin','order_read','order_write'],
                 sidebarMeta: {
                     order: 200
                 },

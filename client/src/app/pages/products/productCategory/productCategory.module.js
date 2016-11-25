@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/products/productCategory/productCategory.html',
                 controller: 'productCategoryPageCtrl',
                 title: 'Product Categories',
-                role: 'admin',
+                role: ['admin','products_read', 'products_write'],
                 sidebarMeta:{
                     order: 200
                 },

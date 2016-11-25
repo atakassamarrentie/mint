@@ -130,7 +130,7 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-disabled="userInfo.$invalid" ng-show=owner ng-click="updateUser()">
+      <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-disabled="userInfo.$invalid" ng-hide=!owner ng-click="updateUser()">
       <i class="ion-android-checkmark-circle"></i>Update Profile
       </button>
     </form>
@@ -190,7 +190,7 @@
         </div>
 
       </div>
-      <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-disabled="userPassword.$invalid" ng-show=owner
+      <button type="button" class="btn btn-primary btn-with-icon save-profile" ng-disabled="userPassword.$invalid" ng-hide=!owner
         ng-click="changePassword()">
       <i class="ion-key"></i>Change Password
       </button>

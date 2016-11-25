@@ -10,10 +10,10 @@
 
 
     /** @ngInject */
-    function servicePageCtrl($rootScope, $scope, Service, Service_category, $filter, $myModal, toastr, $q) {
+    function servicePageCtrl($rootScope, $scope, Service, sessionService, Service_category, $filter, $commonModal, toastr, $q) {
         $scope.newService = {}
         $scope.serviceCategory = {}
-
+        $scope.writeAccess = sessionService.role.indexOf('services_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.serviceCollection = Service.find({ filter: { include: 'serviceCategory' } }, function (result) {
             $scope.serviceCollection.forEach(function (item, index) {
                 $scope.serviceCollection[index].fulfilled = item.reorder >= item.inventory
@@ -31,10 +31,7 @@
         $scope.addNewItem = function (data) {
             data.inventory = 0
             Service.create(data, function (result) {
-
                 toastr.success('New service has been added successfully with id ' + result.id);
-
-
                 $scope.serviceCollection = Service.find({ filter: { include: 'serviceCategory' } }, function (result) {
                     $scope.serviceCollection.forEach(function (item, index) {
                         $scope.serviceCollection[index].fulfilled = item.reorder >= item.inventory
@@ -42,28 +39,25 @@
                 })
 
                 $scope.displayedCollection = [].concat($scope.serviceCollection);
-
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
         }
 
-        $scope.deleteItem = function (item) {
-            var rowId = $scope.serviceCollection.indexOf(item)
-            var message = "Do you really want to delete service " + item.name + " (with id " + item.id + ")"
-            var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
-        };
+
 
         $scope.updateService = function (data, id) {
             data.id = id
             Service.upsert(data, function (result) {
                 toastr.success('Service ' + id + ' has been updated successfully');
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
             $scope.displayedCollection.forEach(function (item, index) {
-                if (item.id == id){
+                if (item.id == id) {
                     $scope.displayedCollection[index].fulfilled = data.reorder >= data.inventory
                     console.log()
                 }
-                
             })
         }
 
@@ -94,18 +88,25 @@
             return d.promise
         }
 
-        $rootScope.confirmedDelete = function (id, itemRow) {
-            Service.destroyById({ id: id }, function (result) {
-                if (result.count == 0) {
-                    toastr.error('Error: Cannot find service with id ' + id);
-                } else {
-                    if (itemRow !== -1) {
-                        $scope.serviceCollection.splice(itemRow, 1)
+        $scope.deleteItem = function (item) {
+            var rowId = $scope.serviceCollection.indexOf(item)
+            var message = "Do you really want to delete service " + item.name + " (with id " + item.id + ")"
+            var title = "Confirm"
+            var dialog = $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function () {
+                Service.destroyById({ id: item.id }, function (result) {
+                    if (result.count == 0) {
+                        toastr.error('Error: Cannot find service with id ' + item.id);
+                    } else {
+                        if (rowId !== -1) {
+                            $scope.serviceCollection.splice(rowId, 1)
+                        }
+                        toastr.success('Service ' + item.id + ' has been deleted successfully');
                     }
-                    toastr.success('Service ' + id + ' has been deleted successfully');
-                }
+                }, function (err) {
+                    toastr.error(err.data.error.message)
+                })
             })
-        }
-
+        };
     }
 })();

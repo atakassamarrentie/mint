@@ -9,11 +9,13 @@
     .controller('BaSidebarCtrl', BaSidebarCtrl);
 
   /** @ngInject */
-  function BaSidebarCtrl($scope, baSidebarService, UserExt, Role, sessionService) {
+  function BaSidebarCtrl($rootScope, $scope, baSidebarService, UserExt, Role, sessionService) {
     UserExt.getRolesById({id: sessionService.user.id}, function(result){
       $scope.menuItems = baSidebarService.getMenuItems(result.roles);
+      $rootScope.defaultMenuItem = $scope.menuItems[0] 
       $scope.defaultSidebarState = $scope.menuItems[0].stateRef;
     })
+    
     
     
 

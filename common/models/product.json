@@ -5,6 +5,10 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "Logging": true,
+    "Admin": true
+  },
   "properties": {
     "name": {
       "type": "string",
@@ -24,6 +28,9 @@
     "inventory": {
       "type": "number",
       "required": true
+    },
+    "packing": {
+      "type": "string"
     }
   },
   "validations": [],
@@ -34,6 +41,43 @@
       "foreignKey": ""
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "products_read",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "products_write",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "products_write",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "order_read",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "order_write",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

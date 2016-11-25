@@ -19,7 +19,6 @@
           template : '<ui-view></ui-view>',
           abstract: true,
           title: 'User Management',
-          role: 'admin',
           sidebarMeta: {
             icon: 'ion-man',
             order: 300

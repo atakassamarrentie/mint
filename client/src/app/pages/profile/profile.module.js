@@ -16,7 +16,7 @@
           title: 'Profile',
           templateUrl: 'app/pages/profile/profile.html',
           controller: 'ProfilePageCtrl',
-          role: 'admin',
+          role: ['admin', 'everyone', 'users_read', 'users_write'],
           params: {
             userId: null
           },

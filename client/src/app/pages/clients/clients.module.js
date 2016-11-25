@@ -13,7 +13,7 @@
                 controller: 'clientPageCtrl',
                 title: 'Clients',
                 disabled: true,
-                role: ['admin','bla'],
+                role: ['admin','client_read','client_write'],
                 sidebarMeta: {
                     icon: 'ion-person-stalker',
                     order: 10

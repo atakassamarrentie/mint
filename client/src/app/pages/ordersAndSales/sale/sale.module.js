@@ -12,7 +12,7 @@
                 templateUrl: 'app/pages/ordersAndSales/sale/sale.html',
                 controller: 'salePageCtrl',
                 title: 'Product Sales',
-                role: 'admin',
+                role: ['admin','sale_read', 'sale_write'],
                 sidebarMeta: {
                     order: 300
                 },

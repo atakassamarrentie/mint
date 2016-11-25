@@ -1,4 +1,4 @@
-<div ng-hide="newItem.$visible">
+<div ng-show="!newItem.$visible && writeAccess">
   <button type="button" class="btn btn-info" ng-click="newItem.$show()">Add new product +</button>
 </div>
 <div ng-show="newItem.$visible">
@@ -90,7 +90,7 @@
                         </option>
                     </select></th>
       </th>
-      <th></th>
+      <th ng-show="writeAccess"></th>
     </tr>
   </thead>
 
@@ -128,10 +128,11 @@
         </span>
       </td>
       <td width="30px"><i ng-class="item.fulfilled ? 'ion-close-round redrow' : 'ion-checkmark-round greenrow'"></i></td>
-      <td style="min-width:100px">
+      <td style="min-width:150px"  align="right">
         <div ng-show="!rowform.$visible">
-          <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
-          <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
+          <button type="button" class="btn btn-primary btn-icon" data-toggle="modal" ng-click="inventory(item)"><i class="ion-clipboard"></i></button>
+          <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()" ng-show="writeAccess"> <i class="ion-edit"></i></button>
+          <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)" ng-show="writeAccess"><i class="ion-trash-b"></i></button>
         </div>
         <form editable-form name="rowform" onbeforesave="updateProduct($data, item.id)" ng-show="rowform.$visible" shown="inserted == item">
           <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
@@ -142,7 +143,7 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="6" class="text-center">
+      <td colspan="9" class="text-center">
         <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
       </td>
     </tr>

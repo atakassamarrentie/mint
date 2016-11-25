@@ -10,16 +10,18 @@
 
 
     /** @ngInject */
-    function partnersPageCtrl($rootScope, $scope, $filter, Partners, $myModal, toastr, $q) {
+    function partnersPageCtrl($rootScope, $scope, $filter, sessionService, Partners, $commonModal, toastr, $q) {
         $scope.partnersCollection = Partners.find()
         $scope.displayedCollection = [].concat($scope.partnersCollection);
-
+        $scope.writeAccess = sessionService.role.indexOf('partner_write') > -1 || sessionService.role.indexOf('admin') > -1
         $scope.addNewItem = function (data) {
             Partners.create(data, function (result) {
                 console.log(result)
                 toastr.success('New product has been added successfully with id ' + result.id);
                 $scope.partnersCollection = Partners.find()
                 $scope.displayedCollection = [].concat($scope.partnersCollection);
+            }, function (err) {
+                toastr.error(err.data.error.message)
             })
             
         }
@@ -51,30 +53,33 @@
             Partners.upsert(data, function (result) {
                 console.log(result)
                 toastr.success('Partner ' + id + ' has been updated successfully');
+            }, function (err){
+                toastr.error(err.data.error.message)
             })
         }
 
         $scope.deleteItem = function (item) {
             var rowId = $scope.partnersCollection.indexOf(item)
-            console.log("itt")
             var message = "Do you really want to delete partner " + item.name + " (with id " + item.id + ")"
             var title = "Confirm"
-            $myModal.open('sm', title, message, item.id, rowId)
+            var dialog = $commonModal.open('sm', title, message, item.id, rowId)
+            dialog.result.then(function(){
+                Partners.destroyById({ id: item.id }, function (result) {
+                if (result.count == 0) {
+                    toastr.error('Error: Cannot find partner with id ' + item.id);
+                } else {
+                    if (rowId !== -1) {
+                        $scope.partnersCollection.splice(rowId, 1)
+                    }
+                    toastr.success('Partner ' + item.id + ' has been deleted successfully');
+                }
+            }, function (err){
+                toastr.error(err.data.error.message)
+            })
+            })
         };
 
     
-          $rootScope.confirmedDelete = function (id, itemRow) {
-            Partners.destroyById({ id: id }, function (result) {
-                if (result.count == 0) {
-                    toastr.error('Error: Cannot find partner with id ' + id);
-                } else {
-                    if (itemRow !== -1) {
-                        $scope.partnersCollection.splice(itemRow, 1)
-                    }
-                    toastr.success('Partner ' + id + ' has been deleted successfully');
-                }
-            })
-        }
     
     }
 })();

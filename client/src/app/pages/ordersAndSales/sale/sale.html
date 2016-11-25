@@ -1,4 +1,4 @@
-<div ng-hide="newItem.$visible">
+<div ng-show="!newItem.$visible && writeAccess">
     <button type="button" class="btn btn-info" ng-click="newItem.$show(); clearFields()">Add new sale +</button>
 </div>
 
@@ -27,7 +27,7 @@
                                     onbeforesave="checkEmpty($data, 'Sold By')"></span></td>
                         </tr>
                         <tr height="35px">
-                            <td><label for="partner">Client</label></td>
+                            <td><label for="client">Client</label></td>
                             <td>
                                 <span editable-select2="newsale.client.first_name" e-form="newItem" e-name="clientId" e-placeholder="Client name" e-view-field="first_name" e-select-choices="item in clients |  filter: $select.search" onbeforesave="checkEmpty($data, 'Client')">
         {{ newsale.client || '-' }}
@@ -72,27 +72,26 @@
     </form>
 </div>
 
-<table st-safe-src="salesCollection" st-table="displayedCollection" class="table table-striped" st-set-filter="myFilter">
+<table st-safe-src="salesCollection" st-table="displayedCollection" class="table table-striped" st-set-filter="onsFilter">
     <thead>
         <tr class="sortable">
             <th st-sort="id" st-sort-default>ID</th>
             <th st-sort="sale_date">sale Date</th>
             <th st-sort="product_name">Product Name</th>
             <th st-sort="product_category">Product Category</th>
-            <th st-sort="partner.name">Client</th>
+            <th st-sort="clientName">Client</th>
             <th st-sort="quantity">Quantity</th>
             <th st-sort="price">Price</th>
             <th st-sort="total">Total</th>
             <th st-sort="payment.name">Payment</th>
             <th st-sort="username">Entered By</th>
             <th st-sort="soldBy">Sold By</th>
-            <th>&nbsp;</th>
         </tr>
         <tr>
             <th></th>
             <th><input type="date" st-search="sale_date" style="width:130px;" /></th>
             <th><input st-search="product_name" placeholder="search" class="input-sm form-control" type="search" /></th>
-            <th><select st-search="product_category" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control
+            <th><select st-search="product_category" st-input-event="change" st-delay=0 class="form-control
                                     input-sm">
                         <option value="">
                             All items
@@ -101,13 +100,12 @@
                             {{ item.product_category }}
                         </option>
                     </select></th>
-            <th><select st-search="partner.name" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control
-                                    input-sm">
+            <th><select st-search="clientName" st-input-event="change" st-delay=0 class="form-control input-sm">
                         <option value="">
                             All items
                         </option>
-                        <option ng-repeat="item in salesCollection | unique: 'client.id'" value="{{item.client.first_name}}">
-                            {{item.client.first_name}}, {{item.client.last_name}}
+                        <option ng-repeat="item in salesCollection  | unique: 'clientName'" value="{{item.clientName}}">
+                            {{item.clientName}}
                         </option>
                     </select></th>
             <th></th>
@@ -124,7 +122,7 @@
                     </select></th>
             <th><input st-search="userId" placeholder="search" class="input-sm form-control" type="search" /></th>
             <th><input st-search="username" placeholder="search" class="input-sm form-control" type="search" /></th>
-            <th></th>
+            <th ng-show="writeAccess"></th>
         </tr>
     </thead>
 
@@ -134,21 +132,21 @@
             <td><span editable-date="item.sale_date" e-name="sale_date" e-form="rowform">{{item.sale_date | date:"MM-dd-yyyy"}}</span></td>
             <td>{{item.product_name}}</td>
             <td>{{item.product_category}}</td>
-            <td style="white-space:nowrap">{{item.client.first_name}}, {{item.client.last_name}}</td>
+            <td style="white-space:nowrap">{{item.clientName}}</td>
             <td>{{item.quantity}}</td>
             <td>{{item.price}} $</td>
             <td>{{item.total}} $</td>
             <td>{{item.payment.name}}</td>
             <td title="ID: {{item.userId}}">{{item.username}}</td>
             <td title="ID: {{item.employeeId}}">{{item.soldBy}}</td>
-            <td style="min-width:200px">
+            <td style="min-width:150px" ng-show="writeAccess" align="right">
                 <div ng-show="!rowform.$visible">
                     <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()
 "><i class="ion-edit"></i></button>
                     <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)
 "><i class="ion-trash-b"></i></button>
                 </div>
-                <form editable-form name="rowform" onbeforesave="updatesale($data, item)" ng-show="rowform.$visible
+                <form editable-form name="rowform" onbeforesave="updateSale($data, item)" ng-show="rowform.$visible
 " shown="inserted==item">
                     <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
                     <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
@@ -159,7 +157,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="6" class="text-center">
+            <td colspan="12" class="text-center">
                 <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
             </td>
         </tr>
