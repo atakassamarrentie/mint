@@ -20,6 +20,7 @@ angular.module('BlurAdmin', [
   'toggle-switch',
   'ngAvatar',
   'trTrustpass',
+  'angular-bar-code-scanner',
   
   'BlurAdmin.theme',
   'BlurAdmin.pages',

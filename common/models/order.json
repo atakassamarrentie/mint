@@ -14,28 +14,8 @@
       "type": "date",
       "required": true
     },
-    "product_name": {
-      "type": "string",
-      "required": true
-    },
-    "product_category": {
-      "type": "string",
-      "required": true
-    },
     "expected_date": {
       "type": "date",
-      "required": true
-    },
-    "price": {
-      "type": "number",
-      "required": true
-    },
-    "total": {
-      "type": "number",
-      "required": true
-    },
-    "quantity": {
-      "type": "number",
       "required": true
     },
     "completed": {
@@ -54,11 +34,6 @@
     "partner": {
       "type": "belongsTo",
       "model": "Partners",
-      "foreignKey": ""
-    },
-    "product": {
-      "type": "belongsTo",
-      "model": "Product",
       "foreignKey": ""
     },
     "payment": {

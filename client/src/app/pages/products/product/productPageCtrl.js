@@ -14,9 +14,9 @@
         $scope.newProduct = {}
         $scope.productCategory = {}
         $scope.writeAccess = sessionService.role.indexOf('products_write') > -1 || sessionService.role.indexOf('admin') > -1
-        $scope.productCollection = Product.find({ filter: { include: 'productCategory' } }, function (result) {
+        $scope.productCollection = Product.find({ filter: { include: ['productCategory', 'productItem'] } }, function (result) {
             $scope.productCollection.forEach(function (item, index) {
-                $scope.productCollection[index].fulfilled = item.reorder >= item.inventory
+                $scope.productCollection[index].fulfilled = item.reorder >= item.productItem.length
             })
         })
 
@@ -35,9 +35,9 @@
                 toastr.success('New product has been added successfully with id ' + result.id);
 
 
-                $scope.productCollection = Product.find({ filter: { include: 'productCategory' } }, function (result) {
+                $scope.productCollection = Product.find({ filter: { include: ['productCategory', 'productItem'] } }, function (result) {
                     $scope.productCollection.forEach(function (item, index) {
-                        $scope.productCollection[index].fulfilled = item.reorder >= item.inventory
+                        $scope.productCollection[index].fulfilled = item.reorder >= item.productItem.length
                     })
                 })
 
@@ -75,8 +75,7 @@
                 toastr.success('Product ' + id + ' has been updated successfully');
                 $scope.displayedCollection.forEach(function (item, index) {
                     if (item.id == id) {
-                        $scope.displayedCollection[index].fulfilled = data.reorder >= data.inventory
-                        console.log()
+                        $scope.displayedCollection[index].fulfilled = item.reorder >= item.productItem.length
                     }
 
                 })
@@ -87,10 +86,19 @@
 
         }
 
-        $scope.inventory = function(item) {
-            var rowId = $scope.productCollection.indexOf(item)
-            var title = "Inventory of " + item 
-            var invDialog = $productInvModal.open('lg', title, item.id, rowId)
+        $scope.inventory = function (itm) {
+            var rowId = $scope.productCollection.indexOf(itm)
+
+            var invDialog = $productInvModal.open('lg', itm, rowId)
+            invDialog.result.then(function () { }, function () {
+                $scope.productCollection = Product.find({ filter: {include: ['productCategory', 'productItem']  } }, function (result) {
+                    $scope.productCollection.forEach(function (item, index) {
+                        $scope.productCollection[index].fulfilled = item.reorder >= item.productItem.length
+                    })
+                })
+
+                $scope.displayedCollection = [].concat($scope.productCollection);
+            })
         }
 
         $scope.showCategory = function (catId) {

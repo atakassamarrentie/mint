@@ -25,10 +25,6 @@
     "sell_price": {
       "type": "number"
     },
-    "inventory": {
-      "type": "number",
-      "required": true
-    },
     "packing": {
       "type": "string"
     }
@@ -39,6 +35,11 @@
       "type": "belongsTo",
       "model": "Product_category",
       "foreignKey": ""
+    },
+    "productItem": {
+      "type": "hasMany",
+      "model": "ProductItem",
+      "foreignKey": "productId"
     }
   },
   "acls": [

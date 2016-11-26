@@ -9,7 +9,7 @@
         .controller('orderPageCtrl', orderPageCtrl)
 
     /** @ngInject */
-    function orderPageCtrl($rootScope, $scope, Order, Product, Partners, Product_category, Payment, sessionService, $filter, $commonModal, toastr, $q) {
+    function orderPageCtrl($rootScope, $scope, Order, Product, Partners, Product_category, Payment, $orderPropModal, sessionService, $filter, $commonModal, toastr, $q) {
         $scope.payments = Payment.find();
         $scope.customPrice = {}
         $scope.productvalue = {}
@@ -156,6 +156,11 @@
 
             $scope.opened[elementOpened] = !$scope.opened[elementOpened];
         };
+
+        $scope.orderModal = function () {
+            var orderModalDialog = $orderPropModal.open('lg')
+
+        }
 
         $scope.deleteItem = function (item) {
             var rowId = $scope.ordersCollection.indexOf(item)

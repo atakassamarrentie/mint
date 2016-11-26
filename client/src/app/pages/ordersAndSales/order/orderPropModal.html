@@ -1,0 +1,128 @@
+<div class="modal-content">
+  <div class="modal-header bg-success">
+    <i class="ion-flame modal-icon"></i><span> Add new order</span>
+  </div>
+  <div class="modal-body">
+    <div class="profile-page">
+      <div class="panel-content">
+        <form name="orderForm">
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputTitle" class="col-sm-5 control-label">Order Date</label>
+                <div class="col-sm-7">
+                  <input type="date" ng-model="newOrder.order_date" class="form-control" name="inputTitle" id="inputTitle" placeholder="">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputGender" class="col-sm-5 control-label">Expected Arrival Date</label>
+                <div class="col-sm-7">
+                  <input type="date" ng-model="newOrder.expected_date" class="form-control" name="inputTitle" id="inputTitle" placeholder="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputTitle" class="col-sm-5 control-label">Partner</label>
+                <div class="col-sm-7">
+                  <select class="form-control" ng-model="newOrder.partner" selectpicker required ng-options="s.id as s.name for s in partners">
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputGender" class="col-sm-5 control-label">Payment</label>
+                <div class="col-sm-7">
+                  <select class="form-control" ng-model="newOrder.payment" selectpicker required ng-options="s.id as s.name for s in payments">
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="with-line">Products</h3><br>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputTitle" class="col-sm-5 control-label">Product</label>
+                <div class="col-sm-7">
+                  <select class="form-control" ng-change="productChanged($data)" ng-model="newOrder.product" selectpicker required ng-options="s as s.name for s in filteredProducts">
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputGender" class="col-sm-5 control-label">Category</label>
+                <div class="col-sm-7">
+                  <select class="form-control" ng-change="productCategoryChanged()" ng-model="newOrder.category" selectpicker required ng-options="s.id as s.category_name for s in productCategory">
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputTitle" class="col-sm-5 control-label">Quantity</label>
+                <div class="col-sm-7">
+                  <input type="number" ng-model="newOrder.quantity" class="form-control" placeholder="">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputTitle" class="col-sm-5 control-label">Custom Price</label>
+                <div class="col-sm-7">
+                  <toggle-switch type="checkbox" color="primary" ng-model="newOrder.customPrice" on-label="YES" off-label="NO" on-change="switchChanged()"></toggle-switch>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputTitle" class="col-sm-5 control-label">Price</label>
+                <div class="col-sm-7">
+                  <input type="number" ng-readonly="!newOrder.customPrice" ng-model="newOrder.price" class="form-control" placeholder="">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row clearfix">
+                <label for="inputTitle" class="col-sm-5 control-label">Total</label>
+                <div class="col-sm-7">
+                  <input type="number" ng-model="newOrder.total" class="form-control" placeholder="">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+          <div ng-show="editable" style="display: inline-block"><button type="submit" class="btn btn-success btn-auth" ng-disabled="newClientForm.$invalid">Submit</button></div>
+          <div ng-show="!editable  && writeAccess" style="display: inline-block"><button type="button" class="btn btn-info" ng-click="edit()">Edit</button></div>
+          <div style="display: inline-block"><button type="button" class="btn btn-warning" ng-click="vm.cancel()">Close</button></div>
+
+        </form>
+      </div>
+    </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</div>

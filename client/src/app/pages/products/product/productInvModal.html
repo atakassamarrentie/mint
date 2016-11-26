@@ -1,18 +1,18 @@
-<div class="modal-content">
+<div class="modal-content" >
   <div class="modal-header bg-success">
     <i class="ion-flame modal-icon"></i><span>Inventory</span>
   </div>
-  <div class="modal-body">
-    <div class="profile-page">
-      <div class="panel-content">
-
+  <div class="modal-body" >
+    <div class="profile-page" > 
+      <div class="panel-content" >
+{{focusedItem}}
         <form name="newLabelForm">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group row clearfix">
                 <label for="newLabel.label" class="col-sm-4 control-label">Label</label>
                 <div class="col-sm-8">
-                  <input type="number" ng-model="newLabel.label" class="form-control" name="newLabel" id="newLabel" placeholder="" ng-keyup="submitLabel($event)">
+                  <input type="number" ng-focus="focusedItem='label'" ng-blur="focusedItem=null" ng-keyup="submitLabel($event)" ng-model="newLabel.label" class="form-control" placeholder="" >
                 </div>
               </div>
             </div>
@@ -20,7 +20,7 @@
               <div class="form-group row clearfix">
                 <label for="newLabel.invoice" class="col-sm-4 control-label">Invoice</label>
                 <div class="col-sm-8">
-                    <input type="number" ng-model="newLabel.invoice" class="form-control" name="newInvoice" id="newInvoice" placeholder="" ng-keyup="submitLabel($event)">
+                    <input type="number" ng-focus="focusedItem='invoice'" ng-blur="focusedItem=null" ng-model="newLabel.invoice" class="form-control" placeholder="" >
                 </div>
               </div>
             </div>
@@ -41,8 +41,8 @@
             </tr>
             <tr>
               <th></th>
-              <th><input st-search="lable" placeholder="search for label" class="input-sm form-control" type="search" /></th>
-              <th><input st-search="invoice" placeholder="search for invoice" class="input-sm form-control" type="search" /></th>
+              <th><input st-search="lable" ng-focus="focusedItem='searchLabel'" st-delay="1000" ng-blur="focusedItem=null" placeholder="search for label" ng-model="newLabel.searchLabel" class="input-sm form-control" type="search" /></th>
+              <th><input st-search="invoice" ng-focus="focusedItem='searchInvoice'" st-delay="1000" ng-blur="focusedItem=null" placeholder="search for invoice" ng-model="newLabel.searchInvoice" class="input-sm form-control" type="search" /></th>
               <th></th>
               <th ng-show="writeAccess"></th>
             </tr>
@@ -53,6 +53,7 @@
               <td class="table-id">{{item.id}}</td>
               <td>{{item.label}}</td>
               <td>{{item.invoice}}</td>
+              <td><button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button></td>
             </tr>
           </tbody>
           <tfoot>
