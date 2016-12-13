@@ -1,0 +1,84 @@
+<div ba-panel ba-panel-title="Complete Order" ba-panel-class="with-scroll">
+    <ba-wizard on-finish="endFunction()">
+        <ba-wizard-step title="Invoice" form="vm.invoiceForm">
+            <form name="vm.invoiceForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group has-feedback" ng-class="{'has-error': vm.invoiceForm.invoiceNumber.$invalid && (vm.invoiceForm.invoiceNumber.$dirty || vm.invoiceForm.$submitted)}">
+                            <label for="invoiceNumber1">Invoice Number</label>
+                            <input type="number" class="form-control" id="invoiceNumber1" name="invoiceNumber" placeholder="Invoice Number" ng-model="vm.invoice.invoiceNumber" required>
+                            <span class="help-block error-block basic-block">Required</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group  has-feedback" ng-class="{'has-error': vm.invoiceForm.expected_date.$invalid && (vm.invoiceForm.expected_date.$dirty || vm.invoiceForm.$submitted)}">
+                            <label for="expected_date" class="col-sm-4 control-label">Arrival Date</label>
+                            <input type="date" class="form-control" id="expected_date" name="expected_date" ng-model="vm.invoice.expected_date">
+                            <span class="help-block error-block basic-block">Required</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ba-wizard-step>
+        <div ng-repeat="prd in products" ng-init="formName = 'p' + prd.productId">
+            <ba-wizard-step title="Product: {{prd.productName}}" form="vm[formName]">
+
+
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <b>Quantity:</b> {{labels[prd.productName].labels.length || 0}} / {{prd.quantity}}
+                        <i class="ion-checkmark greenrow" ng-show="labels[prd.productName].labels.length >= prd.quantity"><br>You can continue with the next product</i>
+                        <i class="ion-close redrow" ng-hide="labels[prd.productName].labels.length >= prd.quantity"><br>Please add all the labels first</i>
+                    </div>
+                    <div class="col-md-6" ng-hide="labels[prd.productName].labels.length >= prd.quantity">
+                        <input type="number" class="form-control" id="label" name="label" placeholder="Label" ng-model="vm.label" required ng-keyup="validateLabel($event, vm.label, prd.productName, prd.productId, prd.quantity)">
+                        <span class="help-block error-block basic-block">Required</span>
+
+                    </div>
+
+                </div>
+                <br>
+                <ng-form name="vm.{{formName}}" ng-init="initForm(formName)">
+                    <input type=hidden ng-model=vm[formName].valid required>
+                    
+                </ng-form>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr ng-repeat="lbl in labels[prd.productName].labels">
+                            <td style="width:100px"><button type="button " class="btn btn-danger btn-icon " data-toggle="modal " ng-click="deleteItem(lbl, prd.productName, prd.productId, quantity)
+                                    "><i class="ion-trash-b "></i></button></td>
+                            <td style="width:100%"> {{lbl}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </ba-wizard-step>
+        </div>
+        <ba-wizard-step title="Finish" ng-if="loaded">
+            All requested data has been collected. Please click on Submit, to complete the order
+            <form class="form-horizontal" name="vm.finishForm" novalidate>
+                <br>
+                
+                <br>
+                <table class="table table-striped">
+                    <tr ng-repeat="(key, value) in labels">
+                        <td style="text-align:left">{{key}}</td>
+                        <td style="text-align:left width: 30px">{{value.completed || 0}} / {{value.labels.length}}</td>
+                        <td style="text-align:right width: 100px">
+                            <div class="yellowrow" ng-show="!value.status">Waiting for upload</div>
+                            <div ng-show="value.status == 'saving'"><img src="assets/img/loading.gif" width="20"> Saving</div>
+                            <div class="greenrow" ng-show="value.status == 'done'">Done</div>
+                            </td>
+                    </tr> 
+                </table>
+                
+
+               
+                
+                
+            </form>
+        </ba-wizard-step>
+    </ba-wizard>
+</div>

@@ -1,11 +1,25 @@
 'use strict';
 
 module.exports = function (Order) {
-    Order.observe('before save', function (ctx, next) {
+  Order.observe('before save', function (ctx, next) {
+      
         if (ctx.hasOwnProperty('currentInstance') && ctx.data.hasOwnProperty('completed') && ctx.data.completed) {
             var Payment = Order.app.models.Payment
             var Product = Order.app.models.Product
-            Product.findById(ctx.currentInstance.productId, function (err, res) {
+            var SubOrder = Order.app.models.SubOrder
+            var totalPrice = 0
+
+
+            console.log(ctx.currentInstance)
+            SubOrder.find({where:  { orderId: ctx.currentInstance.id }}, function (err, res){
+                res.forEach(function(subOrder){
+                    totalPrice += subOrder.total
+                })
+                console.log(totalPrice)                
+            })
+
+
+            /*Product.findById(ctx.currentInstance.productId, function (err, res) {
                 if (err) next(err)
                 if (res && res.hasOwnProperty('id')) {
                     Product.updateAll({ id: res.id }, { inventory: res.inventory + ctx.currentInstance.quantity }, function (err, info) {
@@ -24,13 +38,14 @@ module.exports = function (Order) {
                 Payment.updateAll({ id: res.id }, { balance: res.balance - ctx.currentInstance.total }, function (err, info) {
                     if (err) next(err)
                 })
-            })
+            })*/
+            
 
         }
-        next();
+        //next();
     })
 
-    Order.observe('before delete', function (ctx, next) {
+/*    Order.observe('before delete', function (ctx, next) {
         //
         Order.findById(ctx.where.id, function (err, res) {
             if (err) next(err)
@@ -62,5 +77,5 @@ module.exports = function (Order) {
             }
         })
         
-    })
+    })*/
 };

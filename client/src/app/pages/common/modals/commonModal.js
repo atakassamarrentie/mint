@@ -12,11 +12,11 @@
 
   function commonModalFactory($uibModal) {
     var open = function (size, title, message, id, rowId) {
-        console.log("size: ", size)
+/*        console.log("size: ", size)
         console.log("title: ", title)
         console.log("message: ", message)
         console.log("id: ", id)
-        console.log("rowId: ", rowId)
+        console.log("rowId: ", rowId)*/
       return $uibModal.open({
         controller: 'commonModalCtrl',
         controllerAs: 'vm',

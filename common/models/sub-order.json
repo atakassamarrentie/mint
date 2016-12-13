@@ -1,56 +1,53 @@
 {
-  "name": "Order",
+  "name": "SubOrder",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
-  "mixins": {
+   "mixins": {
     "Logging": true,
     "Admin": true
   },
   "properties": {
-    "order_date": {
-      "type": "date",
+    "productName": {
+      "type": "string",
       "required": true
     },
-    "expected_date": {
-      "type": "date",
+    "category": {
+      "type": "string",
       "required": true
     },
-    "description": {
-      "type": "string"
+    "quantity": {
+      "type": "number",
+      "required": true
     },
-    "completed": {
+    "customPrice": {
       "type": "boolean",
-      "default": false
+      "required": true
     },
-    "username": {
+    "price": {
       "type": "string"
     },
-    "partnerName": {
-      "type": "string"
+    "total": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "partner": {
+    "order": {
       "type": "belongsTo",
-      "model": "Partners",
+      "model": "Order",
       "foreignKey": ""
     },
-    "payment": {
+    "product": {
       "type": "belongsTo",
-      "model": "Payment",
-      "foreignKey": ""
-    },
-    "user": {
-      "type": "belongsTo",
-      "model": "UserExt",
+      "model": "Product",
       "foreignKey": ""
     }
   },
-  "acls": [
+   "acls": [
     {
       "accessType": "*",
       "principalType": "ROLE",

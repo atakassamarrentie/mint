@@ -49,8 +49,8 @@
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default btn-auth" ng-click="$sessionService.login(user)">Sign in</button>
-            <div ng-if="$sessionService.error" class="form-error">
+            <button type="submit" class="btn btn-default btn-auth" ng-click="sessionService.login(user)">Sign in</button>
+            <div ng-if="sessionService.error" class="form-error">
               <br>
               Wrong username or password!
             </div>

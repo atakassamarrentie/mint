@@ -87,5 +87,9 @@
   "ProductItem": {
     "dataSource": "mysql",
     "public": true
+  },
+  "SubOrder": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

@@ -36,7 +36,7 @@
             $scope.selected = false;
           }
         }
-
+        
         function submit() {
           $scope.form && $scope.form.$setSubmitted(true);
         }

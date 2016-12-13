@@ -1,158 +1,131 @@
-<div ng-show="!newItem.$visible && writeAccess">
-    <button type="button" class="btn btn-info" ng-click="orderModal()">Add new order +</button>
+<div ng-show="writeAccess && !addOrder">
+    <button type="button" class="btn btn-info" ng-click="addOrder = !addOrder" ng-init="addOrder = false">Add new order +</button>
 </div>
 
-<div ng-hide="!newItem.$visible">
-    <form editable-form name="newItem" onbeforesave="addNewItem($data)">
-        <div ba-panel class="panel bootstrap-panel">
-            <div class="panel-heading">Add new order</div>
-            <div class="panel-body" align='left'>
-                <table>
-                    <tbody>
-                        <tr height="30px">
-                            <td width="130px"><label for="name">Product Name</label></td>
-                            <td width="200px"><span editable-select="newOrder.product" e-name="product" e-form="newItem" onbeforesave="checkEmpty($data, 'Product Name')"
-                                    e-ng-options="s.name for s in filteredProducts track by s.id" e-ng-change="productChanged($data)"></span></td>
-                            <td width="130px"><label for="productCategoryId">Product Category</label></td>
-                            <td width="200px">
-                                <span editable-select="newOrder.productCategory" e-name="productCategoryId" e-form="newItem" e-ng-options="s.id as s.category_name for s in productCategory"
-                                    e-ng-change="productCategoryChanged($data)" onbeforesave="checkEmpty($data, 'Product Category')"></span>
-                            </td>
-                        </tr>
-                        <tr height="30px">
-                            <td><label for="order_date">Order Date</label></td>
-                            <td> <span editable-date="newOrder.order_date" e-name="order_date" e-form="newItem" onbeforesave="checkEmpty($data, 'Order Date')"></span></td>
-                            <td><label for="expected_date">Expected Arrival Date</label></td>
-                            <td><span editable-date="newOrder.expected_date" e-name="expected_date" e-form="newItem" onbeforesave="checkEmpty($data, 'Expected Arrival Date')"></span></td>
-                        </tr>
-                        <tr height="30px">
-                            <td><label for="partner">Partner</label></td>
-                            <td><span editable-select="newOrder.partner.id" e-name="partnerId" e-form="newItem" e-ng-options="s.id as s.name for s in partners"
-                                    onbeforesave="checkEmpty($data, 'Partner')"></td>
-                            <td><label for="quantity">Quantity</label></td>
-                            <td><span editable-number="newOrder.quantity" e-name="quantity" e-form="newItem" e-ng-change="quantityChanged($data)"></span></td>
-                        </tr>
-                        <tr height="30px">
-                            <td><label for="price">Price</label></td>
-                            <td><input type="text" ng-readonly=!customPrice.value ng-value="productvalue.price"" ng-model="productvalue.price" ng-change="setTotal(productvalue.price)"
-                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'>$</td>
-                            <td><label for="total">Total</label></td>
-                            <td><input type="text" readonly ng-value="productvalue.totalprice" ng-model="productvalue.totalprice" >{{price}}$</td>
-                        </tr>
-                        <tr height="30px">
-                            <td><label for="quantity">Custom Price</label></td>
-                            <td >
-                                <toggle-switch type="checkbox" color="primary" ng-model="customPrice.value"  on-label="YES" off-label="NO" on-change="switchChanged()"></toggle-switch>
-                                {{customPrice.value}}
-                            </td>
-                        </tr>
-                        <tr height="30px">
-                            <td><label for="quantity">Payment Method</label></td>
-                            <td colspan="3">
-                                <a href="#" editable-radiolist="newOrder.paymentId" e-name="paymentId" e-form="newItem" e-ng-options="s.id as s.name for s in ::payments track by s.id"
-                                    onbeforesave="checkEmpty($data, 'Payment Method')">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<div ng-show=addOrder class="profile-page bootstrap-panel" ba-panel>
+    <form name="orderForm"  ng-submit="saveNewOrder()">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row clearfix">
+                    <label for="description" class="col-sm-4 control-label">Description</label>
+                    <div class="col-sm-7">
+                        <input type="text" ng-model="newOrder.description" class="form-control" name="description" id="description" placeholder="" required>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-success" ng-disabled="newItem.$waiting">save</button>
-            <button type="button" class="btn btn-warning" ng-disabled="newItem.$waiting" ng-click="newItem.$cancel()">cancel</button>
         </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row clearfix">
+                    <label for="order_date" class="col-sm-4 control-label">Order Date</label>
+                    <div class="col-sm-7">
+                        <input type="date" ng-model="newOrder.order_date" class="form-control" name="order_date" id="order_date" placeholder="" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group row clearfix">
+                    <label for="expected_date" class="col-sm-4 control-label">Arrival Date</label>
+                    <div class="col-sm-7">
+                        <input type="date" ng-model="newOrder.expected_date" class="form-control" name="expected_date" id="expected_date" placeholder="" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row clearfix">
+                    <label for="partner" class="col-sm-4 control-label">Partner</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="newOrder.partner" name="partner" id="partner" selectpicker ng-options="s as s.name for s in partners" required>
+                            <option value="">-- Select Partner --</option>
+                  </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group row clearfix">
+                    <label for="payment" class="col-sm-4 control-label">Payment</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" ng-model="newOrder.paymentId" name="payment" id="payment" selectpicker ng-options="s.id as s.name for s in payments" required>
+                            <option value="">-- Select Payment Method --</option>
+                  </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: inline-block"><button type="submit" class="btn btn-success">Save</button></div>
+        <div style="display: inline-block"><button type="button" class="btn btn-warning" ng-click="closeNewOrder()">Close</button></div>
     </form>
 </div>
 
-<table st-safe-src="ordersCollection" st-table="displayedCollection" class="table table-striped" st-set-filter="onsFilter">
+
+<table st-safe-src="ordersCollection " st-table="displayedCollection " class="table table-striped " st-set-filter="onsFilter ">
     <thead>
-        <tr class="sortable">
-            <th st-sort="id" st-sort-default>ID</th>
-            <th st-sort="order_date">Order Date</th>
-            <th st-sort="expected_date">Exp. Arrival Date</th>
-            <th st-sort="product_name">Product Name</th>
-            <th st-sort="product_category">Product Category</th>
-            <th st-sort="partnerName">Partner</th>
-            <th st-sort="quantity">Quantity</th>
-            <th st-sort="price">Price</th>
-            <th st-sort="total">Total</th>
-            <th st-sort="payment.name">Payment</th>
-            <th st-sort="username">Username</th>
+        <tr class="sortable ">
+            <th st-sort="id " st-sort-default>ID</th>
+            <th st-sort="order_date ">Order Date</th>
+            <th st-sort="expected_date ">Exp. Arrival Date</th>
+            <th st-sort="description ">Description</th>
+            <th st-sort="partnerName ">Partner</th>
+            <th st-sort="payment.name ">Payment</th>
+            <th st-sort="username ">Username</th>
         </tr>
         <tr>
             <th></th>
-            <th><input type="date" st-search="order_date" style="width:130px;"/></th>
-            <th><input type="date" st-search="expected_date" style="width:130px;"/></th>
-            <th><input st-search="product_name" placeholder="search" class="input-sm form-control" type="search" /></th>
-            <th><select st-search="product_category" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm">
-                        <option value="">
-                            All items
-                        </option>
-                        <option ng-repeat="item in ordersCollection | unique: 'product_category'" value="{{item.product_category}}">
-                            {{ item.product_category }}
-                        </option>
-                    </select></th>
-            <th><select st-search="partnerName" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm" >
-                        <option value="">
-                            All items
-                        </option>
-                        <option ng-repeat="item in ordersCollection | unique:'partnerName'" value="{{item.partnerName}}">
-                            {{ item.partnerName }}
-                        </option>
-                    </select></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th><select st-search="payment.name" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm" >
-                        <option value="">
-                            All items
-                        </option>
-                        <option ng-repeat="item in ordersCollection | unique:'payment.name'" value="{{item.payment.name}}">
-                            {{ item.payment.name }}
-                        </option>
-                    </select></th>
-                    <th><input st-search="username" placeholder="search" class="input-sm form-control" type="search" /></th>
-                    <th ng-show="writeAccess"></th>
+            <th><input type="date " st-search="order_date " style="width:130px; " /></th>
+            <th><input type="date " st-search="expected_date " style="width:130px; " /></th>
+            <th><input st-search="description " placeholder="search " class="input-sm form-control " type="search " /></th>
+            <th><select st-search="partnerName " st-input-event="change " st-delay=0 ng-model="dummy " class="form-control input-sm">
+                    <option value="">All items</option>
+                    <option ng-repeat="item in ordersCollection | unique: 'partnerName' " value="{{item.partnerName}} ">
+                        {{ item.partnerName }}
+                    </option>
+                </select></th>
+            <th><select st-search="payment.name" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm">
+                    <option value="">All items</option>
+                    <option ng-repeat="item in ordersCollection | unique: 'payment.name'" value="{{item.payment.name}}">
+                        {{ item.payment.name }}
+                    </option>
+            </select></th>
+            <th><input st-search="username " placeholder="search " class="input-sm form-control " type="search " /></th>
+            <th ng-show="writeAccess "></th>
         </tr>
     </thead>
 
     <tbody>
-        <tr ng-repeat="item in displayedCollection">
-            <td ng-class="table-id">{{item.id}}</td>
-            <td><span editable-date="item.order_date" e-name="order_date" e-form="rowform">{{item.order_date | date: "MM-dd-yyyy"}}</span></td>
-            <td><span editable-date="item.expected_date" e-name="expected_date" e-form="rowform" ng-class="checkIsOlder(item.expected_date)">
-                    {{item.expected_date | date: "MM-dd-yyyy"}}
-                </span></td>
-            <td>{{item.product_name}}</td>
-            <td>{{item.product_category}}</td>
+        <tr ng-repeat="item in displayedCollection ">
+            <td ng-class="table-id ">{{item.id}}</td>
+            <td>{{item.order_date | date: "MM-dd-yyyy "}}</td>
+            <td ng-class="checkIsOlder(item.expected_date)">{{item.expected_date | date: "MM-dd-yyyy "}}</td>
+            <td>{{item.description}}</td>
             <td>{{item.partnerName}}</td>
-            <td>{{item.quantity}}</td>
-            <td style="white-space:nowrap">{{item.price}} $</td>
-            <td style="white-space:nowrap">{{item.total}} $</td>
             <td>{{item.payment.name}}</td>
-            <td title="ID: {{item.userId}}">{{item.username}}</td>
-            <td style="min-width:200px" ng-show="writeAccess" align="right">
-                <div ng-show="!rowform.$visible">
-                    <button type="button" class="btn btn-info btn-icon" data-toggle="modal" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
-                    <button type="button" class="btn btn-danger btn-icon" data-toggle="modal" ng-click="deleteItem(item)"><i class="ion-trash-b"></i></button>
-                    <button type="button" class="btn btn-success" ng-click="completeItem(item)">Completed</button>
+            <td title="ID: {{item.userId}} ">{{item.username}}</td>
+            <td style="min-width:200px " ng-show="writeAccess " align="right ">
+                <div ng-show="!rowform.$visible ">
+                    <button type="button " class="btn btn-info btn-icon " data-toggle="modal " ng-click="updateOrder(item)
+                                    "><i class="ion-edit "></i></button>
+                    <button type="button " class="btn btn-danger btn-icon " data-toggle="modal " ng-click="deleteItem(item)
+                                    "><i class="ion-trash-b "></i></button>
+                    <button type="button " class="btn btn-success " ng-click="completeItem(item) ">Completed</button>
                 </div>
-                <form editable-form name="rowform" onbeforesave="updateOrder($data, item)" ng-show="rowform.$visible" shown="inserted == item">
-                    <button type="submit" class="btn btn-success" ng-disabled="rowform.$waiting">save</button>
-                    <button type="button" class="btn btn-warning" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()">cancel</button>
-                </form>
+
 
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="12" class="text-center">
-                <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+            <td colspan="12 " class="text-center ">
+                <div st-pagination=" " st-items-by-page="smartTablePageSize " st-displayed-pages="10 "></div>
             </td>
         </tr>
     </tfoot>
 </table>
-<div class="form-group select-page-size-wrap" layout="row">
+<div class="form-group select-page-size-wrap " layout="row ">
     Rows per page
-    <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker ng-model="smartTablePageSize" ng-options="i for i in [5,10,15,20,25,50,100]">
+    <select class="form-control selectpicker show-tick " title="Rows on page " selectpicker ng-model="smartTablePageSize
+                                    " ng-options="i for i in [5,10,15,20,25,50,100] ">
       </select>
 </div>

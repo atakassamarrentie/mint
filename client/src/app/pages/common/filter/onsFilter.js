@@ -5,8 +5,6 @@
     angular.module('BlurAdmin.pages.ordersAndSales')
         .filter('onsFilter', function () {
             return function (array, expression) {
-                console.log(expression)
-                //an example
                 return array.filter(function (val, index) {
                     var ord, exp, prn, prc, par, pay, uid, una, sel, cli
                     ord = exp = prn = prc = par = pay = uid = una = sel = cli = true
@@ -29,7 +27,6 @@
                     }
 
                     if (expression.hasOwnProperty('product_name')) {
-                        console.log(val)
                         prn = val.product_name.indexOf(expression.product_name) !== -1
                     }
 
@@ -50,7 +47,6 @@
                     }
 
                     if (expression.hasOwnProperty('userId')) {
-                        console.log(val)
                         uid = val.userId == expression.userId
                     }
 
