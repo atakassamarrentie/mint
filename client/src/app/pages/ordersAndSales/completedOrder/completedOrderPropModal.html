@@ -1,0 +1,155 @@
+<div class="modal-content">
+  <div class="modal-header bg-success">
+    <i class="ion-flame modal-icon"></i><span>Order content</span>
+  </div>
+
+  <div class="modal-body profile-page">
+
+
+    <div ng-show=addProduct class="profile-page bootstrap-panel" ba-panel>
+      <form name="newProductForm" ng-submit="saveProduct()">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row clearfix">
+              <label for="inputTitle" class="col-sm-4 control-label">Product</label>
+              <div class="col-sm-7">
+                <select class="form-control" ng-change="productChanged()" ng-model="newProduct.product" selectpicker required ng-options="s as s.name for s in filteredProducts | orderBy: 'name'">
+                  <option value="">-- Select Product --</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row clearfix">
+              <label for="inputGender" class="col-sm-4 control-label">Category</label>
+              <div class="col-sm-7">
+                <select class="form-control" ng-change="productCategoryChanged()" ng-model="newProduct.category" selectpicker required ng-options="s.id as s.category_name for s in productCategory">
+                  <option value="">-- Select Category --</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row clearfix">
+              <label for="inputTitle" class="col-sm-4 control-label">Quantity</label>
+              <div class="col-sm-7">
+                <input type="number" ng-change="calcOrder()" ng-model="newProduct.quantity" required class="form-control" min="1" max="99999"
+                  placeholder="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row clearfix">
+              <label for="inputTitle" class="col-sm-4 control-label">Custom Price</label>
+              <div class="col-sm-7">
+                <toggle-switch type="checkbox" color="primary" ng-model="newProduct.customPrice" on-label="YES" off-label="NO" on-change="switchChanged()"></toggle-switch>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row clearfix">
+              <label for="inputTitle" class="col-sm-4 control-label">Price</label>
+              <div class="col-sm-7">
+                <input type="number" ng-change="calcOrder()" ng-readonly="!newProduct.customPrice" min="1" ng-model="newProduct.sell_price"
+                  class="form-control" placeholder="">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row clearfix">
+              <label for="inputTitle" class="col-sm-4 control-label">Total</label>
+              <div class="col-sm-7">
+                <input type="number" readonly ng-model="newProduct.total" class="form-control" placeholder="">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: inline-block"><button type="submit" class="btn btn-success">Add</button></div>
+        <div style="display: inline-block"><button type="button" class="btn btn-warning" ng-click="closeProduct()">Cancel</button></div>
+        <div style="display: inline-block"><button type="button" class="btn btn-primary" ng-click="resetProduct()">Reset</button></div>
+      </form>
+    </div>
+
+    
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group row clearfix">
+          <label for="inputTitle" class="col-sm-4 control-label">Total Price</label>
+          <div class="col-sm-7">
+            <input type="text" readonly ng-model="grandTotal" class="form-control" placeholder="">
+          </div>
+        </div>
+      </div>
+       <div class="col-sm-6">
+        <div class="form-group row clearfix">
+          <label for="inputTitle" class="col-sm-4 control-label">Total Quantity</label>
+          <div class="col-sm-7">
+            <input type="text" readonly ng-model="totalQuantity" class="form-control" placeholder="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table st-safe-src="subOrdersCollection" st-table="displayedSubOrdersCollection" class="table table-striped" st-set-filter="onsFilter">
+      <thead>
+        <tr class="sortable">
+          <th st-sort="id" st-sort-default>ID</th>
+          <th st-sort="productName">Product Name</th>
+          <th st-sort="category">Product Category</th>
+          <th st-sort="quantity">Quantity</th>
+          <th st-sort="price">Price</th>
+          <th st-sort="total">Total</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th><input st-search="productName" placeholder="search" class="input-sm form-control" type="search" /></th>
+          <th><select st-search="category" st-input-event="change" st-delay=0 ng-model="dummy" class="form-control input-sm">
+                        <option value="">
+                            All items
+                        </option>
+                        <option ng-repeat="item in subOrdersCollection | unique: 'category'" value="{{item.category}}">
+                            {{ item.category }}
+                        </option>
+                    </select></th>
+          <th ng-show="!writeAccess"></th>
+          <th></th>
+          <th></th>
+          
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="item in displayedSubOrdersCollection">
+          <td ng-class="table-id">{{item.id}}</td>
+
+          <td>{{item.productName}}</td>
+          <td>{{item.category}}</td>
+          <td>{{item.quantity}}</td>
+          <td style="white-space:nowrap">{{item.price}} $</td>
+          <td style="white-space:nowrap">{{item.total}} $</td>
+          
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="12" class="text-center">
+            <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="10"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+
+    <div style="display: inline-block"><button type="button" class="btn btn-warning" ng-click="vm.cancel()">Close</button></div>
+
+
+  </div>
+</div>

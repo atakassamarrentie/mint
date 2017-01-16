@@ -30,6 +30,9 @@
     },
     "partnerName": {
       "type": "string"
+    },
+    "invoice": {
+      "type": "string"
     }
   },
   "validations": [],

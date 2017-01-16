@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('BlurAdmin', [
-  'ngAnimate',
+  //'ngAnimate',
   'ui.bootstrap',
   'ui.sortable',
   'ui.router',
@@ -21,6 +21,7 @@ angular.module('BlurAdmin', [
   'ngAvatar',
   'trTrustpass',
   'angular-bar-code-scanner',
+  '720kb.datepicker',
   
   'BlurAdmin.theme',
   'BlurAdmin.pages',

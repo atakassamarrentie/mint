@@ -1,22 +1,30 @@
-<div ba-panel ba-panel-title="Complete Order" ba-panel-class="with-scroll">
+<div ba-panel ba-panel-title="Complete Order" ba-panel-class="with-scroll" ng-show="loadedModal" ng-cloak>
     <ba-wizard on-finish="endFunction()">
         <ba-wizard-step title="Invoice" form="vm.invoiceForm">
             <form name="vm.invoiceForm" novalidate>
-                <div class="row">
+                <div class="row" style="height: 300px">
                     <div class="col-md-6">
                         <div class="form-group has-feedback" ng-class="{'has-error': vm.invoiceForm.invoiceNumber.$invalid && (vm.invoiceForm.invoiceNumber.$dirty || vm.invoiceForm.$submitted)}">
-                            <label for="invoiceNumber1">Invoice Number</label>
-                            <input type="number" class="form-control" id="invoiceNumber1" name="invoiceNumber" placeholder="Invoice Number" ng-model="vm.invoice.invoiceNumber" required>
-                            <span class="help-block error-block basic-block">Required</span>
+                            <label for="invoiceNumber">Invoice Number</label>
+                            <input type="number" class="form-control" id="invoiceNumber" name="invoiceNumber" placeholder="Invoice Number" 
+                            ng-model-options="{ debounce: 500 }" ng-model="vm.invoice.invoiceNumber" ng-change="validateInvoice(vm.invoiceForm.invoiceNumber)"
+                                required>
+                                
+                                <div class="redrow" ng-show=" vm.invoiceForm.invoiceNumber.$error.uniq">Invoice number must be unique!</div>
+                        
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group  has-feedback" ng-class="{'has-error': vm.invoiceForm.expected_date.$invalid && (vm.invoiceForm.expected_date.$dirty || vm.invoiceForm.$submitted)}">
                             <label for="expected_date" class="col-sm-4 control-label">Arrival Date</label>
-                            <input type="date" class="form-control" id="expected_date" name="expected_date" ng-model="vm.invoice.expected_date">
-                            <span class="help-block error-block basic-block">Required</span>
+                            <datepicker>
+                                <input ng-model="date" type="text" class="form-control" id="expected_date" name="expected_date" ng-model="vm.invoice.expected_date"
+                                    required/>
+                            </datepicker>
+                            
                         </div>
+                        
                     </div>
                 </div>
             </form>
@@ -25,7 +33,7 @@
             <ba-wizard-step title="Product: {{prd.productName}}" form="vm[formName]">
 
 
-                
+
                 <div class="row">
                     <div class="col-md-6">
                         <b>Quantity:</b> {{labels[prd.productName].labels.length || 0}} / {{prd.quantity}}
@@ -42,7 +50,7 @@
                 <br>
                 <ng-form name="vm.{{formName}}" ng-init="initForm(formName)">
                     <input type=hidden ng-model=vm[formName].valid required>
-                    
+
                 </ng-form>
                 <table class="table table-striped">
                     <tbody>
@@ -60,24 +68,30 @@
             All requested data has been collected. Please click on Submit, to complete the order
             <form class="form-horizontal" name="vm.finishForm" novalidate>
                 <br>
-                
+
                 <br>
                 <table class="table table-striped">
                     <tr ng-repeat="(key, value) in labels">
                         <td style="text-align:left">{{key}}</td>
-                        <td style="text-align:left width: 30px">{{value.completed || 0}} / {{value.labels.length}}</td>
-                        <td style="text-align:right width: 100px">
+                        <td style="text-align:left; width: 100px">{{value.completed || 0}} / {{value.labels.length}}</td>
+                        <td style="text-align:right; width: 150px">
                             <div class="yellowrow" ng-show="!value.status">Waiting for upload</div>
                             <div ng-show="value.status == 'saving'"><img src="assets/img/loading.gif" width="20"> Saving</div>
                             <div class="greenrow" ng-show="value.status == 'done'">Done</div>
-                            </td>
-                    </tr> 
-                </table>
-                
+                            <div class="redrow" ng-show="value.status == 'error'">Error</div>
 
-               
-                
-                
+                        </td>
+                    </tr>
+
+                </table>
+                <br>
+                <div ng-show="errs.length > 0" class="redrow">
+                    <pre class="redrow">{{errs}}</pre>
+                </div>
+
+
+
+
             </form>
         </ba-wizard-step>
     </ba-wizard>

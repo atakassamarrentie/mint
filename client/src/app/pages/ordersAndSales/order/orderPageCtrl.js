@@ -63,22 +63,11 @@
 
         $scope.completeItem = function (item, itemRow) {
             var rowId = $scope.ordersCollection.indexOf(item)
+            console.log(rowId)
+            console.log(item)
             var dialog = $orderCompletedModal.open('lg',item.id)
             dialog.result.then(function () {
-               /* Order.destroyById({ id: item.id }, function (result) {
-                    if (result.count == 0) {
-                        toastr.error('Error: Cannot find order with id ' + item.id);
-                    } else {
-                        if (rowId !== -1) {
-                            $scope.ordersCollection.splice(rowId, 1)
-                        }
-                        toastr.success('Order ' + item.id + ' has been deleted successfully');
-                    }
-                }, function (err) {
-                    toastr.error(err.data.error.message)
-                })*/
-            })
-            /*Order.prototype$updateAttributes({ id: item.id }, { completed: true }
+                Order.prototype$updateAttributes({ id: item.id }, { completed: true }
                 , function (success) {
                     toastr.success('Order successfully set to completed')
                     $scope.ordersCollection.splice($scope.ordersCollection.indexOf(item), 1)
@@ -89,7 +78,10 @@
                             $scope.ordersCollection.splice(itemRow, 1)
                         }
                     }
-                }).$promise*/
+                }).$promise
+               
+            })
+            
 
         }
 
@@ -101,8 +93,10 @@
             newOrder.partnerName = $scope.newOrder.partner.name
             newOrder.partnerId = $scope.newOrder.partner.id
             newOrder.paymentId = $scope.newOrder.paymentId
+            
             Order.create(newOrder,
                 function (success) {
+                    console.log(success)
                     toastr.success('New order succesfully added to database')
                     $scope.addOrder = false
                     $scope.newOrder = {
@@ -111,8 +105,9 @@
                     }
                     getOrders()
                 },
-                function (error) {
-                    toastr.error(error.data.error.message)
+                function (err) {
+                    console.log(err)
+                    toastr.error(err.data.error.message)
                 }
             )
         }

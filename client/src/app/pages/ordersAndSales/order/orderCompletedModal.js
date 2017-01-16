@@ -33,9 +33,14 @@
     }
 
 
-    function orderCompletedModalCtrl($scope, $uibModalInstance, SubOrder, ProductItem, toastr, items) {
+    function orderCompletedModalCtrl($scope, $uibModalInstance, SubOrder, ProductItem, Order, toastr, items) {
+        $scope.loadedModal = false
+        $scope.doneSave = false
         // Initialize data ------------------------
         var vm = this
+        $scope.closeOrder = function() {
+            vm.confirm();
+        }
         vm.confirm = $uibModalInstance.close;
         vm.cancel = $uibModalInstance.dismiss;
         vm.content = items;
@@ -43,6 +48,7 @@
         vm.done = function () {
             vm.confirm();
         }
+        console.log("vm: ", vm)
 
         $scope.products = SubOrder.find({ filter: { where: { orderId: vm.content.id } } }, function (success) {
             $scope.loaded = true
@@ -72,15 +78,26 @@
                 if (label) {
                     ProductItem.count({ where: { label: label } },
                         function (success) {
-                            console.log(success.count)
                             if (success.count > 0) {
                                 toastr.error('Duplicated label!')
                             } else {
-
                                 if ($scope.labels[productName].labels.indexOf(label) > -1) {
                                     toastr.error('Duplicated label!')
                                 } else {
-                                    $scope.labels[productName].labels.push(label)
+                                    var valid = true
+                                    for (var key in $scope.labels) {
+                                        if ($scope.labels[key].labels.indexOf(label) > -1) {
+                                            valid = false
+                                        }
+                                    }
+                                    if (valid) {
+                                        $scope.labels[productName].labels.push(label)
+                                    } else {
+                                        toastr.error('Duplicated label!')
+                                    }
+
+
+
                                 }
                                 if ($scope.labels[productName].labels.length == quantity) {
                                     vm['p' + productId].valid = 1
@@ -96,24 +113,39 @@
 
             }
             $scope.initForm = function (myForm) {
-                console.log(myForm)
+                
                 myForm.$setValidity(false)
             }
 
             $scope.returnForm = function (formName) {
-                console.log("sdsd", formName)
+                
 
                 return vm[formName]
             }
 
         }
 
+        $scope.validateInvoice = function(invoice){
+            
+            Order.count({where: {invoice: invoice.$modelValue}}, function(cntr){
+                console.log(cntr)
+                if (cntr.count > 0) {
+                    console.log(vm.invoiceForm)
+                    vm.invoiceForm.invoiceNumber.$setValidity("uniq", false)
+                } else {
+                    vm.invoiceForm.invoiceNumber.$setValidity("uniq", true)
+                }
+            })
+
+        }
+
         $scope.doneOrder = function () {
+            $scope.errs  = ""
             angular.forEach($scope.labels, function (value, key) {
                 $scope.labels[key].completed = 0
             })
 
-            console.log($scope.labels)
+            
             $scope.pendingSave = true
             angular.forEach($scope.labels, function (value, key) {
                 $scope.labels[key].status = 'saving'
@@ -123,24 +155,44 @@
                         invoice: vm.invoice.invoiceNumber,
                         deleted: false,
                         productId: value.id
-                    }, 
-                    function(success){
-                        if ($scope.labels[key].completed) {$scope.labels[key].completed += 1} else {
-                            $scope.labels[key].completed = 1
-                        }
+                    },
+                        function (success) {
+                            if ($scope.labels[key].completed) { $scope.labels[key].completed += 1 } else {
+                                $scope.labels[key].completed = 1
+                            }
 
-                        if ($scope.labels[key].completed == value.labels.length) {
-                            $scope.labels[key].status = 'done'
-                        }
-                        
-                    })
+                            if ($scope.labels[key].completed == value.labels.length) {
+                                if ($scope.labels[key].status !== 'error') $scope.labels[key].status = 'done'
+                            }
+
+                        },
+                        function (error){
+                            if (error.data.error.code == "ER_DUP_ENTRY") {
+                                $scope.errs += 'The label ' + error.config.data.label + ' is duplicated and will NOT be added to the database!'
+                            } else {
+                                $scope.errs += error.data.error.message + '\n'
+                            }
+                            
+
+                            if ($scope.labels[key].completed) { $scope.labels[key].completed += 1 } else {
+                                $scope.labels[key].completed = 1
+                            }
+                                $scope.labels[key].status = 'error'
+                        })
                 })
-                
-                
+
+
             })
+            console.log("invoice: ", vm.invoiceForm.invoiceNumber.$viewValue)
+            Order.prototype$updateAttributes({ id: vm.content.id }, { invoice: vm.invoiceForm.invoiceNumber.$viewValue }
+                , function (success) {
+                    console.log(success)
+                }
+            )
             $scope.pendingSave = false
+            $scope.doneSave = true
         }
 
-
+        $scope.loadedModal = true
     }
 } ());

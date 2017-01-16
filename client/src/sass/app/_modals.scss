@@ -5,6 +5,10 @@
   color: $dropdown-text;
 }
 
+body > [uib-modal-window]:not([modal-render]) {
+    display: none;
+}
+
 .modal-header {
   color: $label-text;
   border-top-left-radius: 5px;
