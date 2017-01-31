@@ -1,0 +1,39 @@
+<div class="pos-usermenu" ng-class="{ 'pos-collapsed': $baSidebarService.isMenuCollapsed() }">
+    <div class="pos-usermenu-content">
+        <table st-safe-src="clientsInProgress" st-table="displayedCollection" class="table table-hover">
+
+            <tbody>
+                <tr ng-repeat="item in displayedCollection">
+                    <td class="noselect" ng-click="msg(item.id)" valign="middle">
+                        <ng-avatar style="float:left" bind string="{{item.first_name}} {{item.last_name}}" auto-color=true width=35 text-shadow=true></ng-avatar>
+                        <div class="pos-list-name" title="{{item.title}} {{item.last_name}}, {{item.first_name}}">{{item.title}} {{item.last_name}}, {{item.first_name}}
+                            <br><span>{{item.inPSince | timeAgo}}</span></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<button type="button" class="btn btn-primary" ng-click="sideOpened=!sideOpened">Add client  <i ng-class=" sideOpened ? 'ion-arrow-left-b' : 'ion-arrow-right-b'" ></i></button>
+<div style="padding-left:300px">User in progress: {{inpUserID}}<br>
+    <button type="button" ng-click="closeClient({{inpUserID}})" class="btn btn-success btn-with-icon"><i class="ion-android-checkmark-circle"></i>Close</button></div>
+
+</div>
+<pageslide ps-open="sideOpened" ps-key-listener="true" ps-click-outside="false">
+    <div>
+        <p>
+            <div id='pos-main'>
+                <div class="form-group">
+                    <oi-select oi-options="item.id as item.title + ' ' + item.last_name + ', ' + item.first_name for item in clientsNotInProgress track by item.id"
+                        ng-model="addCli" placeholder="Select" class="pos-select"></oi-select>
+                </div>
+
+                <button type="button" ng-disabled="!addCli" ng-click="addClientToList()" class="btn btn-success btn-with-icon">
+                    <i class="ion-android-checkmark-circle"></i>Add</button>
+
+
+        </p>
+        </div>
+</pageslide>

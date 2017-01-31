@@ -122,7 +122,14 @@
     },
     "membership": {
       "type": "string",
-      "default": "1"
+      "default": 1
+    },
+    "inProgress": {
+      "type": "boolean",
+      "default": 0
+    },
+    "inPSince": {
+      "type": "date"
     }
   },
   "validations": [],
@@ -151,6 +158,13 @@
       "principalType": "ROLE",
       "principalId": "client_write",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "pos_write",
+      "permission": "ALLOW",
+      "property": "updateAttributes"
     }
   ],
   "methods": {}

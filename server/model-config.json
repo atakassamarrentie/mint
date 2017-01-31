@@ -91,5 +91,9 @@
   "SubOrder": {
     "dataSource": "mysql",
     "public": true
+  },
+  "Pos": {
+    "dataSource": "mysql",
+    "public": true
   }
 }

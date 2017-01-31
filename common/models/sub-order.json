@@ -5,7 +5,7 @@
   "options": {
     "validateUpsert": true
   },
-   "mixins": {
+  "mixins": {
     "Logging": true,
     "Admin": true
   },
@@ -47,7 +47,7 @@
       "foreignKey": ""
     }
   },
-   "acls": [
+  "acls": [
     {
       "accessType": "*",
       "principalType": "ROLE",

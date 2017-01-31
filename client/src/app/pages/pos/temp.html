@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-xs-3">
+
+        <div class="panel panel-default bootstrap-panel" style="height:100%; padding:0px;">
+            <div class="panel-body" style="padding:0px">
+                <div class="form-group">
+                    <oi-select oi-options="item.first_name as item.title + ' ' + item.last_name + ', ' + item.first_name for item in clients track by item.id"
+                        ng-model="bundle" placeholder="Select"></oi-select>
+
+                </div>
+                <div style="height: 500px; overflow-y: scroll;">
+
+
+
+                    <table st-safe-src="clientCollection" st-table="displayedCollection" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in displayedCollection">
+                                <td class="noselect" ng-click="msg(item.id)" valign="middle">
+                                    <ng-avatar style="float:left" bind string="{{item.first_name}} {{item.last_name}}" auto-color=true width=35 text-shadow=true></ng-avatar>
+                                    <div style="float:left; padding-left: 20px;">{{item.title}} {{item.last_name}}, {{item.first_name}}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">User in progress: {{inpUserID}}</div>
+</div>
